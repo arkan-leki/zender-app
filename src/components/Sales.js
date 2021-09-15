@@ -1,9 +1,9 @@
-import React from 'react'
+import { useState } from "react/cjs/react.development"
 import * as moment from 'moment'
 import { Link } from 'react-router-dom'
 
-const Sales = ({ sales }) => {
-    let yourDate = new Date() ;
+const Sales = ({ sales, locals, search, addForm }) => {
+    const [text, setText] = useState('')
     return (
         <div className="mx-auto" style={{ width: 700 + 'px' }}>
             <div className="table-responsive-xl aling.center">
@@ -23,7 +23,7 @@ const Sales = ({ sales }) => {
                         {sales.map((mob, index) => (
                             <tr key={index}>
                                 <td><Link to={`/form/${mob.id}`}>{mob.id}</Link></td>
-                                <td>{mob.local}</td>
+                                <td>{mob.local_name}</td>
                                 <td>{mob.totall}$</td>
                                 <td>{mob.discount}$</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
@@ -31,7 +31,61 @@ const Sales = ({ sales }) => {
                             </tr>
                         ))}
                     </tbody>
+                    <tfoot>
+                        <button className="btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button>
+                    </tfoot>
                 </table>
+                <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true'>
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">کڕیارەکان</h5>
+                                <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                            </div>
+                            <div className="container">
+                                <div className="d-md-flex justify-content-between align-items-center">
+                                    <h5 className="mb-3 mb-md-0">گەران بۆ کڕیارەکان</h5>
+                                    <div className="input-group news-input">
+                                        <input id='text' type="text" className="form-control" placeholder="بەرزترین نرخ بنوسە کە دەتوانیت بیبەخشی"
+                                            aria-label="Eneter Your price" aria-describedby="button-addon2" value={text} onChange={(e) => setText(e.target.value)} />
+                                        <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => search(text)}>گەڕان</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-body">
+                                <table className="table table-striped table-hover align-middle caption-top">
+                                    <thead className="table-dark">
+                                        <tr>
+                                            <th scope="col">کاڵا</th>
+                                            <th >ژ.موبایل</th>
+                                            <th >کۆد</th>
+                                            <th >ناوچە</th>
+                                            <th >خاوەن</th>
+                                            <th >کۆی کڕین</th>
+                                            <th >وەسل</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {locals.map((people, index) => (
+                                            <tr key={index}>
+                                                <td scope="row">{people.name}</td>
+                                                <td >{people.phone}</td>
+                                                <td >{people.code}</td>
+                                                <td>{people.region}</td>
+                                                <td >{people.owner_name}</td>
+                                                <td >{people.totallSell}</td>
+                                                <button className="btn btn-info" type="button" onClick={() => addForm({"local":people.id})}>کڕین</button>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
