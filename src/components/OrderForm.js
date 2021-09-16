@@ -1,13 +1,12 @@
 import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
 import * as moment from 'moment'
-import { useState } from "react/cjs/react.development"
+import { useState } from 'react';
 
-const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, image }) => {
+const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image}) => {
     const [text, setText] = useState('')
     const [DashText, setDashText] = useState('')
-
     let { id } = useParams();
-    let waslz = sales.filter((mob) => mob.id == id)
+    let orderz = orders.filter((o) => o.id == id)
     let summer = 0
     let wights = 0.0
     let summerprice = 0
@@ -22,30 +21,28 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                     <img src={image} className="img-thumbnail" alt="..." width={100 + '%'} />
                 </div>
                 <div className="col-4">
-                    <h4>پسولەی فرۆش
+                    <h4>پسولەی کڕین
                     </h4>
                     <p>
                         Tel: 07709994444 - 09933338888
                     </p>
                 </div>
             </div>
-            {waslz.map((wasl, index) => (
+            {orderz.map((order, index) => (
                 <>
-                    {/* <h4>{wasl.id}</h4> */}
+                    {/* <h4>{order.id}</h4> */}
                     <hr />
                     <div className="row fs-6">
                         <div className="col-8 border row">
-                            <div className="col-6"> <p>ناو : {wasl.local_name}</p>
-                                <p>ناوچە : {wasl.local_region}</p>
-                                <p>ژمارەی موبایل : {wasl.local_phone}</p></div>
-                            <div className="col-6"> <p>کۆد : {wasl.local_code}</p>
-                                <p>فرۆشیار : {wasl.vendor_name}</p>
-                                <p>ژمارەی موبایل : {wasl.vendor_phone}</p></div>
+                            <div className="col-6"> <p>ناو : {order.trader_name}</p>
+                                <p>ناو : {order.group_name}</p></div>
+                            <div className="col-6"> <p>کۆد : {order.code}</p>
+                            </div>
                         </div>
                         <div className="col-4 border text-center">
-                            <p>بەرواری فرۆش</p>
-                            <p>{moment(new Date(wasl.date)).format("DD/MM/YYYY")}</p>
-                            <p>زنجیرە {wasl.id}</p>
+                            <p>بەرواری کڕین</p>
+                            <p>{moment(new Date(order.date)).format("DD/MM/YYYY")}</p>
+                            <p>زنجیرە {order.id}</p>
                         </div>
 
                     </div>
@@ -65,11 +62,11 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                                 </tr>
                             </thead>
                             <tbody>
-                                {console.log(wasl.sell_detail)}
-                                {wasl.sell_detail.map((kala, index) => (
+                                {console.log(order.order_detail)}
+                                {order.order_detail.map((kala, index) => (
                                     <tr key={index}>
                                         <th hidden={true}>{summer += kala.quantity}</th>
-                                        <th hidden={true}>{wights += kala.quantity * kala.item_wightAll}</th>
+                                        <th hidden={true}>{wights += kala.item_wightAll * kala.quantity}</th>
                                         <th hidden={true}>{summerprice += kala.total}</th>
 
                                         <th scope="row">{kala.id}</th>
@@ -95,43 +92,33 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                                                 <button className="d-print-none btn btn-info col" onClick={() => addGO({
                                                     "quantity": text,
                                                     "price": kala.finalprice,
-                                                    "sell": wasl.id,
+                                                    "order": order.id,
                                                     "item": kala.id
                                                 })}> خەزن </button>
                                             </div>
                                         </th>
                                     </tr>
                                 ))}
-
                             </tbody>
-                            {/* <tfoot>
-                                <th>
-                                    <Link className="btn d-print-none btn-info" to={`/itemlist/${wasl.id}`}>زیادکردن</Link>
-                                </th>
-                                <th></th>
-                                <th> وەزن {Math.trunc( wights )} کیلۆ</th>
-                                <th> عدد {summer} کارتۆن</th>
-                                <th> {summerprice}$</th>
-                                <th> <Link className="btn d-print-none btn-info" to={`/`}>گەرانەوە</Link></th>
-                            </tfoot> */}
                         </table>
                     </div>
                     <div className="row">
                         <div className="col-4">
                             <p>پارەدان بە قەرز</p>
-                            <p>قەرزی پێشوو : {wasl.local_mawe - wasl.totallint}$</p>
-                            <p>قەرزی ئێستا : {wasl.local_mawe}$</p>
+                            <p>قەرزی پێشوو : {order.trader_mawe - order.totallint}$</p>
+                            <p>قەرزی ئێستا : {order.trader_mawe}$</p>
                         </div>
                         <div className="col-4">
-                            <p><Link className="btn d-print-none btn-info" to={`/itemlist/${wasl.id}`}>زیادکردن</Link>
+                            <p>                                    
+                                <Link className="btn d-print-none btn-info" to={`/itemOrderlist/${+order.id}`}>زیادکردن</Link>
                             </p>
                             <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
                             <p>عدد {summer} کارتۆن</p>
                         </div>
                         <div className="col-4">
-                            <p>کۆی کڕین : {wasl.totall}$</p>
-                            <p>داشکان : {wasl.discount}$ <button className=" d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#dicount">edit</button></p>
-                            <p>کۆو وەسڵ : {wasl.totallint}$</p>
+                            <p>کۆی کڕین : {order.totall}$</p>
+                            <p>داشکان : {order.discount}$ <button className=" d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#dicount">edit</button></p>
+                            <p>کۆو وەسڵ : {order.totallint}$</p>
                         </div>
                     </div>
                     <div className="modal fade" id="dicount" tabIndex="-1" aria-hidden='true'>
@@ -143,10 +130,10 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                                 </div>
                                 <div className="modal-body">
                                     <label htmlFor="">dashkan: </label>
-                                    <input type="number" placeholder={wasl.discount} value={DashText} onChange={(e) => setDashText(e.target.value)} />
+                                    <input type="number" placeholder={order.discount} value={DashText} onChange={(e) => setDashText(e.target.value)} />
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={() => dashkan(wasl.id, {
+                                    <button type="button" className="btn btn-success" onClick={() => dashkan(order.id, {
                                         "discount": DashText,
                                     })}>go</button>
                                 </div>
@@ -159,4 +146,4 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
     )
 }
 
-export default SaleForm
+export default OrderForm

@@ -1,59 +1,54 @@
-import { useState } from "react/cjs/react.development"
-import * as moment from 'moment'
+import moment from 'moment'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) => {
+const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder}) => {
     const [text, setText] = useState('')
     const [date, setDate] = useState('')
-
     return (
-        <><div className="mx-auto" style={{ width: 700 + 'px' 
-        }} >
-            <div class="d-print-none">
+        <div className="mx-auto" style={{
+            width: 700 + 'px'
+        }} ><div class="d-print-none">
                 <div class="container-fluid">
                     <div class="">
                         {group != '' ? <button className=" m-1 col-md-4  btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button> : <></>}
                         <button className=" m-1 col-md-4 btn btn-info">بۆ</button>
                         <div class="row">
-                            <input class="col-md-8 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} />
-                            <button class="col-md-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date)}>گەڕان</button>
+                            {/* <input class="col-md-8 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} /> */}
+                            {/* <button class="col-md-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date)}>گەڕان</button> */}
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="table-responsive-xl aling.center">
+            </div><div className="table-responsive-xl aling.center">
                 <table className="table table-striped table-hover col-12 caption-top">
-                    <caption>وەسڵەکان</caption>
                     <thead>
                         <tr>
-                            <th scope="col"> وەسڵ</th>
-                            <th scope="col"> فرۆشیار</th>
-                            <th scope="col">ژمارەی وەسڵ</th>
-                            <th scope="col">کڕیار</th>
-                            <th scope="col">کۆی وەسل</th>
-                            <th scope="col">کۆی داشکان</th>
-                            <th scope="col">کۆتا</th>
-                            <th scope="col">بەروار</th>
-                            {/* <th scope="col">Action</th> */}
+                            <th scope="col">#</th>
+                            <th>کۆمپانیا</th>
+                            <th>کۆدی وەسڵ</th>
+                            <th>جۆری مەواد</th>
+                            <th>کۆی وەسڵ</th>
+                            <th>داشکاندن</th>
+                            <th>کۆی پارە داواکراو</th>
+                            <th>بەروار داخلکردن</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {sales.map((mob, index) => (
+                        {orders.map((order, index) => (
                             <tr key={index}>
-                                <td>{mob.group_name}</td>
-                                <td>{mob.vendor_name}</td>
-                                <td><Link to={`/form/${mob.id}`}>{mob.id}</Link></td>
-                                <td><Link to={`/form/${mob.id}`}>{mob.local_name}</Link></td>
-                                <td>{mob.totall}$</td>
-                                <td>{mob.discount}$</td>
-                                <td>{mob.totallint}$</td>
-                                <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
-                                {/* <td><button className="btn btn-info">Open</button></td> */}
+
+                                <th scope="col"><Link to={`/order/${order.id}`}>{order.id}</Link></th>
+                                <th>{order.trader_name}</th>
+                                <th>{order.code}</th>
+                                <th>{order.group_name}</th>
+                                <th>{order.totall}$</th>
+                                <th>{order.discount}$</th>
+                                <th>{order.totallint}$</th>
+                                <td>{moment(new Date(order.date)).format("DD/MM/YYYY")}</td>
                             </tr>
                         ))}
+
                     </tbody>
-                    <tfoot>
-                    </tfoot>
                 </table>
                 <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true'>
                     <div className="modal-dialog">
@@ -69,7 +64,7 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                                     <div className="input-group news-input">
                                         <input id='text' type="text" className="form-control" placeholder="بەرزترین نرخ بنوسە کە دەتوانیت بیبەخشی"
                                             aria-label="Eneter Your price" aria-describedby="button-addon2" value={text} onChange={(e) => setText(e.target.value)} />
-                                        <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => search(text)}>گەڕان</button>
+                                        <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => searchTrader(text)}>گەڕان</button>
                                     </div>
                                 </div>
                             </div>
@@ -78,24 +73,16 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                                     <thead className="table-dark">
                                         <tr>
                                             <th scope="col">کاڵا</th>
-                                            <th>ژ.موبایل</th>
                                             <th>کۆد</th>
-                                            <th>ناوچە</th>
-                                            <th>خاوەن</th>
-                                            <th>کۆی کڕین</th>
                                             <th>وەسل</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {locals.map((people, index) => (
+                                        {traders.map((trader, index) => (
                                             <tr key={index}>
-                                                <td scope="row">{people.name}</td>
-                                                <td>{people.phone}</td>
-                                                <td>{people.code}</td>
-                                                <td>{people.region}</td>
-                                                <td>{people.owner_name}</td>
-                                                <td>{people.totallSell}</td>
-                                                <button className="btn btn-info" type="button" onClick={() => addForm({ "vendor": vendor, "group": group, "local": people.id })}>کڕین</button>
+                                                <td scope="row">{trader.name}</td>
+                                                <td>{trader.code}</td>
+                                                <button className="btn btn-info" type="button" onClick={() => addOrder({"group": group, "trader": trader.id })}>کڕین</button>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -106,9 +93,8 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                         </div>
                     </div>
                 </div>
-            </div>
-        </div></>
+            </div></div>
     )
 }
 
-export default Sales
+export default OrderHatu
