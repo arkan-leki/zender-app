@@ -14,7 +14,7 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image }) => {
     let wights = 0.0
     let summerprice = 0
     return (
-        <div className="mx-auto border border-5 p-5" style={{ width: 700 + 'px' }}>
+        <div className="mx-auto border border-5 p-5" style={{ width: 100 + '%' }}>
             <div className="row border ">
                 <div className="col-4 ">
                     <h4>کۆمپانیایی زەندەر</h4>

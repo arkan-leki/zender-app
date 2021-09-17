@@ -16,6 +16,9 @@ const Header = ({ groups,setGroupEvent ,vendors ,setVendorEvent }) => {
                                 <Link className="nav-link active" aria-current="page" to="/">ماوڵەوە</Link>
                             </li>
                             <li className="nav-item">
+                                <Link className="nav-link" to="/items">مەوادەکان</Link>
+                            </li>
+                            <li className="nav-item">
                                 <Link className="nav-link" to="/order">مەوادی هاتوو</Link>
                             </li>
                             <li className="nav-item">

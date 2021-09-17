@@ -7,7 +7,7 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
     const [date, setDate] = useState('')
 
     return (
-        <><div className="mx-auto" style={{ width: 700 + 'px' 
+        <><div className="mx-auto" style={{ width: 100 + '%' 
         }} >
             <div className="d-print-none">
                 <div className="container-fluid">

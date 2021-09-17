@@ -12,7 +12,7 @@ import Header from './components/Header';
 import moment from 'moment';
 import OrderHatu from './components/OrderHatu';
 import OrderForm from './components/OrderForm';
-
+import Items from './components/Items'
 // function App() {
 //   return (
 //     <div className="App">
@@ -355,14 +355,54 @@ const App = () => {
 
   }
 
+  const filterItems = async (traderId, text) => {
+    const server = await fetchItems()
+    setItems(server)
+    if (text != "") {
+      
+      setItems(items.filter((kala) => {
+        return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
+      }))
+    }else if (traderId != "") {
+      setItems(items.filter((kala) => {
+        return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
+      }))
+    }
+  }
+
+  const itemPost = async (post) => {
+    const res = await fetch('http://127.0.0.1:8000/item/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+
+      })
+
+    getState()
+
+  }
 
   return (
     <Router>
       <div className=''>
+
         <Header vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} />
         <Route path='/order' exact render={(props) => (
           <>
             <OrderHatu filterBydate={filterBydate} orders={orders} group={groupId} traders={traders} search={search} addOrder={addOrder} />
+          </>
+        )}
+        />
+        <Route path='/items' exact render={(props) => (
+          <>
+            <Items items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost}/>
           </>
         )}
         />

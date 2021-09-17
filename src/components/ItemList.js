@@ -12,7 +12,7 @@ const ItemList = ({ items, addtoListEvent, url ,search}) => {
         <section className="p-5" id="items">
             <div className="container">
                 <div className="d-md-flex justify-content-between align-items-center">
-                    <h5 className="mb-3 mb-md-0">گەران بۆ کڕیارەکان</h5>
+                    <h5 className="mb-3 mb-md-0">گەران بۆ کاڵاکان</h5>
                     <div className="input-group news-input">
                         <input id='text' type="text" className="form-control" placeholder="بەرزترین نرخ بنوسە کە دەتوانیت بیبەخشی"
                             aria-label="Eneter Your price" aria-describedby="button-addon2" value={text} onChange={(e) => setText(e.target.value)} />

@@ -7,7 +7,7 @@ const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder , filterBy
     const [date, setDate] = useState('')
     return (
         <div className="mx-auto" style={{
-            width: 700 + 'px'
+            width: 100 + '%'
         }} ><div className="d-print-none">
                 <div className="container-fluid">
                     <div className="">
