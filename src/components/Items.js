@@ -70,7 +70,7 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
                                         "quantity": dana,
                                         "barcode": code,
                                         "price": price,
-                                        "addprice": add/100,
+                                        "addprice": add / 100,
                                         "group": group,
                                         "trader": tradeID
                                     })}>زیادکردن</button>
@@ -86,6 +86,8 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
             <div className="border border-5">
                 <div className="table-responsive-xl aling.center ">
                     <table className="table table-striped table-hover align-middle caption-top">
+                    <caption>مەوادەکان</caption>
+
                         <thead>
                             <tr>
                                 <th className="d-print-none">زنجیرە</th>

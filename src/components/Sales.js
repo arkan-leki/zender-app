@@ -7,7 +7,8 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
     const [date, setDate] = useState('')
 
     return (
-        <><div className="mx-auto" style={{ width: 100 + '%' 
+        <><div className="mx-auto" style={{
+            width: 100 + '%'
         }} >
             <div className="d-print-none">
                 <div className="container-fluid">
@@ -55,8 +56,8 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                     <tfoot>
                     </tfoot>
                 </table>
-                <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true'>
-                    <div className="modal-dialog">
+                <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true' width={100 + "%"}>
+                    <div className="modal-dialog modal-fullscreen">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">کڕیارەکان</h5>
@@ -67,14 +68,14 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                                 <div className="d-md-flex justify-content-between align-items-center">
                                     <h5 className="mb-3 mb-md-0">گەران بۆ کڕیارەکان</h5>
                                     <div className="input-group news-input">
-                                        <input id='text' type="text" className="form-control" placeholder="بەرزترین نرخ بنوسە کە دەتوانیت بیبەخشی"
+                                        <input id='text' type="text" className="form-control" placeholder=""
                                             aria-label="Eneter Your price" aria-describedby="button-addon2" value={text} onChange={(e) => setText(e.target.value)} />
                                         <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => search(text)}>گەڕان</button>
                                     </div>
                                 </div>
                             </div>
                             <div className="modal-body">
-                                <table className="table table-striped table-hover align-middle caption-top">
+                                <table className="table table-striped">
                                     <thead className="table-dark">
                                         <tr>
                                             <th scope="col">کاڵا</th>
@@ -95,7 +96,7 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                                                 <td>{people.region}</td>
                                                 <td>{people.owner_name}</td>
                                                 <td>{people.totallSell}</td>
-                                                <button className="btn btn-info" type="button" onClick={() => addForm({ "vendor": vendor, "group": group, "local": people.id })}>کڕین</button>
+                                                <td><button className="btn btn-info" type="button" onClick={() => addForm({ "vendor": vendor, "group": group, "local": people.id })}>کڕین</button></td>
                                             </tr>
                                         ))}
                                     </tbody>

@@ -14,6 +14,7 @@ import OrderHatu from './components/OrderHatu';
 import OrderForm from './components/OrderForm';
 import Items from './components/Items'
 import { Locals } from './components/Locals';
+import Trader from './components/Trader';
 // function App() {
 //   return (
 //     <div className="App">
@@ -46,7 +47,7 @@ const App = () => {
   const [groups, setGroups] = useState([])
   const [vendors, setVendors] = useState([])
   const [orders, setOrders] = useState([])
-  const [regions, setRegions] = useState('')
+  const [regions, setRegions] = useState([])
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
 
@@ -420,11 +421,83 @@ const App = () => {
     getGroups()
   }
 
+  const addLocal = async (post) => {
+    const res = await fetch('http://127.0.0.1:8000/local/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+
+      })
+
+    const getLocals = async () => {
+      const server = await fetchLocals()
+      setLocals(server)
+    }
+    getLocals()
+  }
+
+  const addRegion = async (post) => {
+    const res = await fetch('http://127.0.0.1:8000/region/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+
+      })
+
+    const getRegions = async () => {
+      const server = await fetchRegions()
+      setRegions(server)
+    }
+    getRegions()
+  }
+
+  const addTrade = async (post) => {
+    const res = await fetch('http://127.0.0.1:8000/trader/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+
+      })
+
+    const getTraders = async () => {
+      const server = await fetchTraders()
+      setTraders(server)
+    }
+    getTraders()
+  }
+
+  const addVendor = async (post) => {
+    const res = await fetch('http://127.0.0.1:8000/vendors/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+
+      })
+
+    const getVendors = async () => {
+      const server = await fetchVendors()
+      setVendors(server)
+    }
+    getVendors()
+  }
+
   return (
     <Router>
       <div className=''>
 
-        <Header addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} />
+        <Header regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
         <Route path='/order' exact render={(props) => (
           <>
             <OrderHatu filterBydate={filterBydate} orders={orders} group={groupId} traders={traders} search={search} addOrder={addOrder} />
@@ -433,7 +506,13 @@ const App = () => {
         />
         <Route path='/locals' exact render={(props) => (
           <>
-            <Locals locals={locals} group={groupId} regions={regions} />
+            <Locals locals={locals} group={groupId} regions={regions} addLocal={addLocal} addRegion={addRegion} />
+          </>
+        )}
+        />
+         <Route path='/traders' exact render={(props) => (
+          <>
+            <Trader traders={traders} group={groupId}  addTrade={addTrade}  />
           </>
         )}
         />
