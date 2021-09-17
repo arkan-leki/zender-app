@@ -258,7 +258,6 @@ const App = () => {
   }
 
   const search = async (text) => {
-    console.log(text);
     const server = await fetchLocals()
     setLocals(server)
     if (text != "") {
@@ -273,7 +272,6 @@ const App = () => {
 
 
   const itemFilter = async (text) => {
-    console.log(text);
     const server = await fetchItems()
     setItems(server)
     if (text != "") {
@@ -283,7 +281,6 @@ const App = () => {
           kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.group.toString().toLowerCase().includes(text.toString().toLowerCase())
       }))
-      console.log(items);
     }
 
   }
@@ -316,13 +313,15 @@ const App = () => {
   }
 
   const filterBydate = async (date) => {
-    if (date) {
+    if ((Boolean(date))) {
       setSales(sales.filter((sale) => (
         moment(new Date(sale.date)).format("yyyy-MM-DD") == date
       )))
-      setOrders(orders.filter((sale) => (
+      setOrders(orders.filter((orders) => (
         moment(new Date(orders.date)).format("yyyy-MM-DD") == date
       )))
+    }else{
+      getState()
     }
   }
 

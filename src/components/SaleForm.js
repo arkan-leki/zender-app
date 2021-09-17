@@ -66,7 +66,6 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                                 </tr>
                             </thead>
                             <tbody>
-                                {console.log(wasl.sell_detail)}
                                 {wasl.sell_detail.map((kala, index) => (
                                     <tr key={index}>
                                         <th hidden={true}>{summer += kala.quantity}</th>

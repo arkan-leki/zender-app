@@ -66,7 +66,6 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image, addtoLis
                                 </tr>
                             </thead>
                             <tbody>
-                                {console.log(order.order_detail)}
                                 {order.order_detail.map((kala, index) => (
                                     <tr key={index}>
                                         <th hidden={true}>{summer += kala.quantity}</th>

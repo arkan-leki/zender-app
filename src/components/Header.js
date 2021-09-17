@@ -49,7 +49,7 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                                         </li>
                                     ))}
                                     <li className="nav-item">
-                                        <a href="#add-group" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#group">
+                                        <a href="#add-group" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#group">
                                             +
                                         </a>
                                     </li>
@@ -68,7 +68,7 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                                         </li>
                                     ))}
                                     <li className="nav-item">
-                                        <a href="#add-vendor" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vendor">
+                                        <a href="#add-vendor" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#vendor">
                                             +
                                         </a>
                                     </li>
@@ -79,14 +79,14 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                 </div>
             </nav>
             {/* <!-- Modal --> */}
-            <div class="modal fade" id="group" tabindex="-1" aria-labelledby="group" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="group">زیادکردنی گرۆپ</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="group" tabIndex="-1" aria-labelledby="group" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="group">زیادکردنی گرۆپ</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <form action="">
                                 <label for="name" className="form-label">ناو</label>
                                 <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
@@ -94,9 +94,9 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                                 <input type="text" id="phone" className="form-control" aria-describedby="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">داخستن</button>
-                            <button type="button" class="btn btn-primary" onClick={() => addGroup({
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">داخستن</button>
+                            <button type="button" className="btn btn-primary" onClick={() => addGroup({
                                 "name": naw,
                                 "phone": phone
                             })}>خەزن</button>
@@ -104,35 +104,35 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="vendor" tabindex="-1" aria-labelledby="vendor" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="vendor">زیادکردنی مەندووب</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="vendor" tabIndex="-1" aria-labelledby="vendor" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="vendor">زیادکردنی مەندووب</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <form action="">
                                 <label for="name" className="form-label">ناو</label>
                                 <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
                                 <label for="phone" className="form-label">ژ.موبایل</label>
                                 <input type="text" id="phone" className="form-control" aria-describedby="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                                <select multiple={true}  class="form-select"  aria-label="multiple select example" name="regions" value={regs} onChange={(event) => setRegion(Array.from(event.target.selectedOptions, (item) => item.value))} >
+                                <select multiple={true}  className="form-select"  aria-label="multiple select example" name="regions" value={regs} onChange={(event) => setRegion(Array.from(event.target.selectedOptions, (item) => item.value))} >
                                     {regions ? regions.map((region,index) => (
                                         <option key={index} value={region.id} >{region.name}</option>
                                     )) : <></>}
                                 </select>
-                                <select class="form-select"  name="group" >
-                                    <option value="" selected={true}>گروپەکان</option>
+                                <select className="form-select"  name="group" >
+                                    <option value="">گروپەکان</option>
                                     {groups ? groups.map((g,index) => (
                                         <option key={index} value={gro} onClick={()=>setGro(g.id)}>{g.name}</option>
                                     )) : <></>}
                                 </select>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">داخستن</button>
-                            <button type="button" class="btn btn-primary" onClick={() => addVendor({
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">داخستن</button>
+                            <button type="button" className="btn btn-primary" onClick={() => addVendor({
                                 "name": naw,
                                 "phone": phone,
                                 "group": gro,
