@@ -13,7 +13,7 @@ const Trader = ({ group, addTrade ,traders }) => {
             <div className="d-print-none">
                 <div className="container-fluid">
                     <div className="row">
-                        {group != '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newTrade">وەسڵی نوێ</button> : <></>}
+                        {group !== '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newTrade">وەسڵی نوێ</button> : <></>}
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion }) => {
             <div className="d-print-none">
                 <div className="container-fluid">
                     <div className="row">
-                        {group != '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newLocal">وەسڵی نوێ</button> : <></>}
+                        {group !== '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newLocal">وەسڵی نوێ</button> : <></>}
                         <button className="btn btn-info col-md-2 m-1 " data-bs-toggle="modal" data-bs-target="#newRegion">زیادکردنی ناوچە</button>
                         <select className=" form-control  " aria-label="Default select example" onChange={(e) => setRegionID(e.target.value)}>
                             <option value="">ناوچەکان</option>

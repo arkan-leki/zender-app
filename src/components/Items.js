@@ -27,7 +27,7 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
                         </select>
                         <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filterItems(tradeID, text)}>گەڕان</button>
                     </div>
-                    {(group != "" & tradeID != "") ? <button className="btn btn-info d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#modal">نوێ</button> : <></>}
+                    {(group !== "" & tradeID !== "") ? <button className="btn btn-info d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#modal">نوێ</button> : <></>}
                     <div className="modal fade" id="modal" tabIndex="-1" aria-hidden='true'>
                         <div className="modal-dialog">
                             <div className="modal-content">

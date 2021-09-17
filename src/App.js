@@ -187,7 +187,7 @@ const App = () => {
 
       })
 
-    const data = res.json()
+    // const data = res.json()
     const getSales = async () => {
       const server = await fetchSales()
       setSales(server)
@@ -207,7 +207,7 @@ const App = () => {
 
       })
 
-    const data = res.json()
+    // const data = res.json()
     const getSales = async () => {
       const server = await fetchSales()
       setSales(server)
@@ -228,7 +228,7 @@ const App = () => {
 
       })
 
-    const data = res.json()
+    // const data = res.json()
     const getOrders = async () => {
       const server = await fetchOrders()
       setOrders(server)
@@ -248,7 +248,7 @@ const App = () => {
 
       })
 
-    const data = res.json()
+    // const data = res.json()
     const getSales = async () => {
       const server = await fetchSales()
       setSales(server)
@@ -260,7 +260,7 @@ const App = () => {
   const search = async (text) => {
     const server = await fetchLocals()
     setLocals(server)
-    if (text != "") {
+    if (text !== "") {
       setLocals(locals.filter((people) => {
         return people.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           people.region.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
@@ -274,7 +274,7 @@ const App = () => {
   const itemFilter = async (text) => {
     const server = await fetchItems()
     setItems(server)
-    if (text != "") {
+    if (text !== "") {
 
       setItems(items.filter((kala) => {
         return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
@@ -370,14 +370,14 @@ const App = () => {
   const filterItems = async (traderId, text) => {
     const server = await fetchItems()
     setItems(server)
-    if (text != "") {
+    if (text !== "") {
 
       setItems(items.filter((kala) => {
         return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
       }))
-    } else if (traderId != "") {
+    } else if (traderId !== "") {
       setItems(items.filter((kala) => {
         return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
