@@ -2,9 +2,12 @@ import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-do
 import * as moment from 'moment'
 import { useState } from 'react';
 
-const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image}) => {
+const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image }) => {
     const [text, setText] = useState('')
+    const [text2, setText2] = useState('')
+    const [checked, setChecked] = useState(true);
     const [DashText, setDashText] = useState('')
+    const [CodeText, setCodeText] = useState('')
     let { id } = useParams();
     let orderz = orders.filter((o) => o.id == id)
     let summer = 0
@@ -57,8 +60,8 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image}) => {
                                     <th >بڕ</th>
                                     <th>نرخی دانە</th>
                                     <th>کۆی</th>
-                                    {/* <th className="d-print-none">#</th>
-                                    <th className="d-print-none">#</th> */}
+                                    <th className="d-print-none">#</th>
+                                    <th className="d-print-none">#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,33 +71,35 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image}) => {
                                         <th hidden={true}>{summer += kala.quantity}</th>
                                         <th hidden={true}>{wights += kala.item_wightAll * kala.quantity}</th>
                                         <th hidden={true}>{summerprice += kala.total}</th>
-
-                                        <th scope="row">{kala.id}</th>
+                                        <th scope="row">{kala.item_code}</th>
                                         <th scope="row" >{kala.item}</th>
                                         <th >{kala.item_bag}</th>
                                         <th >{kala.quantity}</th>
                                         <th>{kala.price}$</th>
                                         <th >{kala.total}$</th>
-                                        {/* <th className="d-print-none">#</th>
-                                        <th className="d-print-none">#</th> */}
+                                        <th className="d-print-none">#</th>
+                                        <th className="d-print-none">#</th>
                                     </tr>
                                 ))}
                                 {carts.map((kala, index) => (
                                     <tr key={index}>
-                                        <th scope="row">{kala.id}</th>
+                                        {/* <th scope="row">{kala.id}</th> */}
+                                        <th scope="row">{kala.barcode}</th>
                                         <th scope="row" >{kala.name}</th>
-                                        <th scope="row">{kala.bag}</th>
                                         <th ><input className="form-control" id={kala.id} type="number" value={text} onChange={(e) => setText(e.target.value)} /></th>
-                                        <th >{text * kala.finalprice}$</th>
+                                        <th>{kala.price}</th>
+                                        <th ><input className="form-control" id={kala.id} type="number" value={text2} onChange={(e) => setText2(e.target.value)} /></th>
+                                        <th><input type="checkbox" name="nrx" id="nrx" defaultChecked={checked} onChange={() => setChecked(!checked)} /></th>
+                                        <th >{(text * text2).toFixed(2)}$ </th>
                                         <th>
                                             <div className="row p-3">
                                                 <button className="d-print-none btn btn-danger col" type="button" id="button-addon2" onClick={() => deleteEvent(kala.id)}>سڕینەوە</button>
                                                 <button className="d-print-none btn btn-info col" onClick={() => addGO({
                                                     "quantity": text,
-                                                    "price": kala.finalprice,
+                                                    "price": text2,
                                                     "order": order.id,
                                                     "item": kala.id
-                                                })}> خەزن </button>
+                                                }, { "price": checked ? text2 : kala.price })}> خەزن </button>
                                             </div>
                                         </th>
                                     </tr>
@@ -105,11 +110,11 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image}) => {
                     <div className="row">
                         <div className="col-4">
                             <p>پارەدان بە قەرز</p>
-                            <p>قەرزی پێشوو : {order.trader_mawe - order.totallint}$</p>
-                            <p>قەرزی ئێستا : {order.trader_mawe}$</p>
+                            <p>قەرزی پێشوو : {(order.trader_mawe - order.totallint).toFixed(2)}$</p>
+                            <p>قەرزی ئێستا : {(order.trader_mawe).toFixed(2)}$</p>
                         </div>
                         <div className="col-4">
-                            <p>                                    
+                            <p>
                                 <Link className="btn d-print-none btn-info" to={`/itemOrderlist/${+order.id}`}>زیادکردن</Link>
                             </p>
                             <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
@@ -129,13 +134,21 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image}) => {
                                     <button className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
-                                    <label htmlFor="">dashkan: </label>
-                                    <input type="number" placeholder={order.discount} value={DashText} onChange={(e) => setDashText(e.target.value)} />
+                                    <div className="form-item">
+                                        <label htmlFor="">داشکان: </label>
+                                        <input className="form-control" type="number" placeholder={order.discount} value={DashText} onChange={(e) => setDashText(e.target.value)} />
+                                    </div>
+                                    <div className="form-item">
+                                        <label htmlFor="">کۆدی پسولەی: </label>
+                                        <input className="form-control" type="number" placeholder={order.discount} value={CodeText} onChange={(e) => setCodeText(e.target.value)} />
+
+                                    </div>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-success" onClick={() => dashkan(order.id, {
                                         "discount": DashText,
-                                    })}>go</button>
+                                        "code": CodeText,
+                                    })}>خەزن</button>
                                 </div>
                             </div>
                         </div>

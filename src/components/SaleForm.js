@@ -88,7 +88,7 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                                         <th scope="row" >{kala.name}</th>
                                         <th scope="row">{kala.bag}</th>
                                         <th ><input className="form-control" id={kala.id} type="number" value={text} onChange={(e) => setText(e.target.value)} /></th>
-                                        <th >{text * kala.finalprice}$</th>
+                                        <th >{(text * kala.finalprice).toFixed(2)}$</th>
                                         <th>
                                             <div className="row p-3">
                                                 <button className="d-print-none btn btn-danger col" type="button" id="button-addon2" onClick={() => deleteEvent(kala.id)}>سڕینەوە</button>
@@ -142,13 +142,15 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                                     <button className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
-                                    <label htmlFor="">dashkan: </label>
-                                    <input type="number" placeholder={wasl.discount} value={DashText} onChange={(e) => setDashText(e.target.value)} />
+                                    <div className="form-item">
+                                        <label htmlFor="">داشکان: </label>
+                                        <input className="form-control" type="number" placeholder={wasl.discount} value={DashText} onChange={(e) => setDashText(e.target.value)} />
+                                    </div>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-success" onClick={() => dashkan(wasl.id, {
                                         "discount": DashText,
-                                    })}>go</button>
+                                    })}>خەزن</button>
                                 </div>
                             </div>
                         </div>

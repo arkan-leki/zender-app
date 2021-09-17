@@ -2,20 +2,20 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder}) => {
+const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder , filterBydate}) => {
     const [text, setText] = useState('')
     const [date, setDate] = useState('')
     return (
         <div className="mx-auto" style={{
             width: 700 + 'px'
-        }} ><div class="d-print-none">
-                <div class="container-fluid">
-                    <div class="">
+        }} ><div className="d-print-none">
+                <div className="container-fluid">
+                    <div className="">
                         {group != '' ? <button className=" m-1 col-md-4  btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button> : <></>}
                         <button className=" m-1 col-md-4 btn btn-info">بۆ</button>
-                        <div class="row">
-                            {/* <input class="col-md-8 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} /> */}
-                            {/* <button class="col-md-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date)}>گەڕان</button> */}
+                        <div className="row">
+                            <input className="col-md-8 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} />
+                            <button className="col-md-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date)}>گەڕان</button>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,8 @@ const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder}) => {
                             <th>جۆری مەواد</th>
                             <th>کۆی وەسڵ</th>
                             <th>داشکاندن</th>
-                            <th>کۆی پارە داواکراو</th>
+                            <th>کۆی داواکراو</th>
+                            <th>کۆی پارە قەرز</th>
                             <th>بەروار داخلکردن</th>
                         </tr>
                     </thead>
@@ -44,6 +45,7 @@ const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder}) => {
                                 <th>{order.totall}$</th>
                                 <th>{order.discount}$</th>
                                 <th>{order.totallint}$</th>
+                                <th>{order.trader_mawe}$</th>
                                 <td>{moment(new Date(order.date)).format("DD/MM/YYYY")}</td>
                             </tr>
                         ))}

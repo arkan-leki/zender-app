@@ -14,7 +14,7 @@ const Item = ({item,addtoList}) => {
                             <div className="card-image"></div>
                             <h5 className="card-title"> ناو {item.name} </h5>
                             <p className="card-text"><strong className="text-muted">{item.mawe}</strong> ماوە</p>
-                            <h3 className="card-text">نرخ {item.finalprice}$</h3>
+                            <h3 className="card-text">نرخ فرۆش {item.finalprice}$</h3> <h٤ className="card-text">نرخ {item.price}$</h٤>
                             {/* <Link to={`/mobile/${mobile.id}`} className="btn btn-primary">زیاتر بزانە</Link> */}
                         </div>
                     </div>

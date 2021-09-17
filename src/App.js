@@ -49,6 +49,7 @@ const App = () => {
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
 
+
   useEffect(() => {
     const getOrders = async () => {
       const server = await fetchOrders()
@@ -113,7 +114,7 @@ const App = () => {
   }
 
   const fetchTraders = async () => {
-    const res = await fetch('http://127.0.0.1:8000/trader/?format=json&group=' + groupId )
+    const res = await fetch('http://127.0.0.1:8000/trader/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
@@ -257,6 +258,23 @@ const App = () => {
 
   }
 
+
+  const itemFilter = async (text) => {
+    console.log(text);
+    const server = await fetchItems()
+    setItems(server)
+    if (text != "") {
+      
+      setItems(items.filter((kala) => {
+        return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          kala.group.toString().toLowerCase().includes(text.toString().toLowerCase())
+      }))
+      console.log(items);
+    }
+
+  }
+
   const getState = async () => {
     const server = await fetchOrders()
     setOrders(server)
@@ -264,8 +282,6 @@ const App = () => {
     setSales(server1)
     const server2 = await fetchItems()
     setItems(server2)
-    const server3 = await fetchGroups()
-    setGroups(server3)
     const server4 = await fetchTraders()
     setTraders(server4)
   }
@@ -274,6 +290,7 @@ const App = () => {
     setGroupID(id)
     setItems([])
     setSales([])
+    setTraders([])
     getState()
   }
 
@@ -286,16 +303,20 @@ const App = () => {
   }
 
   const filterBydate = async (date) => {
-    if (date)
+    if (date){
       setSales(sales.filter((sale) => (
         moment(new Date(sale.date)).format("yyyy-MM-DD") == date
       )))
-    else
-      getState()
+      setOrders(orders.filter((sale) => (
+        moment(new Date(orders.date)).format("yyyy-MM-DD") == date
+      )))
+    }
   }
 
+  
 
-  const addBuyEvent = async (kala) => {
+
+  const addBuyEvent = async (kala, price) => {
     const res = await fetch('http://127.0.0.1:8000/ordered/',
       {
         method: 'POST',
@@ -303,6 +324,15 @@ const App = () => {
           'Content-type': 'application/json'
         },
         body: JSON.stringify(kala)
+
+      })
+    const res2 = await fetch('http://127.0.0.1:8000/item/'+kala.item+"/",
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(price)
 
       })
 
@@ -325,13 +355,14 @@ const App = () => {
 
   }
 
+
   return (
     <Router>
       <div className=''>
         <Header vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} />
         <Route path='/order' exact render={(props) => (
           <>
-            <OrderHatu  orders={orders} group={groupId} traders={traders} search={search} addOrder={addOrder}/>
+            <OrderHatu filterBydate={filterBydate} orders={orders} group={groupId} traders={traders} search={search} addOrder={addOrder} />
           </>
         )}
         />
@@ -350,20 +381,20 @@ const App = () => {
 
         <Route path='/order/:id' exact render={(props) => (
           <>
-            <OrderForm group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent}/>
+            <OrderForm group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent} />
           </>
         )}
         />
         <Route path='/itemlist/:id' exact render={(props) => (
           <>
-            <ItemList url="form" items={items} addtoListEvent={addtoListEvent} />
+            <ItemList url="form" items={items} addtoListEvent={addtoListEvent} search={itemFilter}/>
           </>
         )}
         />
 
         <Route path='/itemOrderlist/:id' exact render={(props) => (
           <>
-            <ItemList url="order" items={items} addtoListEvent={addtoListEvent} />
+            <ItemList url="order" items={items} addtoListEvent={addtoListEvent} search={itemFilter}/>
           </>
         )}
         />
