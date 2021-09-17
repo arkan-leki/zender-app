@@ -95,7 +95,8 @@ const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder , filterBy
                         </div>
                     </div>
                 </div>
-            </div></div>
+            </div>
+        </div>
     )
 }
 

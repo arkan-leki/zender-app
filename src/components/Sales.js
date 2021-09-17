@@ -7,8 +7,7 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
     const [date, setDate] = useState('')
 
     return (
-        <><div className="mx-auto" style={{
-            width: 100 + '%'
+        <><div className="mx-auto" style={{ width: 100 + '%' 
         }} >
             <div className="d-print-none">
                 <div className="container-fluid">
@@ -56,7 +55,7 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                     <tfoot>
                     </tfoot>
                 </table>
-                <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true' width={100 + "%"}>
+                <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true' width={100+"%"}>
                     <div className="modal-dialog modal-fullscreen">
                         <div className="modal-content">
                             <div className="modal-header">

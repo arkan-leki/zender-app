@@ -5,9 +5,8 @@ import { useState } from 'react'
 import Sales from './components/Sales'
 import { useEffect } from 'react';
 // import {BrowserRouter,Route} from 'react-router-dom'
-import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
+import { BrowserRouter as Router,Route } from 'react-router-dom';
 import SaleForm from './components/SaleForm';
-import ItemList from './components/ItemList';
 import Header from './components/Header';
 import moment from 'moment';
 import OrderHatu from './components/OrderHatu';
@@ -124,7 +123,7 @@ const App = () => {
   }
 
   const fetchTraders = async () => {
-    const res = await fetch('http://127.0.0.1:8000/trader/?format=json&group=' + groupId)
+    const res = await fetch('http://127.0.0.1:8000/traders/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
@@ -530,27 +529,14 @@ const App = () => {
         />
         <Route path='/form/:id' exact render={(props) => (
           <>
-            <SaleForm image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
+            <SaleForm addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
           </>
         )}
         />
 
         <Route path='/order/:id' exact render={(props) => (
           <>
-            <OrderForm group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent} />
-          </>
-        )}
-        />
-        <Route path='/itemlist/:id' exact render={(props) => (
-          <>
-            <ItemList url="form" items={items} addtoListEvent={addtoListEvent} search={itemFilter} />
-          </>
-        )}
-        />
-
-        <Route path='/itemOrderlist/:id' exact render={(props) => (
-          <>
-            <ItemList url="order" items={items} addtoListEvent={addtoListEvent} search={itemFilter} />
+            <OrderForm items={items} addtoListEvent={addtoListEvent} search={itemFilter} group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent} />
           </>
         )}
         />

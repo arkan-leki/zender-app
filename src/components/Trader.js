@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React, { useState } from 'react'
 
 const Trader = ({ group, addTrade ,traders }) => {
@@ -25,6 +26,9 @@ const Trader = ({ group, addTrade ,traders }) => {
                             <th scope="col"> فرۆشگا</th>
                             <th scope="col">کۆد</th>
                             <th scope="col">قەرزی پێشوو</th>
+                            <th scope="col">قەرزی ماوە</th>
+                            <th scope="col"> دراوە</th>
+                            <th scope="col">بەروار </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,7 +38,10 @@ const Trader = ({ group, addTrade ,traders }) => {
                                 <td>{mob.name}</td>
                                 <td>{mob.code}</td>
                                 <td>{mob.exchange}$</td>
-                                {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
+                                <td>{mob.mawe}$</td>
+                                <td>{mob.totallLoan}$</td>
+                                <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
+                                <td></td>
                             </tr>
                         ))}
                     </tbody>

@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
 import * as moment from 'moment'
 import { useState } from "react/cjs/react.development"
+import Item from './Item';
 
-const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, image }) => {
+const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
     const [text, setText] = useState('')
     const [DashText, setDashText] = useState('')
 
@@ -12,7 +13,7 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
     let wights = 0.0
     let summerprice = 0
     return (
-        <div className="mx-auto border border-5 p-5" style={{ width: 700 + 'px' }}>
+        <div className="mx-auto border border-5 p-5" style={{ width: 100 + '%' }}>
             <div className="row border ">
                 <div className="col-4 ">
                     <h4>کۆمپانیایی زەندەر</h4>
@@ -123,9 +124,10 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                             <p>قەرزی ئێستا : {wasl.local_mawe}$</p>
                         </div>
                         <div className="col-4">
-                            <p><Link className="btn d-print-none btn-info" to={`/itemlist/${wasl.id}`}>زیادکردن</Link>
-                            </p>
-                            <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
+                            <p>
+                                <button className=" m-1 col-md-4  btn btn-success" data-bs-toggle="modal" data-bs-target="#newForm">زیادکردن</button>
+
+                            </p>                            <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
                             <p>عدد {summer} کارتۆن</p>
                         </div>
                         <div className="col-4">
@@ -156,6 +158,27 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                         </div>
                     </div></>
             ))}
+            <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true'>
+                <div className="modal-dialog modal-fullscreen">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">کۆمپانیاکان</h5>
+                            <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <h1 className="align-left">items</h1>
+                            <div className="row row-cols-1 row-cols-md-4 text-center g-4">
+                                {items.map((item, index) => (
+                                    <Item key={index} item={item} addtoList={addtoListEvent} />
+                                )
+                                )}
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     )

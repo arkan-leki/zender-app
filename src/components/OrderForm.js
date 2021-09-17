@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
 import * as moment from 'moment'
 import { useState } from 'react';
+import Item from './Item';
 
-const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image }) => {
+const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image, addtoListEvent , items}) => {
     const [text, setText] = useState('')
     const [text2, setText2] = useState('')
     const [checked, setChecked] = useState(true);
@@ -115,7 +116,9 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image }) => {
                         </div>
                         <div className="col-4">
                             <p>
-                                <Link className="btn d-print-none btn-info" to={`/itemOrderlist/${+order.id}`}>زیادکردن</Link>
+                                {/* <Link className="btn d-print-none btn-info" to={`/itemOrderlist/${+order.id}`}>زیادکردن</Link> */}
+                                <button className=" m-1 col-md-4  btn btn-success" data-bs-toggle="modal" data-bs-target="#newForm">زیادکردن</button>
+
                             </p>
                             <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
                             <p>عدد {summer} کارتۆن</p>
@@ -154,6 +157,30 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image }) => {
                         </div>
                     </div></>
             ))}
+        <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true'>
+            <div className="modal-dialog modal-fullscreen">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">کۆمپانیاکان</h5>
+                        <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+                   
+                    <div className="modal-body">
+                        {/* <Link to={`/${url}/${id}`}><button className="btn btn-danger">go back</button></Link> */}
+                        <h1 className="align-left">items</h1>
+                        <div className="row row-cols-1 row-cols-md-4 text-center g-4">
+                            {items.map((item, index) => (
+                                <Item key={index} item={item} addtoList={addtoListEvent} />
+                            )
+                            )}
+                        </div>
+                    </div>
+                    <div className="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         </div>
     )

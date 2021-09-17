@@ -5,6 +5,8 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
     const [naw, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [regs, setRegion] = useState([])
+    const [gro, setGro] = useState('')
+
 
 
     return (
@@ -47,7 +49,7 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                                         </li>
                                     ))}
                                     <li className="nav-item">
-                                        <a href="#add-vendor" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#group">
+                                        <a href="#add-group" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#group">
                                             +
                                         </a>
                                     </li>
@@ -66,7 +68,7 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                                         </li>
                                     ))}
                                     <li className="nav-item">
-                                        <a href="#add-group" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vendor">
+                                        <a href="#add-vendor" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vendor">
                                             +
                                         </a>
                                     </li>
@@ -116,8 +118,14 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                                 <label for="phone" className="form-label">ژ.موبایل</label>
                                 <input type="text" id="phone" className="form-control" aria-describedby="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                                 <select multiple={true}  class="form-select"  aria-label="multiple select example" name="regions" value={regs} onChange={(event) => setRegion(Array.from(event.target.selectedOptions, (item) => item.value))} >
-                                    {regions ? regions.map((region) => (
-                                        <option value={region.id} >{region.name}</option>
+                                    {regions ? regions.map((region,index) => (
+                                        <option key={index} value={region.id} >{region.name}</option>
+                                    )) : <></>}
+                                </select>
+                                <select class="form-select"  name="group" >
+                                    <option value="" selected={true}>گروپەکان</option>
+                                    {groups ? groups.map((g,index) => (
+                                        <option key={index} value={gro} onClick={()=>setGro(g.id)}>{g.name}</option>
                                     )) : <></>}
                                 </select>
                             </form>
@@ -127,7 +135,7 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                             <button type="button" class="btn btn-primary" onClick={() => addVendor({
                                 "name": naw,
                                 "phone": phone,
-                                "group": group,
+                                "group": gro,
                                 "regions": regs
                             })}>خەزن</button>
                         </div>
