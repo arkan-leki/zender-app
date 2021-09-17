@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const Locals = ({ locals, group, addLocal, regions, addRegion }) => {
+export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) => {
     const [naw, setName] = useState('')
     const [code, setCode] = useState('')
     const [address, setAddress] = useState('')
@@ -8,7 +8,8 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion }) => {
     const [owner, setOwner] = useState('')
     const [exchange, setExchange] = useState('')
     const [regionID, setRegionID] = useState('')
-
+    const [loan, setLoan] = useState('')
+    const [income, setIncome] = useState('')
     return (
         <><div className="mx-auto" style={{
             width: 100 + '%'
@@ -18,12 +19,7 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion }) => {
                     <div className="row">
                         {group !== '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newLocal">وەسڵی نوێ</button> : <></>}
                         <button className="btn btn-info col-md-2 m-1 " data-bs-toggle="modal" data-bs-target="#newRegion">زیادکردنی ناوچە</button>
-                        <select className=" form-control  " aria-label="Default select example" onChange={(e) => setRegionID(e.target.value)}>
-                            <option value="">ناوچەکان</option>
-                            {regions ? regions.map((region) => (
-                                <option key={region.id} value={region.id} >{region.name}</option>
-                            )) : <></>}
-                        </select>
+
                     </div>
                 </div>
             </div>
@@ -43,6 +39,7 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion }) => {
                             <th scope="col">کۆی کڕین</th>
                             <th scope="col">قەرز</th>
                             <th scope="col">کۆی دراو</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,11 +56,46 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion }) => {
                                 <td>{mob.totallSell}$</td>
                                 <td>{mob.mawe}$</td>
                                 <td>{mob.totallPay}$</td>
+                                <td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay">پارەدان</button></td>
                                 {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
+                                <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title">فۆرمی پارەدان</h5>
+                                                <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <form >
+                                                    <label for="income" className="form-label">بری پارە</label>
+                                                    <input type="number" id="income" className="form-control" aria-describedby="income" value={income} onChange={(e) => setIncome(e.target.value)} />
+                                                    <label for="loan" className="form-label">گەڕاوە </label>
+                                                    <input type="number" id="loan" className="form-control" aria-describedby="loan" value={loan} onChange={(e) => setLoan(e.target.value)} />
+                                                    <button className="btn btn-info" type="button" onClick={() => addpay(
+                                                        {
+                                                            "group": group,
+                                                            "local": mob.id,
+                                                            "bank": null
+                                                        },
+                                                        {
+                                                            "income": income,
+                                                            "loan": loan
+                                                        }
+                                                    )}
+                                                    >کڕین</button>
+                                                </form>
+                                            </div>
+                                            <div className="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </tr>
+
                         ))}
                     </tbody>
                     <tfoot>
+
                     </tfoot>
                 </table>
                 <div className="modal fade" id="newLocal" tabIndex="-1" aria-hidden='true'>
@@ -87,6 +119,12 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion }) => {
                                     <input type="text" id="owner" className="form-control" aria-describedby="owner" value={owner} onChange={(e) => setOwner(e.target.value)} />
                                     <label for="loan" className="form-label">قەرزی کۆن</label>
                                     <input type="number" id="loan" className="form-control" aria-describedby="loan" value={exchange} onChange={(e) => setExchange(e.target.value)} />
+                                    <select className=" form-control  " aria-label="Default select example" >
+                                        <option value="">ناوچەکان</option>
+                                        {regions ? regions.map((region) => (
+                                            <option key={region.id} value={regionID} onClick={(e) => setRegionID(region.id)}>{region.name}</option>
+                                        )) : <></>}
+                                    </select>
                                     <button className="btn btn-info" type="button" onClick={() => addLocal(
                                         {
                                             "name": naw,

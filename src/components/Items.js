@@ -19,13 +19,13 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
                         <input id='text' type="text" className="form-control" placeholder=""
                             aria-label="Eneter Your price" aria-describedby="button-addon2" value={text} onChange={(e) => setText(e.target.value)} />
 
-                        <select className=" form-control " aria-label="Default select example" onChange={(e) => setTradeID(e.target.value)}>
-                            <option value="">کۆمپانیا</option>
+                        <select className=" form-control " aria-label="Default select example" >
+                            <option value={tradeID} onClick={()=>setTradeID("")}>کۆمپانیا</option>
                             {traders.map((trader) => (
-                                <option key={trader.id} value={trader.id} >{trader.name}</option>
+                                <option key={trader.id} value={tradeID} onClick={(e) => setTradeID(trader)} >{trader.name}</option>
                             ))}
                         </select>
-                        <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filterItems(tradeID, text)}>گەڕان</button>
+                        <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filterItems(tradeID.name, text)}>گەڕان</button>
                     </div>
                     {(group !== "" & tradeID !== "") ? <button className="btn btn-info d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#modal">نوێ</button> : <></>}
                     <div className="modal fade" id="modal" tabIndex="-1" aria-hidden='true'>
@@ -72,7 +72,7 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
                                         "price": price,
                                         "addprice": add / 100,
                                         "group": group,
-                                        "trader": tradeID
+                                        "trader": tradeID.id
                                     })}>زیادکردن</button>
 
                                 </div>

@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Sales from './components/Sales'
 import { useEffect } from 'react';
 // import {BrowserRouter,Route} from 'react-router-dom'
-import { BrowserRouter as Router,Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import SaleForm from './components/SaleForm';
 import Header from './components/Header';
 import moment from 'moment';
@@ -320,7 +320,7 @@ const App = () => {
       setOrders(orders.filter((orders) => (
         moment(new Date(orders.date)).format("yyyy-MM-DD") == date
       )))
-    }else{
+    } else {
       getState()
     }
   }
@@ -368,21 +368,27 @@ const App = () => {
   }
 
   const filterItems = async (traderId, text) => {
-    const server = await fetchItems()
-    setItems(server)
-    if (text !== "") {
 
+    console.log(Boolean(traderId));
+
+    if (traderId && text) {
+      setItems(items.filter((kala) => {
+        return kala.trader.toString().toLowerCase().includes(traderId.toString().toLowerCase()) && (kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()))
+      }))
+    } else if (traderId) {
+      setItems(items.filter((kala) => {
+        return kala.trader.toString().toLowerCase().includes(traderId.toString().toLowerCase())
+      }))
+    } else if (text) {
       setItems(items.filter((kala) => {
         return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
       }))
-    } else if (traderId !== "") {
-      setItems(items.filter((kala) => {
-        return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-          kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-          kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
-      }))
+    } else {
+      const server = await fetchItems()
+      setItems(server)
     }
   }
 
@@ -491,6 +497,36 @@ const App = () => {
     getVendors()
   }
 
+  const addpay = async (pay, bank) => {
+    const res = await fetch('http://127.0.0.1:8000/bank/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(bank)
+
+      })
+
+    const data = res.json()
+    data.then(async(d) => {
+      console.log(d.id)
+      await fetch('http://127.0.0.1:8000/payment/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            "group": pay.group,
+            "local": pay.local,
+            "bank": d.id
+          })
+        })
+    })
+
+  }
+
   return (
     <Router>
       <div className=''>
@@ -504,13 +540,13 @@ const App = () => {
         />
         <Route path='/locals' exact render={(props) => (
           <>
-            <Locals locals={locals} group={groupId} regions={regions} addLocal={addLocal} addRegion={addRegion} />
+            <Locals addpay={addpay} locals={locals} group={groupId} regions={regions} addLocal={addLocal} addRegion={addRegion} />
           </>
         )}
         />
-         <Route path='/traders' exact render={(props) => (
+        <Route path='/traders' exact render={(props) => (
           <>
-            <Trader traders={traders} group={groupId}  addTrade={addTrade}  />
+            <Trader traders={traders} group={groupId} addTrade={addTrade} />
           </>
         )}
         />
