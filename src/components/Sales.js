@@ -12,11 +12,11 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
             <div className="d-print-none">
                 <div className="container-fluid">
                     <div className="">
-                        {group != '' ? <button className=" m-1 col-md-4  btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button> : <></>}
-                        <button className=" m-1 col-md-4 btn btn-info">بۆ</button>
+                        {group != '' ? <button className=" m-1 col-md-2  btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button> : <></>}
+                        <button className=" m-1 col-md-2 btn btn-success">زیادکردنی کڕیار</button>
                         <div className="row">
-                            <input className="col-md-8 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} />
-                            <button className="col-md-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date)}>گەڕان</button>
+                            <input className="col-md-4 m-4 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} />
+                            <button className="col-md-2 m-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date)}>گەڕان</button>
                         </div>
                     </div>
                 </div>

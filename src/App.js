@@ -13,6 +13,7 @@ import moment from 'moment';
 import OrderHatu from './components/OrderHatu';
 import OrderForm from './components/OrderForm';
 import Items from './components/Items'
+import { Locals } from './components/Locals';
 // function App() {
 //   return (
 //     <div className="App">
@@ -45,7 +46,7 @@ const App = () => {
   const [groups, setGroups] = useState([])
   const [vendors, setVendors] = useState([])
   const [orders, setOrders] = useState([])
-
+  const [regions, setRegions] = useState('')
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
 
@@ -72,6 +73,14 @@ const App = () => {
       setVendors(server)
     }
     getVendors()
+  }, [])
+
+  useEffect(() => {
+    const getRegions = async () => {
+      const server = await fetchRegions()
+      setRegions(server)
+    }
+    getRegions()
   }, [])
 
 
@@ -150,7 +159,11 @@ const App = () => {
     return data
   }
 
-
+  const fetchRegions = async () => {
+    const res = await fetch('http://127.0.0.1:8000/region/?format=json')
+    const data = await res.json()
+    return data
+  }
 
 
   const addtoListEvent = (item) => {
@@ -264,7 +277,7 @@ const App = () => {
     const server = await fetchItems()
     setItems(server)
     if (text != "") {
-      
+
       setItems(items.filter((kala) => {
         return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
@@ -303,7 +316,7 @@ const App = () => {
   }
 
   const filterBydate = async (date) => {
-    if (date){
+    if (date) {
       setSales(sales.filter((sale) => (
         moment(new Date(sale.date)).format("yyyy-MM-DD") == date
       )))
@@ -313,7 +326,7 @@ const App = () => {
     }
   }
 
-  
+
 
 
   const addBuyEvent = async (kala, price) => {
@@ -326,7 +339,7 @@ const App = () => {
         body: JSON.stringify(kala)
 
       })
-    const res2 = await fetch('http://127.0.0.1:8000/item/'+kala.item+"/",
+    const res2 = await fetch('http://127.0.0.1:8000/item/' + kala.item + "/",
       {
         method: 'PATCH',
         headers: {
@@ -359,13 +372,13 @@ const App = () => {
     const server = await fetchItems()
     setItems(server)
     if (text != "") {
-      
+
       setItems(items.filter((kala) => {
         return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
       }))
-    }else if (traderId != "") {
+    } else if (traderId != "") {
       setItems(items.filter((kala) => {
         return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
@@ -389,20 +402,44 @@ const App = () => {
 
   }
 
+  const addGroupEvent = async (post) => {
+    const res = await fetch('http://127.0.0.1:8000/group/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+
+      })
+
+    const getGroups = async () => {
+      const server = await fetchGroups()
+      setGroups(server)
+    }
+    getGroups()
+  }
+
   return (
     <Router>
       <div className=''>
 
-        <Header vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} />
+        <Header addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} />
         <Route path='/order' exact render={(props) => (
           <>
             <OrderHatu filterBydate={filterBydate} orders={orders} group={groupId} traders={traders} search={search} addOrder={addOrder} />
           </>
         )}
         />
+        <Route path='/locals' exact render={(props) => (
+          <>
+            <Locals locals={locals} group={groupId} regions={regions} />
+          </>
+        )}
+        />
         <Route path='/items' exact render={(props) => (
           <>
-            <Items items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost}/>
+            <Items items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} />
           </>
         )}
         />
@@ -427,14 +464,14 @@ const App = () => {
         />
         <Route path='/itemlist/:id' exact render={(props) => (
           <>
-            <ItemList url="form" items={items} addtoListEvent={addtoListEvent} search={itemFilter}/>
+            <ItemList url="form" items={items} addtoListEvent={addtoListEvent} search={itemFilter} />
           </>
         )}
         />
 
         <Route path='/itemOrderlist/:id' exact render={(props) => (
           <>
-            <ItemList url="order" items={items} addtoListEvent={addtoListEvent} search={itemFilter}/>
+            <ItemList url="order" items={items} addtoListEvent={addtoListEvent} search={itemFilter} />
           </>
         )}
         />
