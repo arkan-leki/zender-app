@@ -525,6 +525,64 @@ const App = () => {
         })
     })
 
+    const getLocals = async () => {
+      const server = await fetchLocals()
+      setLocals(server)
+    }
+    getLocals()
+  }
+
+  const addPayLoan = async (pay, bank) => {
+    const res = await fetch('http://127.0.0.1:8000/bank/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(bank)
+
+      })
+
+    const data = res.json()
+    data.then(async(d) => {
+      console.log(d.id)
+      await fetch('http://127.0.0.1:8000/payloan/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            "group": pay.group,
+            "trader": pay.trader,
+            "bank": d.id
+          })
+        })
+    })
+    const get = async () => {
+      const server = await fetchTraders()
+      setTraders(server)
+    }
+    get()
+  }
+
+  const addReSell = async (resell) => {
+    const res = await fetch('http://127.0.0.1:8000/resell/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(resell)
+
+      })
+
+    // const data = res.json()
+    const get = async () => {
+      const server = await fetchSales()
+      setSales(server)
+    }
+    get()
   }
 
   return (
@@ -546,7 +604,7 @@ const App = () => {
         />
         <Route path='/traders' exact render={(props) => (
           <>
-            <Trader traders={traders} group={groupId} addTrade={addTrade} />
+            <Trader traders={traders} group={groupId} addTrade={addTrade} addPayLoan = {addPayLoan}/>
           </>
         )}
         />
@@ -558,7 +616,7 @@ const App = () => {
         />
         <Route path='/forms' exact render={(props) => (
           <>
-            <Sales filterBydate={filterBydate} vendor={vendorId} group={groupId} search={search} locals={locals} sales={sales} addForm={addForm} />
+            <Sales addReSell={addReSell} items={items} filterBydate={filterBydate} vendor={vendorId} group={groupId} search={search} locals={locals} sales={sales} addForm={addForm} />
           </>
         )}
         />

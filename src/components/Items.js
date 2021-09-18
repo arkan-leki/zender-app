@@ -10,6 +10,8 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
     const [code, setCode] = useState('')
     const [price, setPrice] = useState('')
     const [add, setAdd] = useState('')
+    const [stock, setStock] = useState('')
+
     return (
         <section className="mx-auto" style={{ width: 100 + '%' }} id="items">
             <div className="container d-print-none p-5">
@@ -56,6 +58,9 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
 
                                         <label for="add" className="form-label">دێژەی قازانج</label>
                                         <input type="number" id="add" className="form-control" aria-describedby="add" value={add} onChange={(e) => setAdd(e.target.value)} />
+                                        
+                                        <label for="add" className="form-label">مانەوەی یەکەمجار</label>
+                                        <input type="number" id="add" className="form-control" aria-describedby="add" value={stock} onChange={(e) => setStock(e.target.value)} />
 
                                         <label for="barcode" className="form-label">بارکۆد</label>
                                         <input type="text" id="barcode" className="form-control" aria-describedby="barcode" value={code} onChange={(e) => setCode(e.target.value)} />
@@ -72,7 +77,8 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
                                         "price": price,
                                         "addprice": add / 100,
                                         "group": group,
-                                        "trader": tradeID.id
+                                        "trader": tradeID.id,
+                                        "stock": stock,
                                     })}>زیادکردن</button>
 
                                 </div>

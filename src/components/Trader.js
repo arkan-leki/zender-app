@@ -1,10 +1,12 @@
 import moment from 'moment'
 import React, { useState } from 'react'
 
-const Trader = ({ group, addTrade ,traders }) => {
+const Trader = ({ group, addTrade, traders, addPayLoan }) => {
     const [naw, setName] = useState('')
     const [code, setCode] = useState('')
-    const [exchange, setExchange] = useState('')
+    const [exchange, setExchange] = useState(0)
+    const [loan, setLoan] = useState(0)
+    const [income, setIncome] = useState(0)
 
     return (
         <><div className="mx-auto" style={{
@@ -13,7 +15,7 @@ const Trader = ({ group, addTrade ,traders }) => {
             <div className="d-print-none">
                 <div className="container-fluid">
                     <div className="row">
-                        {group !== '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newTrade">وەسڵی نوێ</button> : <></>}
+                        {group !== '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newTrade">کۆمپانیایی نوێ</button> : <></>}
                     </div>
                 </div>
             </div>
@@ -23,7 +25,7 @@ const Trader = ({ group, addTrade ,traders }) => {
                     <thead>
                         <tr>
                             <th scope="col"> زنجیرە</th>
-                            <th scope="col"> فرۆشگا</th>
+                            <th scope="col"> هۆمپانیا</th>
                             <th scope="col">کۆد</th>
                             <th scope="col">قەرزی پێشوو</th>
                             <th scope="col">قەرزی ماوە</th>
@@ -41,7 +43,41 @@ const Trader = ({ group, addTrade ,traders }) => {
                                 <td>{mob.mawe}$</td>
                                 <td>{mob.totallLoan}$</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
-                                <td></td>
+                                <td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay">پارەدان</button></td>
+                                {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
+                                <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title">فۆرمی پارەدان</h5>
+                                                <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <form >
+                                                    <label for="income" className="form-label">بری پارە داروە</label>
+                                                    <input type="number" id="income" className="form-control" aria-describedby="income" value={income} onChange={(e) => setIncome(e.target.value)} />
+                                                    <label for="loan" className="form-label">گەڕاوە </label>
+                                                    <input type="number" id="loan" className="form-control" aria-describedby="loan" value={loan} onChange={(e) => setLoan(e.target.value)} />
+                                                    <button className="btn btn-info" type="button" onClick={() => addPayLoan(
+                                                        {
+                                                            "group": group,
+                                                            "trader": mob.id,
+                                                            "bank": null
+                                                        },
+                                                        {
+                                                            "income": loan,
+                                                            "loan": income
+                                                        }
+                                                    )}
+                                                    >کڕین</button>
+                                                </form>
+                                            </div>
+                                            <div className="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </tr>
                         ))}
                     </tbody>

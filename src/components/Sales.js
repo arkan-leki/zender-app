@@ -2,12 +2,14 @@ import { useState } from "react/cjs/react.development"
 import * as moment from 'moment'
 import { Link } from 'react-router-dom'
 
-const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) => {
+const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, items, addReSell }) => {
     const [text, setText] = useState('')
     const [date, setDate] = useState('')
+    const [dana, setDana] = useState(0)
 
     return (
-        <><div className="mx-auto" style={{ width: 100 + '%' 
+        <><div className="mx-auto" style={{
+            width: 100 + '%'
         }} >
             <div className="d-print-none">
                 <div className="container-fluid">
@@ -33,8 +35,10 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                             <th scope="col">کۆی وەسل</th>
                             <th scope="col">کۆی داشکان</th>
                             <th scope="col">کۆتا</th>
+                            <th scope="col">کۆی گەڕاوە</th>
                             <th scope="col">بەروار</th>
-                            {/* <th scope="col">Action</th> */}
+                            <th className="d-print-none">Action</th>
+                            <th className="d-print-none">رێکەوت</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,15 +51,53 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate }) 
                                 <td>{mob.totall}$</td>
                                 <td>{mob.discount}$</td>
                                 <td>{mob.totallint}$</td>
+                                <td>{mob.totalback}$</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
-                                {/* <td><button className="btn btn-info">Open</button></td> */}
+                                <td className="d-print-none"><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#resell">گەڕانەوە لەفرۆش</button></td>
+                                <td className="d-print-none">{moment(new Date(mob.datetime)).format("DD/MM/YYYY HH:MM:SS")}</td>
+                                <div className="modal fade" id="resell" tabIndex="-1" aria-hidden='true'>
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title">گەڕانەوە لەفرۆش</h5>
+                                                <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <form >
+                                                    <table className="table table-striped">
+                                                        <thead className="table-dark">
+                                                            <tr>
+                                                                <th scope="col">کاڵا</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {items.map((item, index) => (
+                                                                <tr key={index}>
+                                                                    <td scope="row">{item.name}</td>
+                                                                    <td>{item.barcode}</td>
+                                                                    <td>{item.price}</td>
+                                                                    <td><input type="number" name="dana" id="dana" value={dana} onChange={(e) => setDana(e.target.value)} /></td>
+                                                                    <td><button className="btn btn-info" type="button" onClick={() => addReSell({ "quantity": dana, "price": item.price, "sell": mob.id, "item": item.id })}>گەڕانەوە</button></td>
+                                                                </tr>
+
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+
+                                                </form>
+                                            </div>
+                                            <div className="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </tr>
                         ))}
                     </tbody>
                     <tfoot>
                     </tfoot>
                 </table>
-                <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true' width={100+"%"}>
+                <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true' width={100 + "%"}>
                     <div className="modal-dialog modal-fullscreen">
                         <div className="modal-content">
                             <div className="modal-header">
