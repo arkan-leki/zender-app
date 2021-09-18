@@ -10,6 +10,8 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) 
     const [regionID, setRegionID] = useState('')
     const [loan, setLoan] = useState('')
     const [income, setIncome] = useState('')
+    const [id, setId] = useState('')
+
     return (
         <><div className="mx-auto" style={{
             width: 100 + '%'
@@ -17,7 +19,7 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) 
             <div className="d-print-none">
                 <div className="container-fluid">
                     <div className="row">
-                        {group !== '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newLocal">وەسڵی نوێ</button> : <></>}
+                        <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newLocal">کڕیاری نوێ</button>
                         <button className="btn btn-info col-md-2 m-1 " data-bs-toggle="modal" data-bs-target="#newRegion">زیادکردنی ناوچە</button>
 
                     </div>
@@ -56,7 +58,7 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) 
                                 <td>{mob.totallSell}$</td>
                                 <td>{mob.mawe}$</td>
                                 <td>{mob.totallPay}$</td>
-                                <td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay">پارەدان</button></td>
+                                {group?<td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay" onClick={()=>setId(mob.id)}>پارەدان</button></td>:<></>}
                                 {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
                                 <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
                                     <div className="modal-dialog">
@@ -71,18 +73,19 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) 
                                                     <input type="number" id="income" className="form-control" aria-describedby="income" value={income} onChange={(e) => setIncome(e.target.value)} />
                                                     <label for="loan" className="form-label">گەڕاوە </label>
                                                     <input type="number" id="loan" className="form-control" aria-describedby="loan" value={loan} onChange={(e) => setLoan(e.target.value)} />
-                                                    <button className="btn btn-info" type="button" onClick={() => addpay(
+                                                    <button  className="btn btn-info" type="button" onClick={() => addpay(
                                                         {
                                                             "group": group,
-                                                            "local": mob.id,
+                                                            "local": id,
                                                             "bank": null
                                                         },
                                                         {
+                                                            "group": group,
                                                             "income": income,
                                                             "loan": loan
                                                         }
                                                     )}
-                                                    >کڕین</button>
+                                                    >وەرگرتن</button>
                                                 </form>
                                             </div>
                                             <div className="modal-footer">

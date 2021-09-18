@@ -7,6 +7,7 @@ const Trader = ({ group, addTrade, traders, addPayLoan }) => {
     const [exchange, setExchange] = useState(0)
     const [loan, setLoan] = useState(0)
     const [income, setIncome] = useState(0)
+    const [id, setId] = useState('')
 
     return (
         <><div className="mx-auto" style={{
@@ -27,9 +28,10 @@ const Trader = ({ group, addTrade, traders, addPayLoan }) => {
                             <th scope="col"> زنجیرە</th>
                             <th scope="col"> هۆمپانیا</th>
                             <th scope="col">کۆد</th>
-                            <th scope="col">قەرزی پێشوو</th>
-                            <th scope="col">قەرزی ماوە</th>
+                            <th scope="col">قەرزی یەکەم جار</th>
+                            <th scope="col">کۆۆی کڕین</th>
                             <th scope="col"> دراوە</th>
+                            <th scope="col">قەرزی ماوە</th>
                             <th scope="col">بەروار </th>
                         </tr>
                     </thead>
@@ -40,10 +42,11 @@ const Trader = ({ group, addTrade, traders, addPayLoan }) => {
                                 <td>{mob.name}</td>
                                 <td>{mob.code}</td>
                                 <td>{mob.exchange}$</td>
-                                <td>{mob.mawe}$</td>
+                                <td>{mob.totallBuy}$</td>
                                 <td>{mob.totallLoan}$</td>
+                                <td>{mob.mawe}$</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
-                                <td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay">پارەدان</button></td>
+                                {group?<td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay"  onClick={()=>setId(mob.id)}>پارەدان</button></td>:<></>}
                                 {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
                                 <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
                                     <div className="modal-dialog">
@@ -61,10 +64,11 @@ const Trader = ({ group, addTrade, traders, addPayLoan }) => {
                                                     <button className="btn btn-info" type="button" onClick={() => addPayLoan(
                                                         {
                                                             "group": group,
-                                                            "trader": mob.id,
+                                                            "trader": id,
                                                             "bank": null
                                                         },
                                                         {
+                                                            "group": group,
                                                             "income": loan,
                                                             "loan": income
                                                         }

@@ -2,10 +2,14 @@ import { useState } from "react/cjs/react.development"
 import * as moment from 'moment'
 import { Link } from 'react-router-dom'
 
-const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, items, addReSell }) => {
+const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, addReSell }) => {
     const [text, setText] = useState('')
     const [date, setDate] = useState('')
     const [dana, setDana] = useState(0)
+    const [items, setItems] = useState([])
+    const [localID, setlocalID] = useState('')
+    let summer  = Object.values(sales).reduce((r, { totallint }) => r + parseFloat(totallint), 0);
+
 
     return (
         <><div className="mx-auto" style={{
@@ -14,12 +18,18 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, it
             <div className="d-print-none">
                 <div className="container-fluid">
                     <div className="">
-                        {group !== '' ? <button className=" m-1 col-md-2  btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button> : <></>}
+                        {group !== '' && vendor != '' ? <button className=" m-1 col-md-2  btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button> : <></>}
                         <button className=" m-1 col-md-2 btn btn-success">زیادکردنی کڕیار</button>
                         <div className="row">
                             <input className="col-md-4 m-4 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} />
-                            <button className="col-md-2 m-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date)}>گەڕان</button>
+                            <button className="col-md-2 m-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date,localID)}>گەڕان</button>
                         </div>
+                        <select className=" form-control " aria-label="Default select example" >
+                            <option value={localID} onClick={()=>setlocalID("")}>کۆمپانیا</option>
+                            {locals.map((trader) => (
+                                <option key={trader.id} value={localID} onClick={(e) => setlocalID(trader.id)} >{trader.name}</option>
+                            ))}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -53,7 +63,9 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, it
                                 <td>{mob.totallint}$</td>
                                 <td>{mob.totalback}$</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
-                                <td className="d-print-none"><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#resell">گەڕانەوە لەفرۆش</button></td>
+                                <td className="d-print-none"><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#resell" onClick={()=>
+                                    setItems(mob.sell_detail)
+                                }>گەڕانەوە لەفرۆش</button></td>
                                 <td className="d-print-none">{moment(new Date(mob.datetime)).format("DD/MM/YYYY HH:MM:SS")}</td>
                                 <div className="modal fade" id="resell" tabIndex="-1" aria-hidden='true'>
                                     <div className="modal-dialog">
@@ -71,13 +83,14 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, it
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            
                                                             {items.map((item, index) => (
                                                                 <tr key={index}>
-                                                                    <td scope="row">{item.name}</td>
-                                                                    <td>{item.barcode}</td>
+                                                                    <td scope="row">{item.item}</td>
+                                                                    <td>{item.item_code}</td>
                                                                     <td>{item.price}</td>
                                                                     <td><input type="number" name="dana" id="dana" value={dana} onChange={(e) => setDana(e.target.value)} /></td>
-                                                                    <td><button className="btn btn-info" type="button" onClick={() => addReSell({ "quantity": dana, "price": item.price, "sell": mob.id, "item": item.id })}>گەڕانەوە</button></td>
+                                                                    <td><button className="btn btn-info" type="button" onClick={() => addReSell({ "quantity": dana, "price": item.price, "sell": item.sell, "item": item.item_id })}>گەڕانەوە</button></td>
                                                                 </tr>
 
                                                             ))}
@@ -95,6 +108,7 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, it
                         ))}
                     </tbody>
                     <tfoot>
+                        <th>{summer}</th>
                     </tfoot>
                 </table>
                 <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true' width={100 + "%"}>

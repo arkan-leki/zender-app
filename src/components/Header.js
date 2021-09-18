@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, group, addVendor, regions }) => {
+const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, addRegion, addVendor, regions }) => {
     const [naw, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [regs, setRegion] = useState([])
     const [gro, setGro] = useState('')
-
+    const [code, setCode] = useState('')
 
 
     return (
@@ -104,6 +104,38 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                     </div>
                 </div>
             </div>
+            <button href="#add-group" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#group">
+                زیادکردنی گروپەکان
+            </button>
+            <button className="btn btn-info col-md-2 m-1 " data-bs-toggle="modal" data-bs-target="#newRegion">زیادکردنی ناوچە</button>
+            <div className="modal fade" id="newRegion" tabIndex="-1" aria-hidden='true'>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">فۆرمی زیادکردن</h5>
+                            <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form >
+                                <label for="name" className="form-label">ناونیشان</label>
+                                <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
+                                <label for="code" className="form-label">کۆد</label>
+                                <input type="text" id="code" className="form-control" aria-describedby="code" value={code} onChange={(e) => setCode(e.target.value)} />
+                                <button className="btn btn-info" type="button" onClick={() => addRegion(
+                                    {
+                                        "name": naw,
+                                        "code": code
+                                    }
+                                )}
+                                >کڕین</button>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className="modal fade" id="vendor" tabIndex="-1" aria-labelledby="vendor" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -117,15 +149,15 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, grou
                                 <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
                                 <label for="phone" className="form-label">ژ.موبایل</label>
                                 <input type="text" id="phone" className="form-control" aria-describedby="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                                <select multiple={true}  className="form-select"  aria-label="multiple select example" name="regions" value={regs} onChange={(event) => setRegion(Array.from(event.target.selectedOptions, (item) => item.value))} >
-                                    {regions ? regions.map((region,index) => (
+                                <select multiple={true} className="form-select" aria-label="multiple select example" name="regions" value={regs} onChange={(event) => setRegion(Array.from(event.target.selectedOptions, (item) => item.value))} >
+                                    {regions ? regions.map((region, index) => (
                                         <option key={index} value={region.id} >{region.name}</option>
                                     )) : <></>}
                                 </select>
-                                <select className="form-select"  name="group" >
+                                <select className="form-select" name="group" >
                                     <option value="">گروپەکان</option>
-                                    {groups ? groups.map((g,index) => (
-                                        <option key={index} value={gro} onClick={()=>setGro(g.id)}>{g.name}</option>
+                                    {groups ? groups.map((g, index) => (
+                                        <option key={index} value={gro} onClick={() => setGro(g.id)}>{g.name}</option>
                                     )) : <></>}
                                 </select>
                             </form>

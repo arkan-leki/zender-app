@@ -14,6 +14,7 @@ import OrderForm from './components/OrderForm';
 import Items from './components/Items'
 import { Locals } from './components/Locals';
 import Trader from './components/Trader';
+import Bank from './components/Bank';
 // function App() {
 //   return (
 //     <div className="App">
@@ -47,6 +48,7 @@ const App = () => {
   const [vendors, setVendors] = useState([])
   const [orders, setOrders] = useState([])
   const [regions, setRegions] = useState([])
+  const [banks, setBanks] = useState([])
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
 
@@ -57,6 +59,14 @@ const App = () => {
       setOrders(server)
     }
     getOrders()
+  }, [])
+
+  useEffect(() => {
+    const getBanks = async () => {
+      const server = await fetchBanks()
+      setBanks(server)
+    }
+    getBanks()
   }, [])
 
   useEffect(() => {
@@ -165,6 +175,14 @@ const App = () => {
     return data
   }
 
+  const fetchBanks = async () => {
+    const res = await fetch('http://127.0.0.1:8000/bank/?format=json&group=' + groupId)
+    const data = await res.json()
+
+    return data
+  }
+
+
 
   const addtoListEvent = (item) => {
     const id = Math.floor(Math.random() * 1000) + 1
@@ -188,11 +206,7 @@ const App = () => {
       })
 
     // const data = res.json()
-    const getSales = async () => {
-      const server = await fetchSales()
-      setSales(server)
-    }
-    getSales()
+    getState()
 
   }
 
@@ -207,12 +221,7 @@ const App = () => {
 
       })
 
-    // const data = res.json()
-    const getSales = async () => {
-      const server = await fetchSales()
-      setSales(server)
-    }
-    getSales()
+    getState()
     setCarts(carts.filter((mob) => mob.id !== kala.item))
   }
 
@@ -229,11 +238,7 @@ const App = () => {
       })
 
     // const data = res.json()
-    const getOrders = async () => {
-      const server = await fetchOrders()
-      setOrders(server)
-    }
-    getOrders()
+    getState()
 
   }
 
@@ -249,13 +254,22 @@ const App = () => {
       })
 
     // const data = res.json()
-    const getSales = async () => {
-      const server = await fetchSales()
-      setSales(server)
+    getState()
+  }
+
+  const searchTrader = async (text) => {
+    const server = await fetchTraders()
+    setTraders(server)
+    if (text !== "") {
+      setTraders(traders.filter((people) => {
+        return people.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          people.code.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          people.id.toString().toLowerCase().includes(text.toString().toLowerCase())
+      }))
     }
-    getSales()
 
   }
+
 
   const search = async (text) => {
     const server = await fetchLocals()
@@ -286,14 +300,18 @@ const App = () => {
   }
 
   const getState = async () => {
-    const server = await fetchOrders()
+    let server = await fetchOrders()
     setOrders(server)
-    const server1 = await fetchSales()
-    setSales(server1)
-    const server2 = await fetchItems()
-    setItems(server2)
-    const server4 = await fetchTraders()
-    setTraders(server4)
+    server = await fetchSales()
+    setSales(server)
+    server = await fetchItems()
+    setItems(server)
+    server = await fetchTraders()
+    setTraders(server)
+    server = await fetchBanks()
+    setBanks(server)
+    server = await fetchLocals()
+    setLocals(server)
   }
 
   const setGroupEvent = (id) => {
@@ -312,7 +330,8 @@ const App = () => {
     getState()
   }
 
-  const filterBydate = async (date) => {
+  const filterBydate = async (date, id) => {
+
     if ((Boolean(date))) {
       setSales(sales.filter((sale) => (
         moment(new Date(sale.date)).format("yyyy-MM-DD") == date
@@ -320,9 +339,13 @@ const App = () => {
       setOrders(orders.filter((orders) => (
         moment(new Date(orders.date)).format("yyyy-MM-DD") == date
       )))
-    } else {
-      getState()
+
     }
+    const res = await fetch('http://127.0.0.1:8000/sells/?group=' + groupId+'&local_id='+id)
+    const data = await res.json()
+    setSales(data)
+
+    // getState()
   }
 
 
@@ -418,11 +441,9 @@ const App = () => {
 
       })
 
-    const getGroups = async () => {
-      const server = await fetchGroups()
-      setGroups(server)
-    }
-    getGroups()
+    let server = await fetchGroups()
+    setGroups(server)
+    getState()
   }
 
   const addLocal = async (post) => {
@@ -436,11 +457,7 @@ const App = () => {
 
       })
 
-    const getLocals = async () => {
-      const server = await fetchLocals()
-      setLocals(server)
-    }
-    getLocals()
+    getState()
   }
 
   const addRegion = async (post) => {
@@ -454,11 +471,7 @@ const App = () => {
 
       })
 
-    const getRegions = async () => {
-      const server = await fetchRegions()
-      setRegions(server)
-    }
-    getRegions()
+    getState()
   }
 
   const addTrade = async (post) => {
@@ -472,11 +485,7 @@ const App = () => {
 
       })
 
-    const getTraders = async () => {
-      const server = await fetchTraders()
-      setTraders(server)
-    }
-    getTraders()
+    getState()
   }
 
   const addVendor = async (post) => {
@@ -490,11 +499,7 @@ const App = () => {
 
       })
 
-    const getVendors = async () => {
-      const server = await fetchVendors()
-      setVendors(server)
-    }
-    getVendors()
+    getState()
   }
 
   const addpay = async (pay, bank) => {
@@ -509,7 +514,7 @@ const App = () => {
       })
 
     const data = res.json()
-    data.then(async(d) => {
+    data.then(async (d) => {
       console.log(d.id)
       await fetch('http://127.0.0.1:8000/payment/',
         {
@@ -525,11 +530,7 @@ const App = () => {
         })
     })
 
-    const getLocals = async () => {
-      const server = await fetchLocals()
-      setLocals(server)
-    }
-    getLocals()
+    getState()
   }
 
   const addPayLoan = async (pay, bank) => {
@@ -544,7 +545,7 @@ const App = () => {
       })
 
     const data = res.json()
-    data.then(async(d) => {
+    data.then(async (d) => {
       console.log(d.id)
       await fetch('http://127.0.0.1:8000/payloan/',
         {
@@ -559,11 +560,7 @@ const App = () => {
           })
         })
     })
-    const get = async () => {
-      const server = await fetchTraders()
-      setTraders(server)
-    }
-    get()
+    getState()
   }
 
   const addReSell = async (resell) => {
@@ -577,22 +574,58 @@ const App = () => {
 
       })
 
-    // const data = res.json()
-    const get = async () => {
-      const server = await fetchSales()
-      setSales(server)
-    }
-    get()
+    getState()
+
   }
 
+
+  const addBuy = async (buy, bank) => {
+    const res = await fetch('http://127.0.0.1:8000/bank/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(bank)
+
+      })
+
+
+
+    const data = res.json()
+
+    data.then(async (d) => {
+      console.log(d.id)
+      await fetch('http://127.0.0.1:8000/buy/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            "name": buy.name,
+            "group": buy.group,
+            "bank": d.id
+          })
+        })
+    })
+    getState()
+  }
   return (
     <Router>
       <div className=''>
 
-        <Header regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+        <Header addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+
+        <Route path='/' exact render={(props) => (
+          <>
+            <Bank group={groupId} banks={banks} addBuy={addBuy} />
+          </>
+        )}
+        />
         <Route path='/order' exact render={(props) => (
           <>
-            <OrderHatu filterBydate={filterBydate} orders={orders} group={groupId} traders={traders} search={search} addOrder={addOrder} />
+            <OrderHatu searchTrader={searchTrader} filterBydate={filterBydate} orders={orders} group={groupId} traders={traders} search={search} addOrder={addOrder} />
           </>
         )}
         />
@@ -604,7 +637,7 @@ const App = () => {
         />
         <Route path='/traders' exact render={(props) => (
           <>
-            <Trader traders={traders} group={groupId} addTrade={addTrade} addPayLoan = {addPayLoan}/>
+            <Trader traders={traders} group={groupId} addTrade={addTrade} addPayLoan={addPayLoan} />
           </>
         )}
         />
