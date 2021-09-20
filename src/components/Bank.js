@@ -47,9 +47,9 @@ const Bank = ({ banks, addBuy, group }) => {
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="headingOne">
+                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         <ul className="list-group col-md-4">
                             <li className="list-group-item"> ماوە {eco - loa}$</li>
                             <li className="list-group-item"> هاتوو {eco}$</li>
@@ -58,8 +58,8 @@ const Bank = ({ banks, addBuy, group }) => {
 
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
+                <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div className="accordion-body">
                         <table className="table">
                             <thead>
                                 <tr>

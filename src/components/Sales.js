@@ -83,7 +83,6 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, ad
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            
                                                             {items.map((item, index) => (
                                                                 <tr key={index}>
                                                                     <td scope="row">{item.item}</td>
@@ -92,11 +91,9 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, ad
                                                                     <td><input type="number" name="dana" id="dana" value={dana} onChange={(e) => setDana(e.target.value)} /></td>
                                                                     <td><button className="btn btn-info" type="button" onClick={() => addReSell({ "quantity": dana, "price": item.price, "sell": item.sell, "item": item.item_id })}>گەڕانەوە</button></td>
                                                                 </tr>
-
                                                             ))}
                                                         </tbody>
                                                     </table>
-
                                                 </form>
                                             </div>
                                             <div className="modal-footer">
@@ -117,7 +114,6 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, ad
                             <div className="modal-header">
                                 <h5 className="modal-title">کڕیارەکان</h5>
                                 <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
                             </div>
                             <div className="container">
                                 <div className="d-md-flex justify-content-between align-items-center">

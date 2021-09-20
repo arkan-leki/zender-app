@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 const Trader = ({ group, addTrade, traders, addPayLoan }) => {
     const [naw, setName] = useState('')
     const [code, setCode] = useState('')
+    const [address, setAdd] = useState('')
+    const [phone, setPhone] = useState('')
     const [exchange, setExchange] = useState(0)
     const [loan, setLoan] = useState(0)
     const [income, setIncome] = useState(0)
@@ -26,10 +28,12 @@ const Trader = ({ group, addTrade, traders, addPayLoan }) => {
                     <thead>
                         <tr>
                             <th scope="col"> زنجیرە</th>
-                            <th scope="col"> هۆمپانیا</th>
+                            <th scope="col"> کۆمپانیا</th>
                             <th scope="col">کۆد</th>
-                            <th scope="col">قەرزی یەکەم جار</th>
-                            <th scope="col">کۆۆی کڕین</th>
+                            <th scope="col">ژارە موڤباری</th>
+                            <th scope="col">کۆد</th>
+                            <th scope="col">نقل حساب</th>
+                            <th scope="col">کۆی داواکردن</th>
                             <th scope="col"> دراوە</th>
                             <th scope="col">قەرزی ماوە</th>
                             <th scope="col">بەروار </th>
@@ -41,12 +45,14 @@ const Trader = ({ group, addTrade, traders, addPayLoan }) => {
                                 <td>{mob.id}</td>
                                 <td>{mob.name}</td>
                                 <td>{mob.code}</td>
+                                <td>{mob.address}</td>
+                                <td>{mob.phone}</td>
                                 <td>{mob.exchange}$</td>
                                 <td>{mob.totallBuy}$</td>
                                 <td>{mob.totallLoan}$</td>
                                 <td>{mob.mawe}$</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
-                                {group?<td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay"  onClick={()=>setId(mob.id)}>پارەدان</button></td>:<></>}
+                                {group?<td><button className="btn btn-success d-print-none" data-bs-toggle="modal" data-bs-target="#pay"  onClick={()=>setId(mob.id)}>پارەدان</button></td>:<></>}
                                 {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
                                 <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
                                     <div className="modal-dialog">
@@ -99,6 +105,10 @@ const Trader = ({ group, addTrade, traders, addPayLoan }) => {
                                 <form >
                                     <label for="name" className="form-label">ناو</label>
                                     <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
+                                    <label for="name" className="form-label">ماونیشان</label>
+                                    <input type="text" id="name" className="form-control" aria-describedby="name" value={address} onChange={(e) => setAdd(e.target.value)} />
+                                    <label for="name" className="form-label">ژ.وبای</label>
+                                    <input type="text" id="name" className="form-control" aria-describedby="name" value={phone} onChange={(e) => setPhone(e.target.value)} />
                                     <label for="code" className="form-label">کۆد</label>
                                     <input type="text" id="code" className="form-control" aria-describedby="code" value={code} onChange={(e) => setCode(e.target.value)} />
                                     <label for="loan" className="form-label">قەرزی کۆن</label>
@@ -107,6 +117,8 @@ const Trader = ({ group, addTrade, traders, addPayLoan }) => {
                                         {
                                             "name": naw,
                                             "code": code,
+                                            "phone": phone,
+                                            "address": address,
                                             "exchange": exchange,
                                             "group": group,
                                         }

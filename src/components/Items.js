@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Items = ({ items, traders, group, filterItems, itemPost }) => {
+const Items = ({ items, traders, group, filterItems, itemPost ,cats }) => {
     const [tradeID, setTradeID] = useState('')
     const [text, setText] = useState('')
     const [naw, setName] = useState('')
@@ -11,6 +11,8 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
     const [price, setPrice] = useState('')
     const [add, setAdd] = useState('')
     const [stock, setStock] = useState('')
+    const [catID, setCatID] = useState('')
+
 
     return (
         <section className="mx-auto" style={{ width: 100 + '%' }} id="items">
@@ -22,7 +24,7 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
                             aria-label="Eneter Your price" aria-describedby="button-addon2" value={text} onChange={(e) => setText(e.target.value)} />
 
                         <select className=" form-control " aria-label="Default select example" >
-                            <option value={tradeID} onClick={()=>setTradeID("")}>کۆمپانیا</option>
+                            <option value={tradeID} onClick={() => setTradeID("")}>کۆمپانیا</option>
                             {traders.map((trader) => (
                                 <option key={trader.id} value={tradeID} onClick={(e) => setTradeID(trader)} >{trader.name}</option>
                             ))}
@@ -42,8 +44,12 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
 
                                         <label for="name" className="form-label">ناو</label>
                                         <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
-
-
+                                        <select className=" form-control  " aria-label="Default select example" >
+                                            <option value="">جۆرەکان</option>
+                                            {cats ? cats.map((cat) => (
+                                                <option key={cat.id} value={catID} onClick={(e) => setCatID(cat.id)}>{cat.name}</option>
+                                            )) : <></>}
+                                        </select>
                                         <label for="bag" className="form-label">جۆری بار</label>
                                         <input type="text" id="bag" className="form-control" aria-describedby="bag" value={bag} onChange={(e) => setBag(e.target.value)} />
 
@@ -58,7 +64,7 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
 
                                         <label for="add" className="form-label">دێژەی قازانج</label>
                                         <input type="number" id="add" className="form-control" aria-describedby="add" value={add} onChange={(e) => setAdd(e.target.value)} />
-                                        
+
                                         <label for="add" className="form-label">مانەوەی یەکەمجار</label>
                                         <input type="number" id="add" className="form-control" aria-describedby="add" value={stock} onChange={(e) => setStock(e.target.value)} />
 
@@ -79,6 +85,9 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
                                         "group": group,
                                         "trader": tradeID.id,
                                         "stock": stock,
+                                        "image": null,
+                                        "deleted": false,
+                                        "category": catID,
                                     })}>زیادکردن</button>
 
                                 </div>
@@ -92,7 +101,7 @@ const Items = ({ items, traders, group, filterItems, itemPost }) => {
             <div className="border border-5">
                 <div className="table-responsive-xl aling.center ">
                     <table className="table table-striped table-hover align-middle caption-top">
-                    <caption>مەوادەکان</caption>
+                        <caption>مەوادەکان</caption>
 
                         <thead>
                             <tr>

@@ -136,7 +136,12 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) 
                                             "phone": phone,
                                             "owner_name": owner,
                                             "exchange": exchange,
-                                            "region": regionID
+                                            "region": regionID,
+                                            "status": false,
+                                            "zip_code": "",
+                                            "state": "",
+                                            "country": "",
+                                            "image": null,
                                         }
                                     )}
                                     >کڕین</button>

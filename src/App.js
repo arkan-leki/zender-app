@@ -41,6 +41,7 @@ import Bank from './components/Bank';
 const App = () => {
   const [sales, setSales] = useState([])
   const [items, setItems] = useState([])
+  const [cats, setCats] = useState([])
   const [carts, setCarts] = useState([])
   const [locals, setLocals] = useState([])
   const [traders, setTraders] = useState([])
@@ -51,7 +52,7 @@ const App = () => {
   const [banks, setBanks] = useState([])
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
-
+  const url = 'http://127.0.0.1:8000/'
 
   useEffect(() => {
     const getOrders = async () => {
@@ -59,6 +60,14 @@ const App = () => {
       setOrders(server)
     }
     getOrders()
+  }, [])
+
+  useEffect(() => {
+    const getCats = async () => {
+      const server = await fetchCats()
+      setCats(server)
+    }
+    getCats()
   }, [])
 
   useEffect(() => {
@@ -127,62 +136,67 @@ const App = () => {
   }, [])
 
   const fetchSales = async () => {
-    const res = await fetch('http://127.0.0.1:8000/sells/?format=json&group=' + groupId + '&vendor=' + vendorId)
+    const res = await fetch(url+'sells/?format=json&group=' + groupId + '&vendor=' + vendorId)
     const data = await res.json()
     return data
   }
 
   const fetchTraders = async () => {
-    const res = await fetch('http://127.0.0.1:8000/traders/?format=json&group=' + groupId)
+    const res = await fetch(url+'traders/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
   const fetchVendors = async () => {
-    const res = await fetch('http://127.0.0.1:8000/vendors/?format=json')
+    const res = await fetch(url+'vendors/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchOrders = async () => {
-    const res = await fetch('http://127.0.0.1:8000/orders/?format=json&group=' + groupId)
+    const res = await fetch(url+'orders/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
 
   const fetchLocals = async () => {
-    const res = await fetch('http://127.0.0.1:8000/locals/?format=json')
+    const res = await fetch(url+'locals/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchItems = async () => {
-    const res = await fetch('http://127.0.0.1:8000/items/?format=json&group=' + groupId)
+    const res = await fetch(url+'items/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
   const fetchGroups = async () => {
-    const res = await fetch('http://127.0.0.1:8000/groups/?format=json')
+    const res = await fetch(url+'groups/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchRegions = async () => {
-    const res = await fetch('http://127.0.0.1:8000/region/?format=json')
+    const res = await fetch(url+'region/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchBanks = async () => {
-    const res = await fetch('http://127.0.0.1:8000/bank/?format=json&group=' + groupId)
+    const res = await fetch(url+'bank/?format=json&group=' + groupId)
     const data = await res.json()
 
     return data
   }
 
+  const fetchCats = async () => {
+    const res = await fetch(url+'cat/?format=json&group=' + groupId)
+    const data = await res.json()
 
+    return data
+  }
 
   const addtoListEvent = (item) => {
     const id = Math.floor(Math.random() * 1000) + 1
@@ -195,7 +209,7 @@ const App = () => {
   }
 
   const dashkanEvent = async (id, discount) => {
-    const res = await fetch('http://127.0.0.1:8000/sell/' + id + '/',
+    const res = await fetch(url+'sell/' + id + '/',
       {
         method: 'PATCH',
         headers: {
@@ -211,7 +225,7 @@ const App = () => {
   }
 
   const addGoEvent = async (kala) => {
-    const res = await fetch('http://127.0.0.1:8000/sale/',
+    const res = await fetch(url+'sale/',
       {
         method: 'POST',
         headers: {
@@ -227,7 +241,7 @@ const App = () => {
 
 
   const addOrder = async (args) => {
-    const res = await fetch('http://127.0.0.1:8000/order/',
+    const res = await fetch(url+'order/',
       {
         method: 'POST',
         headers: {
@@ -243,7 +257,7 @@ const App = () => {
   }
 
   const addForm = async (args) => {
-    const res = await fetch('http://127.0.0.1:8000/sell/',
+    const res = await fetch(url+'sell/',
       {
         method: 'POST',
         headers: {
@@ -312,6 +326,8 @@ const App = () => {
     setBanks(server)
     server = await fetchLocals()
     setLocals(server)
+    server = await fetchCats()
+    setCats(server)
   }
 
   const setGroupEvent = (id) => {
@@ -331,28 +347,31 @@ const App = () => {
   }
 
   const filterBydate = async (date, id) => {
-
     if ((Boolean(date))) {
+
       setSales(sales.filter((sale) => (
-        moment(new Date(sale.date)).format("yyyy-MM-DD") == date
+        moment(new Date(sale.date)).format("yyyy-MM-DD") === date
       )))
       setOrders(orders.filter((orders) => (
-        moment(new Date(orders.date)).format("yyyy-MM-DD") == date
+        moment(new Date(orders.date)).format("yyyy-MM-DD") === date
       )))
 
+    }else
+    {
+      getState()
     }
-    const res = await fetch('http://127.0.0.1:8000/sells/?group=' + groupId+'&local_id='+id)
-    const data = await res.json()
-    setSales(data)
+    // const res = await fetch(url+'sells/?group=' + groupId+'&local_id='+id)
+    // const data = await res.json()
+    // setSales(data)
 
-    // getState()
+    
   }
 
 
 
 
   const addBuyEvent = async (kala, price) => {
-    const res = await fetch('http://127.0.0.1:8000/ordered/',
+    const res = await fetch(url+'ordered/',
       {
         method: 'POST',
         headers: {
@@ -361,7 +380,7 @@ const App = () => {
         body: JSON.stringify(kala)
 
       })
-    const res2 = await fetch('http://127.0.0.1:8000/item/' + kala.item + "/",
+    const res2 = await fetch(url+'item/' + kala.item + "/",
       {
         method: 'PATCH',
         headers: {
@@ -376,7 +395,7 @@ const App = () => {
   }
 
   const dashkanBuyEvent = async (id, discount) => {
-    const res = await fetch('http://127.0.0.1:8000/order/' + id + '/',
+    const res = await fetch(url+'order/' + id + '/',
       {
         method: 'PATCH',
         headers: {
@@ -416,7 +435,7 @@ const App = () => {
   }
 
   const itemPost = async (post) => {
-    const res = await fetch('http://127.0.0.1:8000/item/',
+    const res = await fetch(url+'item/',
       {
         method: 'POST',
         headers: {
@@ -431,7 +450,7 @@ const App = () => {
   }
 
   const addGroupEvent = async (post) => {
-    const res = await fetch('http://127.0.0.1:8000/group/',
+    const res = await fetch(url+'group/',
       {
         method: 'POST',
         headers: {
@@ -447,7 +466,7 @@ const App = () => {
   }
 
   const addLocal = async (post) => {
-    const res = await fetch('http://127.0.0.1:8000/local/',
+    const res = await fetch(url+'local/',
       {
         method: 'POST',
         headers: {
@@ -461,7 +480,22 @@ const App = () => {
   }
 
   const addRegion = async (post) => {
-    const res = await fetch('http://127.0.0.1:8000/region/',
+    const res = await fetch(url+'region/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+
+      })
+
+    getState()
+  }
+
+
+  const addCat = async (post) => {
+    const res = await fetch(url+'cat/',
       {
         method: 'POST',
         headers: {
@@ -475,7 +509,7 @@ const App = () => {
   }
 
   const addTrade = async (post) => {
-    const res = await fetch('http://127.0.0.1:8000/trader/',
+    const res = await fetch(url+'trader/',
       {
         method: 'POST',
         headers: {
@@ -489,7 +523,7 @@ const App = () => {
   }
 
   const addVendor = async (post) => {
-    const res = await fetch('http://127.0.0.1:8000/vendors/',
+    const res = await fetch(url+'vendors/',
       {
         method: 'POST',
         headers: {
@@ -503,7 +537,7 @@ const App = () => {
   }
 
   const addpay = async (pay, bank) => {
-    const res = await fetch('http://127.0.0.1:8000/bank/',
+    const res = await fetch(url+'bank/',
       {
         method: 'POST',
         headers: {
@@ -516,7 +550,7 @@ const App = () => {
     const data = res.json()
     data.then(async (d) => {
       console.log(d.id)
-      await fetch('http://127.0.0.1:8000/payment/',
+      await fetch(url+'payment/',
         {
           method: 'POST',
           headers: {
@@ -534,7 +568,7 @@ const App = () => {
   }
 
   const addPayLoan = async (pay, bank) => {
-    const res = await fetch('http://127.0.0.1:8000/bank/',
+    const res = await fetch(url+'bank/',
       {
         method: 'POST',
         headers: {
@@ -547,7 +581,7 @@ const App = () => {
     const data = res.json()
     data.then(async (d) => {
       console.log(d.id)
-      await fetch('http://127.0.0.1:8000/payloan/',
+      await fetch(url+'payloan/',
         {
           method: 'POST',
           headers: {
@@ -564,7 +598,7 @@ const App = () => {
   }
 
   const addReSell = async (resell) => {
-    const res = await fetch('http://127.0.0.1:8000/resell/',
+    const res = await fetch(url+'resell/',
       {
         method: 'POST',
         headers: {
@@ -580,7 +614,7 @@ const App = () => {
 
 
   const addBuy = async (buy, bank) => {
-    const res = await fetch('http://127.0.0.1:8000/bank/',
+    const res = await fetch(url+'bank/',
       {
         method: 'POST',
         headers: {
@@ -596,7 +630,7 @@ const App = () => {
 
     data.then(async (d) => {
       console.log(d.id)
-      await fetch('http://127.0.0.1:8000/buy/',
+      await fetch(url+'buy/',
         {
           method: 'POST',
           headers: {
@@ -615,7 +649,7 @@ const App = () => {
     <Router>
       <div className=''>
 
-        <Header addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+        <Header addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
 
         <Route path='/' exact render={(props) => (
           <>
@@ -643,7 +677,7 @@ const App = () => {
         />
         <Route path='/items' exact render={(props) => (
           <>
-            <Items items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} />
+            <Items cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} />
           </>
         )}
         />
