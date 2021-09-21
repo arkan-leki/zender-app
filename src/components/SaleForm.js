@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
 import * as moment from 'moment'
-import { useState } from "react/cjs/react.development"
 import Item from './Item';
+import { useState } from 'react';
 
 const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
     const [text, setText] = useState('')
