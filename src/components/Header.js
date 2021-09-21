@@ -187,7 +187,7 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
                                 <label for="name" className="form-label">ناو</label>
                                 <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
                                 <select className=" form-control  " aria-label="Default select example" >
-                                    <option value="">جۆرەکان</option>
+                                    {/* <option value="">جۆرەکان</option> */}
                                     {cats ? cats.map((cat) => (
                                         <option key={cat.id} value={catID} onClick={(e) => setCatID(cat.id)}>{cat.name}</option>
                                     )) : <></>}
@@ -213,7 +213,7 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
                                 <label for="barcode" className="form-label">بارکۆد</label>
                                 <input type="text" id="barcode" className="form-control" aria-describedby="barcode" value={code} onChange={(e) => setCode(e.target.value)} />
                                 <select className=" form-control " aria-label="Default select example" >
-                                    <option value={tradeID} onClick={() => setTradeID("")}>کۆمپانیا</option>
+                                    {/* <option value={tradeID} onClick={() => setTradeID("")}>کۆمپانیا</option> */}
                                     {traders.map((trader) => (
                                         <option key={trader.id} value={tradeID} onClick={(e) => setTradeID(trader.id)} >{trader.name}</option>
                                     ))}
