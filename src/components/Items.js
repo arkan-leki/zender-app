@@ -3,16 +3,6 @@ import React, { useState } from 'react'
 const Items = ({ items, traders, group, filterItems, itemPost, cats }) => {
     const [tradeID, setTradeID] = useState('')
     const [text, setText] = useState('')
-    const [naw, setName] = useState('')
-    const [bag, setBag] = useState('')
-    const [wight, setWight] = useState('')
-    const [dana, setDana] = useState('')
-    const [code, setCode] = useState('')
-    const [price, setPrice] = useState('')
-    const [add, setAdd] = useState('')
-    const [stock, setStock] = useState('')
-    const [catID, setCatID] = useState('')
-
 
     return (
         <section className="mx-auto" style={{ width: 100 + '%' }} id="items">
@@ -31,70 +21,6 @@ const Items = ({ items, traders, group, filterItems, itemPost, cats }) => {
                         </select>
                         <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filterItems(tradeID.name, text)}>گەڕان</button>
                     </div>
-                    {(group !== "" & tradeID !== "") ? <button className="btn btn-info d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#modal">نوێ</button> : <></>}
-                    <div className="modal fade" id="modal" tabIndex="-1" aria-hidden='true'>
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title">کاڵایی نوێ</h5>
-                                    <button className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <form >
-
-                                        <label for="name" className="form-label">ناو</label>
-                                        <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
-                                        <select className=" form-control  " aria-label="Default select example" >
-                                            <option value="">جۆرەکان</option>
-                                            {cats ? cats.map((cat) => (
-                                                <option key={cat.id} value={catID} onClick={(e) => setCatID(cat.id)}>{cat.name}</option>
-                                            )) : <></>}
-                                        </select>
-                                        <label for="bag" className="form-label">جۆری بار</label>
-                                        <input type="text" id="bag" className="form-control" aria-describedby="bag" value={bag} onChange={(e) => setBag(e.target.value)} />
-
-                                        <label for="wight" className="form-label">وەزن دانە</label>
-                                        <input type="number" id="wight" className="form-control" aria-describedby="wight" value={wight} onChange={(e) => setWight(e.target.value)} />
-
-                                        <label for="quantity" className="form-label">دانە</label>
-                                        <input type="number" id="quantity" className="form-control" aria-describedby="quantity" value={dana} onChange={(e) => setDana(e.target.value)} />
-
-                                        <label for="price" className="form-label">نرخ کڕین</label>
-                                        <input type="number" id="price" className="form-control" aria-describedby="price" value={price} onChange={(e) => setPrice(e.target.value)} />
-
-                                        <label for="add" className="form-label">دێژەی قازانج</label>
-                                        <input type="number" id="add" className="form-control" aria-describedby="add" value={add} onChange={(e) => setAdd(e.target.value)} />
-
-                                        <label for="add" className="form-label">مانەوەی یەکەمجار</label>
-                                        <input type="number" id="add" className="form-control" aria-describedby="add" value={stock} onChange={(e) => setStock(e.target.value)} />
-
-                                        <label for="barcode" className="form-label">بارکۆد</label>
-                                        <input type="text" id="barcode" className="form-control" aria-describedby="barcode" value={code} onChange={(e) => setCode(e.target.value)} />
-
-                                    </form>
-                                </div>
-                                <div className="modal-footer">
-                                    <button className="btn btn-success" type="button" onClick={() => itemPost({
-                                        "name": naw,
-                                        "bag": bag,
-                                        "wight": wight,
-                                        "quantity": dana,
-                                        "barcode": code,
-                                        "price": price,
-                                        "addprice": add / 100,
-                                        "group": group,
-                                        "trader": tradeID.id,
-                                        "stock": stock,
-                                        "image": null,
-                                        "deleted": false,
-                                        "category": catID,
-                                    })}>زیادکردن</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <hr />

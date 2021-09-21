@@ -667,7 +667,7 @@ const App = () => {
     <Router>
       <div className=''>
 
-        <Header addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+        <Header cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
         <Route path='/' exact render={(props) => (
           <>
             <Bank group={groupId} banks={banks} addBuy={addBuy} />
