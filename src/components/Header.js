@@ -37,6 +37,9 @@ const Header = ({ groups, setGroupEvent, vendors, setVendorEvent, addGroup, addR
                             <li className="nav-item">
                                 <Link className="nav-link" to="/forms" >داواکاریەکان</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/payments" >پارەوەرگرتن</Link>
+                            </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     لقەکان

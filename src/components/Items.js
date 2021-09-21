@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Items = ({ items, traders, group, filterItems, itemPost ,cats }) => {
+const Items = ({ items, traders, group, filterItems, itemPost, cats }) => {
     const [tradeID, setTradeID] = useState('')
     const [text, setText] = useState('')
     const [naw, setName] = useState('')
@@ -124,7 +124,8 @@ const Items = ({ items, traders, group, filterItems, itemPost ,cats }) => {
                             {items.map((item, index) => (
                                 <tr key={index}>
                                     <th className="d-print-none">{item.id}</th>
-                                    <th>{item.barcode}</th>
+                                    <th><img src={item.image}
+                                        className="img-fluid rounded-start m-2" alt="....."  width={50+'px'}/>{item.barcode}</th>
                                     <th>{item.group}</th>
                                     <th >{item.trader}</th>
                                     <th>{item.name}</th>

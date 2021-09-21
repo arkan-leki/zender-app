@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) => {
     const [naw, setName] = useState('')
@@ -47,8 +48,8 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) 
                     <tbody>
                         {locals.map((mob, index) => (
                             <tr key={index}>
-                                <td>{mob.id}</td>
-                                <td>{mob.name}</td>
+                                <td><Link to={`/form/${mob.id}`}>{mob.id}</Link></td>
+                                <td><Link to={`/localForm/${mob.id}`}>{mob.name}</Link></td>
                                 <td>{mob.code}</td>
                                 <td>{mob.address}</td>
                                 <td>{mob.phone}</td>

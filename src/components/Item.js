@@ -2,12 +2,12 @@ import React from 'react'
 
 const Item = ({item,addtoList}) => {
     return (
-        <div className="col-md-4">
+        <div className="co-sm-6 col-md-4 col-xl-3">
             <div className="card bg-light mb-3">
                 <div className="row g-0">
                     <div className="col-4">
-                        {/* <img src={item.mobile['image']}
-                            className="img-fluid rounded-start m-2 w-50" alt="....." /> */}
+                        <img src={item.image}
+                            className="img-fluid rounded-start m-2" alt="....." />
                     </div>
                     <div className="col-8">
                         <div className="card-body">

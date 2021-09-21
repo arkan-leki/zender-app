@@ -1,5 +1,5 @@
-import { useState } from "react/cjs/react.development"
 import * as moment from 'moment'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, addReSell }) => {

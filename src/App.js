@@ -15,6 +15,9 @@ import Items from './components/Items'
 import { Locals } from './components/Locals';
 import Trader from './components/Trader';
 import Bank from './components/Bank';
+import Payments from './components/Payments';
+import PaymentForm from './components/PaymentForm';
+import LocalForm from './components/LocalForm';
 // function App() {
 //   return (
 //     <div className="App">
@@ -50,9 +53,10 @@ const App = () => {
   const [orders, setOrders] = useState([])
   const [regions, setRegions] = useState([])
   const [banks, setBanks] = useState([])
+  const [payments, setPayments] = useState([])
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
-  const url = 'http://127.0.0.1:8000/'
+  const url = 'http://127.0.0.1:8000/api/'
 
   useEffect(() => {
     const getOrders = async () => {
@@ -60,6 +64,14 @@ const App = () => {
       setOrders(server)
     }
     getOrders()
+  }, [])
+
+  useEffect(() => {
+    const getPayments = async () => {
+      const server = await fetchPayments()
+      setPayments(server)
+    }
+    getPayments()
   }, [])
 
   useEffect(() => {
@@ -111,6 +123,7 @@ const App = () => {
     getGroups()
   }, [])
 
+
   useEffect(() => {
     const getLocals = async () => {
       const server = await fetchLocals()
@@ -136,63 +149,67 @@ const App = () => {
   }, [])
 
   const fetchSales = async () => {
-    const res = await fetch(url+'sells/?format=json&group=' + groupId + '&vendor=' + vendorId)
+    const res = await fetch(url + 'sells/?format=json&group=' + groupId + '&vendor=' + vendorId)
     const data = await res.json()
     return data
   }
 
   const fetchTraders = async () => {
-    const res = await fetch(url+'traders/?format=json&group=' + groupId)
+    const res = await fetch(url + 'traders/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
   const fetchVendors = async () => {
-    const res = await fetch(url+'vendors/?format=json')
+    const res = await fetch(url + 'vendors/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchOrders = async () => {
-    const res = await fetch(url+'orders/?format=json&group=' + groupId)
+    const res = await fetch(url + 'orders/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
 
   const fetchLocals = async () => {
-    const res = await fetch(url+'locals/?format=json')
+    const res = await fetch(url + 'locals/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchItems = async () => {
-    const res = await fetch(url+'items/?format=json&group=' + groupId)
+    const res = await fetch(url + 'items/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
   const fetchGroups = async () => {
-    const res = await fetch(url+'groups/?format=json')
+    const res = await fetch(url + 'groups/?format=json')
     const data = await res.json()
     return data
   }
-
+  const fetchPayments = async () => {
+    const res = await fetch(url + 'payment/?format=json')
+    const data = await res.json()
+    return data
+  }
   const fetchRegions = async () => {
-    const res = await fetch(url+'region/?format=json')
+    const res = await fetch(url + 'region/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchBanks = async () => {
-    const res = await fetch(url+'bank/?format=json&group=' + groupId)
+    const res = await fetch(url + 'bank/?format=json&group=' + groupId)
     const data = await res.json()
 
     return data
   }
 
   const fetchCats = async () => {
-    const res = await fetch(url+'cat/?format=json&group=' + groupId)
+    const res = await fetch(url + 'cat/?format=json&group=' + groupId)
     const data = await res.json()
 
     return data
@@ -209,7 +226,7 @@ const App = () => {
   }
 
   const dashkanEvent = async (id, discount) => {
-    const res = await fetch(url+'sell/' + id + '/',
+    const res = await fetch(url + 'sell/' + id + '/',
       {
         method: 'PATCH',
         headers: {
@@ -225,7 +242,7 @@ const App = () => {
   }
 
   const addGoEvent = async (kala) => {
-    const res = await fetch(url+'sale/',
+    const res = await fetch(url + 'sale/',
       {
         method: 'POST',
         headers: {
@@ -241,7 +258,7 @@ const App = () => {
 
 
   const addOrder = async (args) => {
-    const res = await fetch(url+'order/',
+    const res = await fetch(url + 'order/',
       {
         method: 'POST',
         headers: {
@@ -257,7 +274,7 @@ const App = () => {
   }
 
   const addForm = async (args) => {
-    const res = await fetch(url+'sell/',
+    const res = await fetch(url + 'sell/',
       {
         method: 'POST',
         headers: {
@@ -328,6 +345,8 @@ const App = () => {
     setLocals(server)
     server = await fetchCats()
     setCats(server)
+    server = await fetchPayments()
+    setPayments(server)
   }
 
   const setGroupEvent = (id) => {
@@ -356,22 +375,21 @@ const App = () => {
         moment(new Date(orders.date)).format("yyyy-MM-DD") === date
       )))
 
-    }else
-    {
+    } else {
       getState()
     }
     // const res = await fetch(url+'sells/?group=' + groupId+'&local_id='+id)
     // const data = await res.json()
     // setSales(data)
 
-    
+
   }
 
 
 
 
   const addBuyEvent = async (kala, price) => {
-    const res = await fetch(url+'ordered/',
+    const res = await fetch(url + 'ordered/',
       {
         method: 'POST',
         headers: {
@@ -380,7 +398,7 @@ const App = () => {
         body: JSON.stringify(kala)
 
       })
-    const res2 = await fetch(url+'item/' + kala.item + "/",
+    const res2 = await fetch(url + 'item/' + kala.item + "/",
       {
         method: 'PATCH',
         headers: {
@@ -395,7 +413,7 @@ const App = () => {
   }
 
   const dashkanBuyEvent = async (id, discount) => {
-    const res = await fetch(url+'order/' + id + '/',
+    const res = await fetch(url + 'order/' + id + '/',
       {
         method: 'PATCH',
         headers: {
@@ -435,7 +453,7 @@ const App = () => {
   }
 
   const itemPost = async (post) => {
-    const res = await fetch(url+'item/',
+    const res = await fetch(url + 'item/',
       {
         method: 'POST',
         headers: {
@@ -450,7 +468,7 @@ const App = () => {
   }
 
   const addGroupEvent = async (post) => {
-    const res = await fetch(url+'group/',
+    const res = await fetch(url + 'group/',
       {
         method: 'POST',
         headers: {
@@ -466,7 +484,7 @@ const App = () => {
   }
 
   const addLocal = async (post) => {
-    const res = await fetch(url+'local/',
+    const res = await fetch(url + 'local/',
       {
         method: 'POST',
         headers: {
@@ -480,7 +498,7 @@ const App = () => {
   }
 
   const addRegion = async (post) => {
-    const res = await fetch(url+'region/',
+    const res = await fetch(url + 'region/',
       {
         method: 'POST',
         headers: {
@@ -495,7 +513,7 @@ const App = () => {
 
 
   const addCat = async (post) => {
-    const res = await fetch(url+'cat/',
+    const res = await fetch(url + 'cat/',
       {
         method: 'POST',
         headers: {
@@ -509,7 +527,7 @@ const App = () => {
   }
 
   const addTrade = async (post) => {
-    const res = await fetch(url+'trader/',
+    const res = await fetch(url + 'trader/',
       {
         method: 'POST',
         headers: {
@@ -523,7 +541,7 @@ const App = () => {
   }
 
   const addVendor = async (post) => {
-    const res = await fetch(url+'vendors/',
+    const res = await fetch(url + 'vendors/',
       {
         method: 'POST',
         headers: {
@@ -537,7 +555,7 @@ const App = () => {
   }
 
   const addpay = async (pay, bank) => {
-    const res = await fetch(url+'bank/',
+    const res = await fetch(url + 'bank/',
       {
         method: 'POST',
         headers: {
@@ -550,7 +568,7 @@ const App = () => {
     const data = res.json()
     data.then(async (d) => {
       console.log(d.id)
-      await fetch(url+'payment/',
+      await fetch(url + 'payment/',
         {
           method: 'POST',
           headers: {
@@ -568,7 +586,7 @@ const App = () => {
   }
 
   const addPayLoan = async (pay, bank) => {
-    const res = await fetch(url+'bank/',
+    const res = await fetch(url + 'bank/',
       {
         method: 'POST',
         headers: {
@@ -581,7 +599,7 @@ const App = () => {
     const data = res.json()
     data.then(async (d) => {
       console.log(d.id)
-      await fetch(url+'payloan/',
+      await fetch(url + 'payloan/',
         {
           method: 'POST',
           headers: {
@@ -598,7 +616,7 @@ const App = () => {
   }
 
   const addReSell = async (resell) => {
-    const res = await fetch(url+'resell/',
+    const res = await fetch(url + 'resell/',
       {
         method: 'POST',
         headers: {
@@ -614,7 +632,7 @@ const App = () => {
 
 
   const addBuy = async (buy, bank) => {
-    const res = await fetch(url+'bank/',
+    const res = await fetch(url + 'bank/',
       {
         method: 'POST',
         headers: {
@@ -630,7 +648,7 @@ const App = () => {
 
     data.then(async (d) => {
       console.log(d.id)
-      await fetch(url+'buy/',
+      await fetch(url + 'buy/',
         {
           method: 'POST',
           headers: {
@@ -650,7 +668,6 @@ const App = () => {
       <div className=''>
 
         <Header addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
-
         <Route path='/' exact render={(props) => (
           <>
             <Bank group={groupId} banks={banks} addBuy={addBuy} />
@@ -666,6 +683,13 @@ const App = () => {
         <Route path='/locals' exact render={(props) => (
           <>
             <Locals addpay={addpay} locals={locals} group={groupId} regions={regions} addLocal={addLocal} addRegion={addRegion} />
+          </>
+        )}
+        />
+
+        <Route path='/localForm/:id' exact render={(props) => (
+          <>
+            <LocalForm locals={locals} image={image} />
           </>
         )}
         />
@@ -697,6 +721,20 @@ const App = () => {
         <Route path='/order/:id' exact render={(props) => (
           <>
             <OrderForm items={items} addtoListEvent={addtoListEvent} search={itemFilter} group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent} />
+          </>
+        )}
+        />
+
+        <Route path='/payments' exact render={(props) => (
+          <>
+            <Payments payments={payments} locals={locals} group={groupId} addpay={addpay} />
+          </>
+        )}
+        />
+
+        <Route path='/paymentForm/:id' exact render={(props) => (
+          <>
+            <PaymentForm payments={payments} image={image} />
           </>
         )}
         />

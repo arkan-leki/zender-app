@@ -13,7 +13,7 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
     let wights = 0.0
     let summerprice = 0
     return (
-        <div className="mx-auto border border-5 p-5" style={{ width: 100 + '%' }}>
+        <div className="mx-auto border border-5 p-5" style={{ width: 700 + 'px' }}>
             <div className="row border ">
                 <div className="col-4 ">
                     <h4>کۆمپانیایی زەندەر</h4>
@@ -122,9 +122,9 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                             <p>قەرزی پێشوو : {wasl.local_mawe - wasl.totallint}$</p>
                             <p>قەرزی ئێستا : {wasl.local_mawe}$</p>
                         </div>
-                        <div className="col-4">
+                        <div className="col-4 ">
                             <p>
-                                <button className=" m-1 col-md-4  btn btn-success" data-bs-toggle="modal" data-bs-target="#newForm">زیادکردن</button>
+                                <button className=" m-1 col-md-4  btn btn-success d-print-none" data-bs-toggle="modal" data-bs-target="#newForm">زیادکردن</button>
 
                             </p>                            <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
                             <p>عدد {summer} کارتۆن</p>
