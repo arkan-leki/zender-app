@@ -1,6 +1,5 @@
 import './App.css';
 import image from './Lays-Logo.png';
-
 import { useState } from 'react'
 import Sales from './components/Sales'
 import { useEffect } from 'react';
