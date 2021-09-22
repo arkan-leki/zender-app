@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import Select from 'react-select'
 
 const Items = ({ items, traders, group, filterItems, itemPost, cats }) => {
     const [tradeID, setTradeID] = useState('')
     const [text, setText] = useState('')
+    const tradersopt = traders.map((city) => ({ value: city.id, label: city.name }))
 
     return (
         <section className="mx-auto" style={{ width: 100 + '%' }} id="items">
@@ -19,7 +21,9 @@ const Items = ({ items, traders, group, filterItems, itemPost, cats }) => {
                                 <option key={trader.id} value={tradeID} onClick={(e) => setTradeID(trader)} >{trader.name}</option>
                             ))}
                         </select>
-                        <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filterItems(tradeID.name, text)}>گەڕان</button>
+                        {/* <label for="name" className="form-label">کۆمپانیا</label>
+                                <Select defaultValue={tradersopt[1]}  onChange={(e) => setTradeID(e.value)} options={tradersopt} /> */}
+                        <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filterItems(tradeID, text)}>گەڕان</button>
                     </div>
                 </div>
             </div>

@@ -56,7 +56,7 @@ const App = () => {
   const [payments, setPayments] = useState([])
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
-  const url = 'https://zender-app.herokuapp.com/api/'
+  const url = 'http://127.0.0.1:8000/api/'
 
   useEffect(() => {
     const getOrders = async () => {
@@ -347,6 +347,10 @@ const App = () => {
     setCats(server)
     server = await fetchPayments()
     setPayments(server)
+    server = await fetchRegions()
+    setRegions(server)
+    server = await fetchVendors()
+    setVendors(server)
   }
 
   const setGroupEvent = (id) => {
@@ -366,18 +370,20 @@ const App = () => {
   }
 
   const filterBydate = async (date, id) => {
+    console.log(id);
+    setSales(sales.filter((sale) => (
+      sale.local_id === id 
+    )))
     if ((Boolean(date))) {
 
       setSales(sales.filter((sale) => (
-        moment(new Date(sale.date)).format("yyyy-MM-DD") === date
+        moment(new Date(sale.date)).format("yyyy-MM-DD") === date 
       )))
       setOrders(orders.filter((orders) => (
         moment(new Date(orders.date)).format("yyyy-MM-DD") === date
       )))
 
-    } else {
-      getState()
-    }
+    } 
     // const res = await fetch(url+'sells/?group=' + groupId+'&local_id='+id)
     // const data = await res.json()
     // setSales(data)

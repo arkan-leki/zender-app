@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Select from 'react-select'
 
 export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) => {
     const [naw, setName] = useState('')
@@ -12,6 +13,7 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) 
     const [loan, setLoan] = useState('')
     const [income, setIncome] = useState('')
     const [id, setId] = useState('')
+    const options = regions.map((city) => ({ value: city.id, label: city.name }))
 
     return (
         <><div className="mx-auto" style={{
@@ -123,12 +125,14 @@ export const Locals = ({ locals, group, addLocal, regions, addRegion , addpay}) 
                                     <input type="text" id="owner" className="form-control" aria-describedby="owner" value={owner} onChange={(e) => setOwner(e.target.value)} />
                                     <label for="loan" className="form-label">قەرزی کۆن</label>
                                     <input type="number" id="loan" className="form-control" aria-describedby="loan" value={exchange} onChange={(e) => setExchange(e.target.value)} />
-                                    <select className=" form-control  " aria-label="Default select example" >
+                                    {/* <select className=" form-control  " aria-label="Default select example" >
                                         <option value="">ناوچەکان</option>
                                         {regions ? regions.map((region) => (
                                             <option key={region.id} value={regionID} onClick={(e) => setRegionID(region.id)}>{region.name}</option>
                                         )) : <></>}
-                                    </select>
+                                    </select> */}
+                                    <label for="name" className="form-label">ناوچەکان</label>
+                                    <Select defaultValue={options[1]}  onChange={(e) => setRegionID(e.value)} options={options} />
                                     <button className="btn btn-info" type="button" onClick={() => addLocal(
                                         {
                                             "name": naw,

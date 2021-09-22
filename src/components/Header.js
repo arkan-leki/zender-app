@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Select from 'react-select'
 
-const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGroup, addRegion, addVendor, regions, addCat, cats , traders , itemPost}) => {
+const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGroup, addRegion, addVendor, regions, addCat, cats, traders, itemPost }) => {
     const [naw, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [regs, setRegion] = useState([])
@@ -15,6 +16,9 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
     const [add, setAdd] = useState('')
     const [stock, setStock] = useState('')
     const [catID, setCatID] = useState('')
+    const options = traders.map((city) => ({ value: city.id, label: city.name }))
+    const optioncats = cats.map((city) => ({ value: city.id, label: city.name }))
+    const groupsopt = groups.map((city) => ({ value: city.id, label: city.name }))
 
     return (
         <div className="d-print-none">
@@ -91,7 +95,7 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
             {/* <!-- Modal --> */}
             <div className="modal fade" id="group" tabIndex="-1" aria-labelledby="group" aria-hidden="true">
                 <div className="modal-dialog">
-                    <div className="modal-content">
+                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="group">زیادکردنی گرۆپ</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -186,12 +190,8 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
 
                                 <label for="name" className="form-label">ناو</label>
                                 <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
-                                <select className=" form-control  " aria-label="Default select example" >
-                                    {/* <option value="">جۆرەکان</option> */}
-                                    {cats ? cats.map((cat) => (
-                                        <option key={cat.id} value={catID} onClick={(e) => setCatID(cat.id)}>{cat.name}</option>
-                                    )) : <></>}
-                                </select>
+                                <label for="name" className="form-label">جۆری کاڵا</label>
+                                <Select  onChange={(e) => setCatID(e.value)} options={optioncats} />
                                 <label for="bag" className="form-label">جۆری بار</label>
                                 <input type="text" id="bag" className="form-control" aria-describedby="bag" value={bag} onChange={(e) => setBag(e.target.value)} />
 
@@ -212,12 +212,8 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
 
                                 <label for="barcode" className="form-label">بارکۆد</label>
                                 <input type="text" id="barcode" className="form-control" aria-describedby="barcode" value={code} onChange={(e) => setCode(e.target.value)} />
-                                <select className=" form-control " aria-label="Default select example" >
-                                    {/* <option value={tradeID} onClick={() => setTradeID("")}>کۆمپانیا</option> */}
-                                    {traders.map((trader) => (
-                                        <option key={trader.id} value={tradeID} onClick={(e) => setTradeID(trader.id)} >{trader.name}</option>
-                                    ))}
-                                </select>
+                                <label for="name" className="form-label">بنکە</label>
+                                <Select onChange={(e) => setTradeID(e.value)} options={options} />
                             </form>
                         </div>
                         <div className="modal-footer">
@@ -259,12 +255,8 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
                                         <option key={index} value={region.id} >{region.name}</option>
                                     )) : <></>}
                                 </select>
-                                <select className="form-select" name="group" >
-                                    <option value="">گروپەکان</option>
-                                    {groups ? groups.map((g, index) => (
-                                        <option key={index} value={gro} onClick={() => setGro(g.id)}>{g.name}</option>
-                                    )) : <></>}
-                                </select>
+                                <label for="name" className="form-label">بنکە</label>
+                                <Select defaultValue={groupsopt[1]}  onChange={(e) => setGro(e.value)} options={groupsopt} />
                             </form>
                         </div>
                         <div className="modal-footer">

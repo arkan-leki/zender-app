@@ -1,13 +1,15 @@
 import * as moment from 'moment'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Select from 'react-select'
 
-const Payments = ({ payments, locals, group, filterBydate , addpay }) => {
+const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
     const [text, setText] = useState('')
     const [date, setDate] = useState('')
     const [localID, setlocalID] = useState('')
     const [loan, setLoan] = useState('')
     const [income, setIncome] = useState('')
+    const localsopt = locals.map((city) => ({ value: city.id, label: city.name }))
 
     return (
         <><div className="mx-auto" style={{
@@ -22,13 +24,15 @@ const Payments = ({ payments, locals, group, filterBydate , addpay }) => {
                             <input className="col-md-4 m-4 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} />
                             <button className="col-md-2 m-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date, localID)}>گەڕان</button>
                         </div>
-                        <select className=" form-control " aria-label="Default select example" >
+                        {/* <select className=" form-control " aria-label="Default select example" >
                             <option value={localID} onClick={() => setlocalID("")}>کڕیار</option>
                             {locals.map((trader) => (
                                 <option key={trader.id} value={localID} onClick={(e) => setlocalID(trader.id)} >{trader.name}</option>
                             ))}
-                        </select>
-                        {group?<td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay" >پارەدان</button></td>:<></>}
+                        </select> */}
+                        <label for="name" className="form-label">کڕیار</label>
+                        <Select defaultValue={localsopt[1]} onChange={(e) => setlocalID(e.value)} options={localsopt} />
+                        {group ? <td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay" >پارەدان</button></td> : <></>}
                         <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
                             <div className="modal-dialog">
                                 <div className="modal-content">
