@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
 
-const Items = ({ items, traders, group, filterItems, itemPost, cats }) => {
+const Items = ({ items, traders, filterItems }) => {
     const [tradeID, setTradeID] = useState('')
     const [text, setText] = useState('')
     const tradersopt = traders.map((city) => ({ value: city.id, label: city.name }))
@@ -36,10 +36,10 @@ const Items = ({ items, traders, group, filterItems, itemPost, cats }) => {
                         <thead>
                             <tr>
                                 <th className="d-print-none">زنجیرە</th>
-                                <th>بارکۆۆد</th>
-                                <th>جۆر مەواد</th>
-                                <th >ناوە بریکار</th>
-                                <th>ناو مەواد</th>
+                                <th>کۆد</th>
+                                <th>گروپ</th>
+                                <th >ناوی کۆمپانیا</th>
+                                <th>ناوی مەواد</th>
                                 <th className="d-print-none">نرخ</th>
                                 <th className="d-print-none">رێژەی قازانج</th>
                                 <th className="d-print-none"> نرخ فرۆش</th>

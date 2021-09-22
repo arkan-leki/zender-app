@@ -673,7 +673,7 @@ const App = () => {
     <Router>
       <div className=''>
 
-        <Header cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+        <Header addTrade={addTrade}  addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
         <Route path='/' exact render={(props) => (
           <>
             <Bank group={groupId} banks={banks} addBuy={addBuy} />
@@ -688,7 +688,7 @@ const App = () => {
         />
         <Route path='/locals' exact render={(props) => (
           <>
-            <Locals addpay={addpay} locals={locals} group={groupId} regions={regions} addLocal={addLocal} addRegion={addRegion} />
+            <Locals addpay={addpay} locals={locals} group={groupId} regions={regions}  addRegion={addRegion} />
           </>
         )}
         />
@@ -701,7 +701,7 @@ const App = () => {
         />
         <Route path='/traders' exact render={(props) => (
           <>
-            <Trader traders={traders} group={groupId} addTrade={addTrade} addPayLoan={addPayLoan} />
+            <Trader traders={traders} group={groupId} addPayLoan={addPayLoan} />
           </>
         )}
         />

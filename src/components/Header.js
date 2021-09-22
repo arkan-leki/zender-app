@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
 
-const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGroup, addRegion, addVendor, regions, addCat, cats, traders, itemPost }) => {
+const Header = ({ searchTrader, addOrder ,  addTrade, group, groups, setGroupEvent, vendors, addLocal, setVendorEvent, addGroup, addRegion, addVendor, regions, addCat, cats, traders, itemPost }) => {
     const [naw, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [regs, setRegion] = useState([])
@@ -16,6 +16,11 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
     const [add, setAdd] = useState('')
     const [stock, setStock] = useState('')
     const [catID, setCatID] = useState('')
+    const [address, setAddress] = useState('')
+    const [owner, setOwner] = useState('')
+    const [exchange, setExchange] = useState('')
+    const [regionID, setRegionID] = useState('')
+    const [text, setText] = useState('')
     const options = traders.map((city) => ({ value: city.id, label: city.name }))
     const optioncats = cats.map((city) => ({ value: city.id, label: city.name }))
     const groupsopt = groups.map((city) => ({ value: city.id, label: city.name }))
@@ -95,7 +100,7 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
             {/* <!-- Modal --> */}
             <div className="modal fade" id="group" tabIndex="-1" aria-labelledby="group" aria-hidden="true">
                 <div className="modal-dialog">
-                     <div className="modal-content">
+                    <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="group">زیادکردنی گرۆپ</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -191,7 +196,7 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
                                 <label for="name" className="form-label">ناو</label>
                                 <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
                                 <label for="name" className="form-label">جۆری کاڵا</label>
-                                <Select  onChange={(e) => setCatID(e.value)} options={optioncats} />
+                                <Select onChange={(e) => setCatID(e.value)} options={optioncats} />
                                 <label for="bag" className="form-label">جۆری بار</label>
                                 <input type="text" id="bag" className="form-control" aria-describedby="bag" value={bag} onChange={(e) => setBag(e.target.value)} />
 
@@ -212,7 +217,7 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
 
                                 <label for="barcode" className="form-label">بارکۆد</label>
                                 <input type="text" id="barcode" className="form-control" aria-describedby="barcode" value={code} onChange={(e) => setCode(e.target.value)} />
-                                <label for="name" className="form-label">بنکە</label>
+                                <label for="name" className="form-label">کۆمپانیا</label>
                                 <Select onChange={(e) => setTradeID(e.value)} options={options} />
                             </form>
                         </div>
@@ -256,7 +261,7 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
                                     )) : <></>}
                                 </select>
                                 <label for="name" className="form-label">بنکە</label>
-                                <Select defaultValue={groupsopt[1]}  onChange={(e) => setGro(e.value)} options={groupsopt} />
+                                <Select defaultValue={groupsopt[1]} onChange={(e) => setGro(e.value)} options={groupsopt} />
                             </form>
                         </div>
                         <div className="modal-footer">
@@ -271,7 +276,104 @@ const Header = ({ group, groups, setGroupEvent, vendors, setVendorEvent, addGrou
                     </div>
                 </div>
             </div>
+            <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newLocal">کڕیاری نوێ</button>
+            <div className="modal fade" id="newLocal" tabIndex="-1" aria-hidden='true'>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">فۆرمی زیادکردن</h5>
+                            <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form >
+                                <label for="name" className="form-label">فرۆشگا</label>
+                                <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
+                                <label for="code" className="form-label">کۆد</label>
+                                <input type="text" id="code" className="form-control" aria-describedby="code" value={code} onChange={(e) => setCode(e.target.value)} />
+                                <label for="address" className="form-label">ناونیشان</label>
+                                <input type="text" id="address" className="form-control" aria-describedby="address" value={address} onChange={(e) => setAddress(e.target.value)} />
+                                <label for="phone" className="form-label">ژمارەی موبایل</label>
+                                <input type="text" id="phone" className="form-control" aria-describedby="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                <label for="owner" className="form-label">خاوەنی کار</label>
+                                <input type="text" id="owner" className="form-control" aria-describedby="owner" value={owner} onChange={(e) => setOwner(e.target.value)} />
+                                <label for="loan" className="form-label">قەرزی کۆن</label>
+                                <input type="number" id="loan" className="form-control" aria-describedby="loan" value={exchange} onChange={(e) => setExchange(e.target.value)} />
+                                {/* <select className=" form-control  " aria-label="Default select example" >
+                                        <option value="">ناوچەکان</option>
+                                        {regions ? regions.map((region) => (
+                                            <option key={region.id} value={regionID} onClick={(e) => setRegionID(region.id)}>{region.name}</option>
+                                        )) : <></>}
+                                    </select> */}
+                                <label for="name" className="form-label">ناوچەکان</label>
+                                <Select defaultValue={options[1]} onChange={(e) => setRegionID(e.value)} options={options} />
+                                <button className="btn btn-info" type="button" onClick={() => addLocal(
+                                    {
+                                        "name": naw,
+                                        "code": code,
+                                        "address": address,
+                                        "phone": phone,
+                                        "owner_name": owner,
+                                        "exchange": exchange,
+                                        "region": regionID,
+                                        "status": false,
+                                        "zip_code": "",
+                                        "state": "",
+                                        "country": "",
+                                        "image": null,
+                                    }
+                                )}
+                                >کڕین</button>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {group !== '' ? <button className=" m-1 col-md-2  btn btn-success" data-bs-toggle="modal" data-bs-target="#newTrade">کۆمپانیایی نوێ</button> : <></>}
+
+            <div className="modal fade" id="newTrade" tabIndex="-1" aria-hidden='true'>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">فۆرمی زیادکردن</h5>
+                            <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form >
+                                <label for="name" className="form-label">ناو</label>
+                                <input type="text" id="name" className="form-control" aria-describedby="name" value={naw} onChange={(e) => setName(e.target.value)} />
+                                <label for="name" className="form-label">ماونیشان</label>
+                                <input type="text" id="name" className="form-control" aria-describedby="name" value={address} onChange={(e) => setAdd(e.target.value)} />
+                                <label for="name" className="form-label">ژ.موبایل</label>
+                                <input type="text" id="name" className="form-control" aria-describedby="name" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                <label for="code" className="form-label">کۆد</label>
+                                <input type="text" id="code" className="form-control" aria-describedby="code" value={code} onChange={(e) => setCode(e.target.value)} />
+                                <label for="loan" className="form-label">قەرزی کۆن</label>
+                                <input type="number" id="loan" className="form-control" aria-describedby="loan" value={exchange} onChange={(e) => setExchange(e.target.value)} />
+                                <button className="btn btn-info" type="button" onClick={() => addTrade(
+                                    {
+                                        "name": naw,
+                                        "code": code,
+                                        "phone": phone,
+                                        "address": address,
+                                        "exchange": exchange,
+                                        "group": group,
+                                    }
+                                )}
+                                >کڕین</button>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
     )
 }
 

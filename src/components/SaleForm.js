@@ -131,7 +131,7 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                         </div>
                         <div className="col-4">
                             <p>کۆی کڕین : {wasl.totall}$</p>
-                            <p>داشکان : {wasl.discount}$ <button className=" d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#dicount">edit</button></p>
+                            <p>داشکان : {wasl.discount}$ <button className=" d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#dicount">داشکاندن</button></p>
                             <p>کۆو وەسڵ : {wasl.totallint}$</p>
                         </div>
                     </div>
