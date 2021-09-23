@@ -1,18 +1,19 @@
 import './App.css';
 import image from './Lays-Logo.png';
 import { useState } from 'react'
-import Sales from './components/Sales'
 import { useEffect } from 'react';
 // import {BrowserRouter,Route} from 'react-router-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import SaleForm from './components/SaleForm';
+
+import Sales from './components//sell/Sales'
+import SaleForm from './components/sell/SaleForm';
 import Header from './components/Header';
 import moment from 'moment';
 import OrderHatu from './components/OrderHatu';
 import OrderForm from './components/OrderForm';
-import Items from './components/Items'
+import Items from './components/item/Items'
 import { Locals } from './components/Locals';
-import Trader from './components/Trader';
+import Trader from './components/trader/Trader';
 import Bank from './components/Bank';
 import Payments from './components/Payments';
 import PaymentForm from './components/PaymentForm';
@@ -371,18 +372,18 @@ const App = () => {
   const filterBydate = async (date, id) => {
     console.log(id);
     setSales(sales.filter((sale) => (
-      sale.local_id === id 
+      sale.local_id === id
     )))
     if ((Boolean(date))) {
 
       setSales(sales.filter((sale) => (
-        moment(new Date(sale.date)).format("yyyy-MM-DD") === date 
+        moment(new Date(sale.date)).format("yyyy-MM-DD") === date
       )))
       setOrders(orders.filter((orders) => (
         moment(new Date(orders.date)).format("yyyy-MM-DD") === date
       )))
 
-    } 
+    }
     // const res = await fetch(url+'sells/?group=' + groupId+'&local_id='+id)
     // const data = await res.json()
     // setSales(data)
@@ -472,6 +473,15 @@ const App = () => {
 
   }
 
+
+  const itemzPost = async (post) => {
+    
+    post.map((moo) => {
+      itemzPost(moo)
+    })
+
+  }
+
   const addGroupEvent = async (post) => {
     const res = await fetch(url + 'group/',
       {
@@ -483,9 +493,10 @@ const App = () => {
 
       })
 
-    let server = await fetchGroups()
-    setGroups(server)
-    getState()
+      const data =res.json()
+    // let server = await fetchGroups()
+    // setGroups(server)
+    // getState()
   }
 
   const addLocal = async (post) => {
@@ -590,7 +601,7 @@ const App = () => {
     getState()
   }
 
-  const addPayLoan = async (pay, bank) => {
+  const addPayLoan = async (trader, bank) => {
     const res = await fetch(url + 'bank/',
       {
         method: 'POST',
@@ -611,8 +622,8 @@ const App = () => {
             'Content-type': 'application/json'
           },
           body: JSON.stringify({
-            "group": pay.group,
-            "trader": pay.trader,
+            "group": groupId,
+            "trader": trader,
             "bank": d.id
           })
         })
@@ -672,7 +683,7 @@ const App = () => {
     <Router>
       <div className=''>
 
-        <Header addTrade={addTrade}  addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+        <Header vendor={vendorId}  locals={locals} addForm={addForm} search={search} addTrade={addTrade} addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
         <Route path='/' exact render={(props) => (
           <>
             <Bank group={groupId} banks={banks} addBuy={addBuy} />
@@ -687,7 +698,7 @@ const App = () => {
         />
         <Route path='/locals' exact render={(props) => (
           <>
-            <Locals addpay={addpay} locals={locals} group={groupId} regions={regions}  addRegion={addRegion} />
+            <Locals addpay={addpay} locals={locals} group={groupId} regions={regions} addRegion={addRegion} />
           </>
         )}
         />

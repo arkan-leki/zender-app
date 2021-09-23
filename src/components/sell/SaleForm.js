@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
 import * as moment from 'moment'
-import Item from './Item';
 import { useState } from 'react';
+import ItemModal from '../item/ItemModal';
+import Discount from './model/Discount';
 
 const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
     const [text, setText] = useState('')
-    const [DashText, setDashText] = useState('')
 
     let { id } = useParams();
     let waslz = sales.filter((mob) => mob.id == id)
@@ -124,61 +124,19 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                         </div>
                         <div className="col-4 ">
                             <p>
-                                <button className=" m-1 col-md-4  btn btn-success d-print-none" data-bs-toggle="modal" data-bs-target="#newForm">زیادکردن</button>
-
-                            </p>                            <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
+                                <ItemModal items={items} addtoListEvent={addtoListEvent}/>
+                            </p>
+                            <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
                             <p>عدد {summer} کارتۆن</p>
                         </div>
                         <div className="col-4">
                             <p>کۆی کڕین : {wasl.totall}$</p>
-                            <p>داشکان : {wasl.discount}$ <button className=" d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#dicount">داشکاندن</button></p>
+                            <p>داشکان : {wasl.discount}$ <Discount dashkan={dashkan} wasl={wasl} /></p>
                             <p>کۆو وەسڵ : {wasl.totallint}$</p>
                         </div>
                     </div>
-                    <div className="modal fade" id="dicount" tabIndex="-1" aria-hidden='true'>
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title">لیستەکەم</h5>
-                                    <button className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div className="form-item">
-                                        <label htmlFor="">داشکان: </label>
-                                        <input className="form-control" type="number" placeholder={wasl.discount} value={DashText} onChange={(e) => setDashText(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={() => dashkan(wasl.id, {
-                                        "discount": DashText,
-                                    })}>خەزن</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div></>
+                    </>
             ))}
-            <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true'>
-                <div className="modal-dialog modal-fullscreen">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">کۆمپانیاکان</h5>
-                            <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <h1 className="align-left">items</h1>
-                            <div className="row row-cols-1 row-cols-md-4 text-center g-4">
-                                {items.map((item, index) => (
-                                    <Item key={index} item={item} addtoList={addtoListEvent} />
-                                )
-                                )}
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     )
 }

@@ -11,7 +11,6 @@ const Bank = ({ banks, addBuy, group }) => {
     return (
         <div>
             {group ? <button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay">گۆرینی قاسە</button> : <></>}
-            {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
             <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">

@@ -14,25 +14,22 @@ const Items = ({ items, traders, filterItems }) => {
                     <div className="input-group news-input">
                         <input id='text' type="text" className="form-control" placeholder=""
                             aria-label="Eneter Your price" aria-describedby="button-addon2" value={text} onChange={(e) => setText(e.target.value)} />
-
                         <select className=" form-control " aria-label="Default select example" >
                             <option value={tradeID} onClick={() => setTradeID("")}>کۆمپانیا</option>
                             {traders.map((trader) => (
                                 <option key={trader.id} value={tradeID} onClick={(e) => setTradeID(trader)} >{trader.name}</option>
                             ))}
                         </select>
-                        {/* <label for="name" className="form-label">کۆمپانیا</label>
-                                <Select defaultValue={tradersopt[1]}  onChange={(e) => setTradeID(e.value)} options={tradersopt} /> */}
                         <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filterItems(tradeID, text)}>گەڕان</button>
                     </div>
                 </div>
+
             </div>
             <hr />
             <div className="border border-5">
                 <div className="table-responsive-xl aling.center ">
                     <table className="table table-striped table-hover align-middle caption-top">
                         <caption>مەوادەکان</caption>
-
                         <thead>
                             <tr>
                                 <th className="d-print-none">زنجیرە</th>
@@ -55,7 +52,7 @@ const Items = ({ items, traders, filterItems }) => {
                                 <tr key={index}>
                                     <th className="d-print-none">{item.id}</th>
                                     <th><img src={item.image}
-                                        className="img-fluid rounded-start m-2" alt="....."  width={50+'px'}/>{item.barcode}</th>
+                                        className="img-fluid rounded-start m-2" alt="....." width={50 + 'px'} />{item.barcode}</th>
                                     <th>{item.group}</th>
                                     <th >{item.trader}</th>
                                     <th>{item.name}</th>
