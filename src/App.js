@@ -57,7 +57,7 @@ const App = () => {
   const [payments, setPayments] = useState([])
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
-  const url = 'http://127.0.0.1:8000/api/'
+  const url = 'https://zender-app.herokuapp.com/api/'
 
   useEffect(() => {
     const getOrders = async () => {
