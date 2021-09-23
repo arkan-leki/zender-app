@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import * as moment from 'moment'
 import { useState } from 'react';
 import ItemModal from '../item/ItemModal';
 import Discount from './model/Discount';
 
-const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
+const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
     const [text, setText] = useState('')
 
     let { id } = useParams();
@@ -124,7 +124,7 @@ const SaleForm = ({ sales, items, carts, deleteEvent, addGO, dashkan, locals, im
                         </div>
                         <div className="col-4 ">
                             <p>
-                                <ItemModal items={items} addtoListEvent={addtoListEvent}/>
+                                <ItemModal cats={cats} searchItem={searchItem} items={items} addtoListEvent={addtoListEvent}/>
                             </p>
                             <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
                             <p>عدد {summer} کارتۆن</p>

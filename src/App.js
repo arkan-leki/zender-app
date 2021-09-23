@@ -1,5 +1,5 @@
 import './App.css';
-import image from './Lays-Logo.png';
+import image from './logo.jpg';
 import { useState } from 'react'
 import { useEffect } from 'react';
 // import {BrowserRouter,Route} from 'react-router-dom'
@@ -18,6 +18,7 @@ import Bank from './components/Bank';
 import Payments from './components/Payments';
 import PaymentForm from './components/PaymentForm';
 import LocalForm from './components/local/LocalForm';
+import ItemForm from './components/item/ItemForm';
 // function App() {
 //   return (
 //     <div className="App">
@@ -222,7 +223,7 @@ const App = () => {
   }
 
   const deleteFromList = (id) => {
-    setCarts(carts.filter((mob) => mob.id !== id))
+    setCarts(carts.filter((mob) => mob.id != id))
   }
 
   const dashkanEvent = async (id, discount) => {
@@ -253,7 +254,7 @@ const App = () => {
       })
 
     getState()
-    setCarts(carts.filter((mob) => mob.id !== kala.item))
+    setCarts(carts.filter((mob) => mob.id != kala.item))
   }
 
 
@@ -291,7 +292,7 @@ const App = () => {
   const searchTrader = async (text) => {
     const server = await fetchTraders()
     setTraders(server)
-    if (text !== "") {
+    if (text != "") {
       setTraders(traders.filter((people) => {
         return people.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           people.code.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
@@ -305,7 +306,7 @@ const App = () => {
   const search = async (text) => {
     const server = await fetchLocals()
     setLocals(server)
-    if (text !== "") {
+    if (text != "") {
       setLocals(locals.filter((people) => {
         return people.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           people.region.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
@@ -316,17 +317,38 @@ const App = () => {
   }
 
 
-  const itemFilter = async (text) => {
+  const itemFilter = async (text, id) => {
     const server = await fetchItems()
-    setItems(server)
-    if (text !== "") {
 
+    setItems(server)
+
+    if (text != '' || id != '') {
       setItems(items.filter((kala) => {
-        return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-          kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-          kala.group.toString().toLowerCase().includes(text.toString().toLowerCase())
+        return kala.category == id
       }))
+      if(text!=''){
+        setItems(items.filter((kala) => {
+          return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+            kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+            kala.group.toString().toLowerCase().includes(text.toString().toLowerCase())
+        }))
+      }
+    }else{
+      
     }
+    // if (text != '') {
+    //   if (id== {
+    //     setItems(items.filter((kala) => {
+    //       return kala.category == id
+    //     }))
+    //   }
+    //   setItems(items.filter((kala) => {
+    //     return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+    //       kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+    //       kala.group.toString().toLowerCase().includes(text.toString().toLowerCase())
+    //   }))
+    // } 
+
 
   }
 
@@ -370,17 +392,20 @@ const App = () => {
   }
 
   const filterBydate = async (date, id) => {
-    console.log(id);
-    setSales(sales.filter((sale) => (
-      sale.local_id === id
+    const server = await fetchSales()
+    setSales(server)
+    if(id!=''){
+      setSales(sales.filter((sale) => (
+      sale.local_id == id
     )))
+    }
     if ((Boolean(date))) {
 
       setSales(sales.filter((sale) => (
-        moment(new Date(sale.date)).format("yyyy-MM-DD") === date
+        moment(new Date(sale.date)).format("yyyy-MM-DD") == date
       )))
       setOrders(orders.filter((orders) => (
-        moment(new Date(orders.date)).format("yyyy-MM-DD") === date
+        moment(new Date(orders.date)).format("yyyy-MM-DD") == date
       )))
 
     }
@@ -415,7 +440,7 @@ const App = () => {
       })
 
     getState()
-    setCarts(carts.filter((mob) => mob.id !== kala.item))
+    setCarts(carts.filter((mob) => mob.id != kala.item))
   }
 
   const dashkanBuyEvent = async (id, discount) => {
@@ -435,26 +460,36 @@ const App = () => {
 
   const filterItems = async (traderId, text) => {
 
-    console.log(Boolean(traderId));
+    const server = await fetchItems()
+    setItems(server)
 
-    if (traderId && text) {
+    if (text != '' || traderId != '') {
       setItems(items.filter((kala) => {
-        return kala.trader.toString().toLowerCase().includes(traderId.toString().toLowerCase()) && (kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-          kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()))
+        return kala.trader_id == traderId
       }))
-    } else if (traderId) {
-      setItems(items.filter((kala) => {
-        return kala.trader.toString().toLowerCase().includes(traderId.toString().toLowerCase())
-      }))
-    } else if (text) {
-      setItems(items.filter((kala) => {
-        return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-          kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-          kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
-      }))
-    } else {
-      const server = await fetchItems()
-      setItems(server)
+      if(text!=''){
+        setItems(items.filter((kala) => {
+          return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+            kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+            kala.category_name.toString().toLowerCase().includes(text.toString().toLowerCase())
+        }))
+    }
+
+    // if (traderId != '' && text != '') {
+    //   setItems(items.filter((kala) => {
+    //     return kala.trader.toString().toLowerCase().includes(traderId.toString().toLowerCase()) && (kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+    //       kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()))
+    //   }))
+    // } else if (traderId !='') {
+    //   setItems(items.filter((kala) => {
+    //     return kala.trader_id == traderId
+    //   }))
+    // } else if (text!='') {
+    //   setItems(items.filter((kala) => {
+    //     return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+    //       kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+    //       kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
+    //   }))
     }
   }
 
@@ -473,14 +508,29 @@ const App = () => {
 
   }
 
+  const itemEdit = async (id,post) => {
+    const res = await fetch(url + 'item/'+id+"/",
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
 
-  const itemzPost = async (post) => {
-    
-    post.map((moo) => {
-      itemzPost(moo)
-    })
+      })
+
+    getState()
 
   }
+
+
+  // const itemzPost = async (post) => {
+
+  //   post.map((moo) => {
+  //     itemzPost(moo)
+  //   })
+
+  // }
 
   const addGroupEvent = async (post) => {
     const res = await fetch(url + 'group/',
@@ -493,7 +543,7 @@ const App = () => {
 
       })
 
-      const data =res.json()
+    // const data = res.json()
     // let server = await fetchGroups()
     // setGroups(server)
     // getState()
@@ -683,7 +733,7 @@ const App = () => {
     <Router>
       <div className=''>
 
-        <Header vendor={vendorId}  locals={locals} addForm={addForm} search={search} addTrade={addTrade} addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+        <Header vendor={vendorId} locals={locals} addForm={addForm} search={search} addTrade={addTrade} addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
         <Route path='/' exact render={(props) => (
           <>
             <Bank group={groupId} banks={banks} addBuy={addBuy} />
@@ -717,7 +767,13 @@ const App = () => {
         />
         <Route path='/items' exact render={(props) => (
           <>
-            <Items cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} />
+            <Items cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
+          </>
+        )}
+        />
+        <Route path='/item/:id' exact render={(props) => (
+          <>
+            <ItemForm cats={cats} items={items} group={groupId} traders={traders} />
           </>
         )}
         />
@@ -729,7 +785,7 @@ const App = () => {
         />
         <Route path='/form/:id' exact render={(props) => (
           <>
-            <SaleForm addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
+            <SaleForm searchItem={itemFilter} cats={cats} addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
           </>
         )}
         />

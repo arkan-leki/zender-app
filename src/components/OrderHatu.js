@@ -2,7 +2,7 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder , filterBydate}) => {
+const OrderHatu = ({ orders, group, traders, searchTrader, addOrder, filterBydate }) => {
     const [text, setText] = useState('')
     const [date, setDate] = useState('')
     return (
@@ -11,7 +11,7 @@ const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder , filterBy
         }} ><div className="d-print-none">
                 <div className="container-fluid">
                     <div className="">
-                        {group !== '' ? <button className=" m-1 col-md-4  btn btn-success" data-bs-toggle="modal" data-bs-target="#newForm">باری نوێ</button> : <></>}
+                        {group != '' ? <button className=" m-1 col-md-4  btn btn-success" data-bs-toggle="modal" data-bs-target="#newForm">باری نوێ</button> : <></>}
                         <div className="row">
                             <input className="col-md-8 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} />
                             <button className="col-md-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date)}>گەڕان</button>
@@ -81,9 +81,10 @@ const OrderHatu = ({ orders ,group , traders , searchTrader, addOrder , filterBy
                                     <tbody>
                                         {traders.map((trader, index) => (
                                             <tr key={index}>
-                                                <td scope="row">{trader.name}</td>
+                                                <td>{trader.name}</td>
                                                 <td>{trader.code}</td>
-                                                <td>                                                <button className="btn btn-info" type="button" onClick={() => addOrder({"group": group, "trader": trader.id })}>کڕین</button></td>
+                                                <td>
+                                                    <button className="btn btn-info" type="button" onClick={() => addOrder({ "group": group, "trader": trader.id })}>کڕین</button></td>
                                             </tr>
                                         ))}
                                     </tbody>

@@ -1,11 +1,10 @@
-import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
+import {Link, useParams } from 'react-router-dom';
 import * as moment from 'moment'
 import { useState } from 'react';
 
-const LocalForm = ({ image, locals }) => {
+const LocalForm = ({ image, locals}) => {
     let { id } = useParams();
     let people = locals.filter((mob) => mob.id == id)
-    const [cats, setCats] = useState([])
 
     const lists = (pp) => {
         let arr = []
@@ -99,7 +98,7 @@ const LocalForm = ({ image, locals }) => {
                                     "attempts": ppl.attempts,
                                     "payments": ppl.payment_compnay
                                 })}
-                                {cats.map((attempt, index) => (
+                                {/* {cats.map((attempt, index) => (
                                     <tr key={index}>
                                         <th scope="row"> <Link to={`/paymentForm/${attempt.id}`}>کڕێن {attempt.id} </Link></th>
                                         <th scope="row" >{attempt.local_name}</th>
@@ -108,7 +107,7 @@ const LocalForm = ({ image, locals }) => {
                                         <th scope="row">{attempt.discount}$</th>
                                         <th scope="row">{attempt.date}</th>
                                     </tr>
-                                ))}
+                                ))} */}
                                 {/* {ppl.attempts.map((attempt, index) => (
                                     <>
                                         <tr key={index}>

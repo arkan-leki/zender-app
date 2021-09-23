@@ -40,7 +40,7 @@ const NewSell = ({locals, search, addForm, group, vendor}) => {
                                 <tbody>
                                     {locals.map((people, index) => (
                                         <tr key={index}>
-                                            <td scope="row">{people.name}</td>
+                                            <th scope="row">{people.name}</th>
                                             <td>{people.phone}</td>
                                             <td>{people.code}</td>
                                             <td>{people.region}</td>

@@ -89,10 +89,10 @@ const Header = ({ addTrade, group, groups, setGroupEvent, vendors, addLocal, set
                 <NewVendor regions={regions} addVendor={addVendor} groups={groups} />
                 <NewReg addRegion={addRegion} />
                 <NewCat addCat={addCat} />
-                {(group !== "") ? <NewItem group={group} itemPost={itemPost} traders={traders} cats={cats} /> : <></>}
+                {(group != "") ? <NewItem group={group} itemPost={itemPost} traders={traders} cats={cats} /> : <></>}
                 <NewLocal addLocal={addLocal} regions={regions} />
-                {group !== '' ? <NewTrade group={group} addTrade={addTrade} /> : <></>}
-                {group !== '' && vendor != '' ? <NewSell locals={locals} addForm={addForm} search={search} group={group} vendor={vendor} /> : <></>}
+                {group != '' ? <NewTrade group={group} addTrade={addTrade} /> : <></>}
+                {group != '' && vendor != '' ? <NewSell locals={locals} addForm={addForm} search={search} group={group} vendor={vendor} /> : <></>}
             </div>
         </div>
     )

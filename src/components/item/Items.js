@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
+import ItemForm from './ItemForm'
 
-const Items = ({ items, traders, filterItems }) => {
+const Items = ({ items, traders, filterItems ,group ,cats , itemEdit }) => {
     const [tradeID, setTradeID] = useState('')
     const [text, setText] = useState('')
-    const tradersopt = traders.map((city) => ({ value: city.id, label: city.name }))
-
+    const tradersopt =  [{ value: '', label: 'hich' } ,...traders.map((city) => ({ value: city.id, label: city.name }))]
+   
     return (
         <section className="mx-auto" style={{ width: 100 + '%' }} id="items">
             <div className="container d-print-none p-5">
@@ -14,12 +15,7 @@ const Items = ({ items, traders, filterItems }) => {
                     <div className="input-group news-input">
                         <input id='text' type="text" className="form-control" placeholder=""
                             aria-label="Eneter Your price" aria-describedby="button-addon2" value={text} onChange={(e) => setText(e.target.value)} />
-                        <select className=" form-control " aria-label="Default select example" >
-                            <option value={tradeID} onClick={() => setTradeID("")}>کۆمپانیا</option>
-                            {traders.map((trader) => (
-                                <option key={trader.id} value={tradeID} onClick={(e) => setTradeID(trader)} >{trader.name}</option>
-                            ))}
-                        </select>
+                        <Select className="form-control" onChange={(e) => setTradeID(e.value)} options={tradersopt} />
                         <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filterItems(tradeID, text)}>گەڕان</button>
                     </div>
                 </div>
@@ -36,6 +32,7 @@ const Items = ({ items, traders, filterItems }) => {
                                 <th>کۆد</th>
                                 <th>گروپ</th>
                                 <th >ناوی کۆمپانیا</th>
+                                <th>جۆر</th>
                                 <th>ناوی مەواد</th>
                                 <th className="d-print-none">نرخ</th>
                                 <th className="d-print-none">رێژەی قازانج</th>
@@ -55,9 +52,10 @@ const Items = ({ items, traders, filterItems }) => {
                                         className="img-fluid rounded-start m-2" alt="....." width={50 + 'px'} />{item.barcode}</th>
                                     <th>{item.group}</th>
                                     <th >{item.trader}</th>
-                                    <th>{item.name}</th>
+                                    <th >{item.category_name}</th>
+                                    <th><ItemForm item={item} cats={cats} group={group} traders={traders} itemEdit={itemEdit} /></th>
                                     <th className="d-print-none">{item.price}$</th>
-                                    <th className="d-print-none">{item.addprice}%</th>
+                                    <th className="d-print-none">{item.addprice*100}%</th>
                                     <th className="d-print-none">{item.finalprice}$</th>
                                     <th>{item.bag}</th>
                                     <th > {item.quantity} دانە</th>

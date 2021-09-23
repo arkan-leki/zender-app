@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Link, Route, useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 import * as moment from 'moment'
 
 const PaymentForm = ({ image, payments }) => {

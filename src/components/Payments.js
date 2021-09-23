@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Select from 'react-select'
 
 const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
-    const [text, setText] = useState('')
+    // const [text, setText] = useState('')
     const [date, setDate] = useState('')
     const [localID, setlocalID] = useState('')
     const [loan, setLoan] = useState('')
@@ -18,7 +18,7 @@ const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
             <div className="d-print-none">
                 <div className="container-fluid">
                     <div className="">
-                        {group !== '' && payments != '' ? <button className=" m-1 col-md-2  btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button> : <></>}
+                        {group != '' && payments != '' ? <button className=" m-1 col-md-2  btn btn-info" data-bs-toggle="modal" data-bs-target="#newForm">وەسڵی نوێ</button> : <></>}
                         <div className="row">
                             <input className="col-md-4 m-4 " type="date" value={date} placeholder="11/01/2021" aria-label="date" onChange={(e) => setDate(e.target.value)} />
                             <button className="col-md-2 m-4 btn btn-outline-success" type="submit" onClick={() => filterBydate(date, localID)}>گەڕان</button>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Select from 'react-select'
 
 export const Locals = ({ locals, group, addpay }) => {
     const [loan, setLoan] = useState('')

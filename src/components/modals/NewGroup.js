@@ -6,7 +6,7 @@ const NewGroup = ({ addGroup }) => {
 
     return (
         <div>
-            <button href="#add-group"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#group">
+            <button href="#add-group"  type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#group">
                 زیادکردنی گرۆپ
             </button>
             <div className="modal fade" id="group" tabIndex="-1" aria-labelledby="group" aria-hidden="true">

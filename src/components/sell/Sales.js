@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import Select from 'react-select'
-import NewSell from '../modals/NewSell'
 import SaleList from './model/SaleList'
 
 const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, addReSell }) => {
     const [date, setDate] = useState('')
     const [localID, setlocalID] = useState('')
-    const groupsopt = locals.map((city) => ({ value: city.id, label: city.name }))
+    const groupsopt =  [{ value: '', label: 'hich' } ,...locals.map((city) => ({ value: city.id, label: city.name }))]
 
     return (
         <>
