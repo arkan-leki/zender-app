@@ -12,12 +12,12 @@ import moment from 'moment';
 import OrderHatu from './components/OrderHatu';
 import OrderForm from './components/OrderForm';
 import Items from './components/item/Items'
-import { Locals } from './components/Locals';
+import { Locals } from './components/local/Locals';
 import Trader from './components/trader/Trader';
 import Bank from './components/Bank';
 import Payments from './components/Payments';
 import PaymentForm from './components/PaymentForm';
-import LocalForm from './components/LocalForm';
+import LocalForm from './components/local/LocalForm';
 // function App() {
 //   return (
 //     <div className="App">
