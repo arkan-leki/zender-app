@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import * as moment from 'moment'
 import { useState } from 'react';
 import ItemModal from '../item/ItemModal';
-import Discount from './model/Discount';
+import Discount from '../modals/Discount';
 
 const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
     const [text, setText] = useState('')
@@ -13,14 +13,14 @@ const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, d
     let wights = 0.0
     let summerprice = 0
     return (
-        <div className="mx-auto border border-5 p-5" style={{ width: 700 + 'px' }}>
+        <div className="mx-auto border border-5 p-5" style={{ width: 100 + '%' }}>
             <div className="row border ">
                 <div className="col-4 ">
                     <h4>کۆمپانیایی زەندەر</h4>
                     <p>بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
                 </div>
                 <div className="text-center col-4">
-                    <img src={image} className="img-thumbnail" alt="..." width={100 + '%'} />
+                    <img src={image} className="img-thumbnail" alt="..." width={50 + '%'} />
                 </div>
                 <div className="col-4">
                     <h4>پسولەی فرۆش

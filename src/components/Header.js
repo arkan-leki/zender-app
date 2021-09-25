@@ -4,12 +4,14 @@ import NewCat from './modals/NewCat'
 import NewGroup from './modals/NewGroup'
 import NewItem from './modals/NewItem'
 import NewLocal from './modals/NewLocal'
+import NewOrder from './modals/NewOrder'
+import NewPay from './modals/NewPay'
 import NewReg from './modals/NewReg'
 import NewSell from './modals/NewSell'
 import NewTrade from './modals/NewTrade'
 import NewVendor from './modals/NewVendor'
 
-const Header = ({ addTrade, group, groups, setGroupEvent, vendors, addLocal, setVendorEvent, addGroup, addRegion, addVendor, regions, addCat, cats, traders, itemPost , vendor, locals, addForm, search }) => {
+const Header = ({ addpay, addTrade, group , searchTrader, addOrder, groups, setGroupEvent, vendors, addLocal, setVendorEvent, addGroup, addRegion, addVendor, regions, addCat, cats, traders, itemPost , vendor, locals, addForm, search }) => {
 
     return (
         <div className="d-print-none">
@@ -84,7 +86,7 @@ const Header = ({ addTrade, group, groups, setGroupEvent, vendors, addLocal, set
                 </div>
             </nav>
             {/* <!-- Modal --> */}
-            <div className="btn-group" role="group" aria-label="Basic example">
+            <div className="btn-group mb-5" role="group" aria-label="Basic example">
                 <NewGroup addGroup={addGroup} />
                 <NewVendor regions={regions} addVendor={addVendor} groups={groups} />
                 <NewReg addRegion={addRegion} />
@@ -93,6 +95,8 @@ const Header = ({ addTrade, group, groups, setGroupEvent, vendors, addLocal, set
                 <NewLocal addLocal={addLocal} regions={regions} />
                 {group != '' ? <NewTrade group={group} addTrade={addTrade} /> : <></>}
                 {group != '' && vendor != '' ? <NewSell locals={locals} addForm={addForm} search={search} group={group} vendor={vendor} /> : <></>}
+                {group != '' ? <NewOrder searchTrader={searchTrader} group={group} traders={traders} search={search} addOrder={addOrder} /> : <></>}
+                {group ? <NewPay addpay={addpay , group} /> : <></>}
             </div>
         </div>
     )

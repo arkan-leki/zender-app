@@ -1,14 +1,13 @@
 import { useParams } from 'react-router-dom';
 import * as moment from 'moment'
 import { useState } from 'react';
-import Item from './item/Item';
+import ItemModal from '../item/ItemModal';
+import Discount from '../modals/Discount';
 
-const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image, addtoListEvent , items}) => {
+const OrderForm = ({ orders, carts, cats, searchItem, deleteEvent, addGO, dashkan, image, addtoListEvent, items }) => {
     const [text, setText] = useState('')
     const [text2, setText2] = useState('')
     const [checked, setChecked] = useState(true);
-    const [DashText, setDashText] = useState('')
-    const [CodeText, setCodeText] = useState('')
     let { id } = useParams();
     let orderz = orders.filter((o) => o.id == id)
     let summer = 0
@@ -22,7 +21,7 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image, addtoLis
                     <p>بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
                 </div>
                 <div className="text-center col-4">
-                    <img src={image} className="img-thumbnail" alt="..." width={100 + '%'} />
+                    <img src={image} className="img-thumbnail" alt="..." width={50 + '%'} />
                 </div>
                 <div className="col-4">
                     <h4>پسولەی کڕین
@@ -51,7 +50,6 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image, addtoLis
 
                     </div>
                     <div key={index} className="table-responsive">
-
                         <table className=" table table-striped table-hover align-middle caption-top border border-5">
                             <thead className="table-dark">
                                 <tr>
@@ -115,72 +113,19 @@ const OrderForm = ({ orders, carts, deleteEvent, addGO, dashkan, image, addtoLis
                         </div>
                         <div className="col-4">
                             <p>
-                                {/* <Link className="btn d-print-none btn-info" to={`/itemOrderlist/${+order.id}`}>زیادکردن</Link> */}
-                                <button className=" m-1 col-md-4  btn btn-success" data-bs-toggle="modal" data-bs-target="#newForm">زیادکردن</button>
-
+                                <ItemModal cats={cats} searchItem={searchItem} items={items} addtoListEvent={addtoListEvent} />
                             </p>
                             <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
                             <p>عدد {summer} کارتۆن</p>
                         </div>
                         <div className="col-4">
                             <p>کۆی کڕین : {order.totall}$</p>
-                            <p>داشکان : {order.discount}$ <button className=" d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#dicount">edit</button></p>
+                            <p>داشکان : {order.discount}$ <Discount dashkan={dashkan} wasl={order} /></p>
                             <p>کۆو وەسڵ : {order.totallint}$</p>
                         </div>
                     </div>
-                    <div className="modal fade" id="dicount" tabIndex="-1" aria-hidden='true'>
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title">لیستەکەم</h5>
-                                    <button className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div className="form-item">
-                                        <label htmlFor="">داشکان: </label>
-                                        <input className="form-control" type="number" placeholder={order.discount} value={DashText} onChange={(e) => setDashText(e.target.value)} />
-                                    </div>
-                                    <div className="form-item">
-                                        <label htmlFor="">کۆدی پسولەی: </label>
-                                        <input className="form-control" type="number" placeholder={order.discount} value={CodeText} onChange={(e) => setCodeText(e.target.value)} />
-
-                                    </div>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={() => dashkan(order.id, {
-                                        "discount": DashText,
-                                        "code": CodeText,
-                                    })}>خەزن</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div></>
+                </>
             ))}
-        <div className="modal fade" id="newForm" tabIndex="-1" aria-hidden='true'>
-            <div className="modal-dialog modal-fullscreen">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">کۆمپانیاکان</h5>
-                        <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                    </div>
-                   
-                    <div className="modal-body">
-                        {/* <Link to={`/${url}/${id}`}><button className="btn btn-danger">go back</button></Link> */}
-                        <h1 className="align-left">items</h1>
-                        <div className="row row-cols-1 row-cols-md-4 text-center g-4">
-                            {items.map((item, index) => (
-                                <Item key={index} item={item} addtoList={addtoListEvent} />
-                            )
-                            )}
-                        </div>
-                    </div>
-                    <div className="modal-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
-
         </div>
     )
 }

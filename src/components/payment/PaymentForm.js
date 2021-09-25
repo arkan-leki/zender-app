@@ -13,7 +13,7 @@ const PaymentForm = ({ image, payments }) => {
                     <p>بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
                 </div>
                 <div className="text-center col-4">
-                    <img src={image} className="img-thumbnail" alt="..." width={100 + '%'} />
+                <img src={image} className="img-thumbnail" alt="..." width={50 + '%'} />
                 </div>
                 <div className="col-4">
                     <h4>پسولەی پارەدان

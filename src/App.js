@@ -1,5 +1,5 @@
 import './App.css';
-import image from './logo.jpg';
+import image from './zend.png';
 import { useState } from 'react'
 import { useEffect } from 'react';
 // import {BrowserRouter,Route} from 'react-router-dom'
@@ -9,16 +9,19 @@ import Sales from './components//sell/Sales'
 import SaleForm from './components/sell/SaleForm';
 import Header from './components/Header';
 import moment from 'moment';
-import OrderHatu from './components/OrderHatu';
-import OrderForm from './components/OrderForm';
+import OrderHatu from './components/order/OrderHatu';
+import OrderForm from './components/order/OrderForm';
 import Items from './components/item/Items'
 import { Locals } from './components/local/Locals';
 import Trader from './components/trader/Trader';
 import Bank from './components/Bank';
-import Payments from './components/Payments';
-import PaymentForm from './components/PaymentForm';
+import Payments from './components/payment/Payments';
+import PaymentForm from './components/payment/PaymentForm';
 import LocalForm from './components/local/LocalForm';
 import ItemForm from './components/item/ItemForm';
+import ItemDetail from './components/item/ItemDetail';
+import Pending from './components/Pending';
+
 // function App() {
 //   return (
 //     <div className="App">
@@ -57,7 +60,7 @@ const App = () => {
   const [payments, setPayments] = useState([])
   const [groupId, setGroupID] = useState('')
   const [vendorId, setVendorID] = useState('')
-  const url = 'https://zender-app.herokuapp.com/api/'
+  const url = 'http://127.0.0.1:8000/api/'
 
   useEffect(() => {
     const getOrders = async () => {
@@ -326,15 +329,15 @@ const App = () => {
       setItems(items.filter((kala) => {
         return kala.category == id
       }))
-      if(text!=''){
+      if (text != '') {
         setItems(items.filter((kala) => {
           return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
             kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
             kala.group.toString().toLowerCase().includes(text.toString().toLowerCase())
         }))
       }
-    }else{
-      
+    } else {
+
     }
     // if (text != '') {
     //   if (id== {
@@ -391,28 +394,57 @@ const App = () => {
     getState()
   }
 
-  const filterBydate = async (date, id) => {
+  const filterBydateSales = async (date, id) => {
     const server = await fetchSales()
     setSales(server)
-    if(id!=''){
+
+    if (id != '') {
       setSales(sales.filter((sale) => (
-      sale.local_id == id
-    )))
+        sale.local_id == id
+      )))
+
     }
     if ((Boolean(date))) {
 
       setSales(sales.filter((sale) => (
         moment(new Date(sale.date)).format("yyyy-MM-DD") == date
       )))
+
+    }
+  }
+
+  const filterBydateOrder = async (date, id) => {
+  
+    const server2 = await fetchOrders()
+    setOrders(server2)
+   
+    if (id != '') {
+      setOrders(orders.filter((sale) => (
+        sale.trader == id
+      )))
+    }
+    if ((Boolean(date))) {
       setOrders(orders.filter((orders) => (
         moment(new Date(orders.date)).format("yyyy-MM-DD") == date
       )))
-
+     
     }
-    // const res = await fetch(url+'sells/?group=' + groupId+'&local_id='+id)
-    // const data = await res.json()
-    // setSales(data)
+  }
 
+  const filterBydatePay = async (date, id) => {
+
+    const server3 = await fetchPayments()
+    setPayments(server3)
+    if (id != '') {
+      setPayments(payments.filter((sale) => (
+        sale.local == id
+      )))
+    }
+    if ((Boolean(date))) {
+      setPayments(payments.filter((orders) => (
+        moment(new Date(orders.date)).format("yyyy-MM-DD") == date
+      )))
+    }
 
   }
 
@@ -467,29 +499,29 @@ const App = () => {
       setItems(items.filter((kala) => {
         return kala.trader_id == traderId
       }))
-      if(text!=''){
+      if (text != '') {
         setItems(items.filter((kala) => {
           return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
             kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
             kala.category_name.toString().toLowerCase().includes(text.toString().toLowerCase())
         }))
-    }
+      }
 
-    // if (traderId != '' && text != '') {
-    //   setItems(items.filter((kala) => {
-    //     return kala.trader.toString().toLowerCase().includes(traderId.toString().toLowerCase()) && (kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-    //       kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()))
-    //   }))
-    // } else if (traderId !='') {
-    //   setItems(items.filter((kala) => {
-    //     return kala.trader_id == traderId
-    //   }))
-    // } else if (text!='') {
-    //   setItems(items.filter((kala) => {
-    //     return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-    //       kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-    //       kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
-    //   }))
+      // if (traderId != '' && text != '') {
+      //   setItems(items.filter((kala) => {
+      //     return kala.trader.toString().toLowerCase().includes(traderId.toString().toLowerCase()) && (kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+      //       kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()))
+      //   }))
+      // } else if (traderId !='') {
+      //   setItems(items.filter((kala) => {
+      //     return kala.trader_id == traderId
+      //   }))
+      // } else if (text!='') {
+      //   setItems(items.filter((kala) => {
+      //     return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+      //       kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+      //       kala.trader.toString().toLowerCase().includes(text.toString().toLowerCase())
+      //   }))
     }
   }
 
@@ -508,8 +540,8 @@ const App = () => {
 
   }
 
-  const itemEdit = async (id,post) => {
-    const res = await fetch(url + 'item/'+id+"/",
+  const itemEdit = async (id, post) => {
+    const res = await fetch(url + 'item/' + id + "/",
       {
         method: 'PATCH',
         headers: {
@@ -729,11 +761,16 @@ const App = () => {
     })
     getState()
   }
+
+  const sort = (sortKey) => {
+    let itemsort = items.sort((a, b) => a[sortKey].localeCompare(b[sortKey]))
+    setItems(itemsort)
+  }
+
   return (
     <Router>
-      <div className=''>
-
-        <Header vendor={vendorId} locals={locals} addForm={addForm} search={search} addTrade={addTrade} addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+      <Header addpay={addpay} searchTrader={searchTrader} group={groupId} traders={traders} search={search} addOrder={addOrder} vendor={vendorId} locals={locals} addForm={addForm} search={search} addTrade={addTrade} addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+      <div className='container-fluid'>
         <Route path='/' exact render={(props) => (
           <>
             <Bank group={groupId} banks={banks} addBuy={addBuy} />
@@ -742,7 +779,7 @@ const App = () => {
         />
         <Route path='/order' exact render={(props) => (
           <>
-            <OrderHatu searchTrader={searchTrader} filterBydate={filterBydate} orders={orders} group={groupId} traders={traders} search={search} addOrder={addOrder} />
+            <OrderHatu filterBydate={filterBydateOrder} orders={orders} traders={traders} />
           </>
         )}
         />
@@ -767,7 +804,7 @@ const App = () => {
         />
         <Route path='/items' exact render={(props) => (
           <>
-            <Items cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
+            <Items sort={sort} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
           </>
         )}
         />
@@ -777,9 +814,21 @@ const App = () => {
           </>
         )}
         />
+        <Route path='/itemDetail/:id' exact render={(props) => (
+          <>
+            <ItemDetail sales={sales} />
+          </>
+        )}
+        />
+        <Route path='/pending' exact render={(props) => (
+          <>
+            <Pending sales={sales} />
+          </>
+        )}
+        />
         <Route path='/forms' exact render={(props) => (
           <>
-            <Sales addReSell={addReSell} items={items} filterBydate={filterBydate} vendor={vendorId} group={groupId} search={search} locals={locals} sales={sales} addForm={addForm} />
+            <Sales addReSell={addReSell} items={items} filterBydate={filterBydateSales} vendor={vendorId} group={groupId} search={search} locals={locals} sales={sales} addForm={addForm} />
           </>
         )}
         />
@@ -792,14 +841,14 @@ const App = () => {
 
         <Route path='/order/:id' exact render={(props) => (
           <>
-            <OrderForm items={items} addtoListEvent={addtoListEvent} search={itemFilter} group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent} />
+            <OrderForm searchItem={itemFilter} cats={cats} items={items} addtoListEvent={addtoListEvent} search={itemFilter} group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent} />
           </>
         )}
         />
 
         <Route path='/payments' exact render={(props) => (
           <>
-            <Payments payments={payments} locals={locals} group={groupId} addpay={addpay} />
+            <Payments payments={payments} locals={locals} group={groupId} filterBydate={filterBydatePay} />
           </>
         )}
         />
