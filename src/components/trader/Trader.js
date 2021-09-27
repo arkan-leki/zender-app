@@ -40,9 +40,9 @@ const Trader = ({ group, traders, addPayLoan }) => {
                                 <td>{mob.totallLoan}$</td>
                                 <td>{mob.mawe}$</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
-                                {group?<td><button className="btn btn-success d-print-none" data-bs-toggle="modal" data-bs-target="#pay"  onClick={()=>setId(mob.id)}>پارەدان</button></td>:<></>}
+                                {group?<td><button className="btn btn-success d-print-none" data-bs-toggle="modal" data-bs-target="#lohan"  onClick={()=>setId(mob.id)}>پارەدان</button></td>:<></>}
                                 {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
-                                <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
+                                <div className="modal fade" id="lohan" tabIndex="-1" aria-hidden='true'>
                                     <div className="modal-dialog">
                                         <div className="modal-content">
                                             <div className="modal-header">

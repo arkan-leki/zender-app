@@ -31,7 +31,7 @@ const NewVendor = ({ addVendor ,groups ,regions }) => {
                                         <option key={index} value={region.id} >{region.name}</option>
                                     )) : <></>}
                                 </select>
-                                <label for="name" className="form-label">بنکە</label>
+                                <label for="name" className="form-label">گرۆپ</label>
                                 <Select defaultValue={groupsopt[1]} onChange={(e) => setGro(e.value)} options={groupsopt} />
                             </form>
                         </div>

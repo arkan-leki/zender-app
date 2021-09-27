@@ -2,10 +2,14 @@ import React from 'react'
 import { useParams } from 'react-router';
 import { useState, useEffect } from "react";
 import axios from 'axios'
+import ItemForm from './ItemForm';
 
-const ItemDetail = () => {
+const ItemDetail = ({itemEdit}) => {
     let { id } = useParams();
     const [data, setData] = useState([]);
+    const [cats, setCat] = useState([]);
+    const [items, setItems] = useState([]);
+
     const fetchData = () => {
         axios.get("http://127.0.0.1:8000/api/sale/").then(res => {
             console.log(res);
@@ -15,12 +19,32 @@ const ItemDetail = () => {
         })
     }
 
+    const fetchCats = () => {
+        axios.get("http://127.0.0.1:8000/api/cat/").then(res => {
+            console.log(res);
+            setCat(res.data)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    const fetchItems = () => {
+        axios.get("http://127.0.0.1:8000/api/items/"+id+"/").then(res => {
+            console.log(res);
+            setItems(res.data)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     useEffect(() => {
         fetchData();
+        fetchCats();
+        fetchItems()
     }, []);
 
     return (
         <div className="table-responsive-xl aling.center ">
+            <ItemForm item={items} cats={cats} itemEdit={itemEdit} />
             <table className="table table-striped table-hover align-middle caption-top">
                 <thead>
                     <tr>

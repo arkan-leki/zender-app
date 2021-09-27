@@ -53,7 +53,7 @@ const Pending = () => {
                             <th>{item.price}$</th>
                             <th>{item.date}</th>
                             <th>{item.sell}</th>
-                            <th><input className="form-control" type="checkbox" name="status" id={i} checked={item.status} onClick={(e) => setStat(item)} /></th>
+                            <th><input type="checkbox" name="status" id={i} checked={item.status} onClick={(e) => setStat(item)} /></th>
                         </tr>
                     ))}
                     {sales.map((item, i) => (

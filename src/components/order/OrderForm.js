@@ -14,8 +14,8 @@ const OrderForm = ({ orders, carts, cats, searchItem, deleteEvent, addGO, dashka
     let wights = 0.0
     let summerprice = 0
     return (
-        <div className="mx-auto border border-5 p-5" style={{ width: 100 + '%' }}>
-            <div className="row border ">
+        <div className="mx-auto" style={{ width: 90 + '%' }}>
+            <div className="row border border-4">
                 <div className="col-4 ">
                     <h4>کۆمپانیایی زەندەر</h4>
                     <p>بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
@@ -27,28 +27,31 @@ const OrderForm = ({ orders, carts, cats, searchItem, deleteEvent, addGO, dashka
                     <h4>پسولەی کڕین
                     </h4>
                     <p>
-                        Tel: 07709994444 - 09933338888
+                        07719930849 - محمد الزندی
+                        {/* {group.phone} */}
                     </p>
                 </div>
             </div>
             {orderz.map((order, index) => (
                 <>
                     {/* <h4>{order.id}</h4> */}
-                    <hr />
-                    <div className="row fs-6">
-                        <div className="col-8 border row">
-                            <div className="col-6"> <p>ناو : {order.trader_name}</p>
-                                <p>ناو : {order.group_name}</p></div>
-                            <div className="col-6"> <p>کۆد : {order.code}</p>
+                    <br />
+                    <div className="row border border-4">
+                        <div className="row col-8">
+                            <div className="col"> <p>ناوی کۆمپانیا : {order.trader_name}</p>
+                                <p>گروپ : {order.group_name}</p></div>
+                            <div className="col"> <p>ژمارەی داواکاری : {order.code}</p>
                             </div>
                         </div>
-                        <div className="col-4 border text-center">
+                        <div className="col-4 bg-warning border border-4 border-danger text-center">
                             <p>بەرواری کڕین</p>
                             <p>{moment(new Date(order.date)).format("DD/MM/YYYY")}</p>
                             <p>زنجیرە {order.id}</p>
                         </div>
 
                     </div>
+                    <br />
+
                     <div key={index} className="table-responsive">
                         <table className=" table table-striped table-hover align-middle caption-top border border-5">
                             <thead className="table-dark">
@@ -105,7 +108,7 @@ const OrderForm = ({ orders, carts, cats, searchItem, deleteEvent, addGO, dashka
                             </tbody>
                         </table>
                     </div>
-                    <div className="row">
+                    <div className="row border  border-4 ">
                         <div className="col-4">
                             <p>پارەدان بە قەرز</p>
                             <p>قەرزی پێشوو : {(order.trader_mawe - order.totallint).toFixed(2)}$</p>
@@ -123,6 +126,8 @@ const OrderForm = ({ orders, carts, cats, searchItem, deleteEvent, addGO, dashka
                             <p>داشکان : {order.discount}$ <Discount dashkan={dashkan} wasl={order} /></p>
                             <p>کۆو وەسڵ : {order.totallint}$</p>
                         </div>
+                        <p>واژۆی وردبینی </p>
+                        <h5>واژۆی بەرێوەبەر </h5>
                     </div>
                 </>
             ))}

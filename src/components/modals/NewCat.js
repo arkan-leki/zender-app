@@ -24,7 +24,7 @@ const NewCat = ({addCat}) => {
                                         "deleted": false
                                     }
                                 )}
-                                >کڕین</button>
+                                >خەزن</button>
                             </form>
                         </div>
                         <div className="modal-footer">

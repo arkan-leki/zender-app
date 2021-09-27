@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 
-const NewOrder = ({ group, traders , searchTrader, addOrder }) => {
+const NewOrder = ({ group, traders, searchTrader, addOrder }) => {
     const [text, setText] = useState('')
+    const [code, setCode] = useState('')
+
 
     return (
         <div>
@@ -37,8 +39,10 @@ const NewOrder = ({ group, traders , searchTrader, addOrder }) => {
                                         <tr key={index}>
                                             <td>{trader.name}</td>
                                             <td>{trader.code}</td>
+                                            <input id='text' type="text" className="form-control" placeholder=""
+                                                aria-label="Eneter Your price" aria-describedby="button-addon2" value={code} onChange={(e) => setCode(e.target.value)} />
                                             <td>
-                                                <button className="btn btn-info" type="button" onClick={() => addOrder({ "group": group, "trader": trader.id })}>کڕین</button></td>
+                                                <button className="btn btn-info" type="button" onClick={() => addOrder({ "group": group, "trader": trader.id, "code": code })}>کڕین</button></td>
                                         </tr>
                                     ))}
                                 </tbody>

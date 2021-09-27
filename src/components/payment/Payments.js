@@ -44,7 +44,7 @@ const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
                             <tr key={index}>
                                 <td>{mob.id}</td>
                                 <td><Link to={`/paymentForm/${mob.id}`}>{mob.local_name}</Link></td>
-                                <td>{mob.bank_loan}$</td>
+                                <td>{mob.bank_income}$</td>
                                 <td>{mob.group_name}</td>
                                 <td>{mob.date}</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>

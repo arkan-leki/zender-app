@@ -1,42 +1,41 @@
 import React, { useState } from 'react'
-import Select from 'react-select'
 
-const NewPay = ({locals, addpay, group}) => {
+const NewBuy = ({ addBuy, group }) => {
     const [loan, setLoan] = useState('')
     const [income, setIncome] = useState('')
-    const [localID, setlocalID] = useState('')
-    const options = locals.map((city) => ({ value: city.id, label: city.name }))
+    const [ho, setHo] = useState('')
 
     return (
         <div>
-            <button className="btn btn-danger " data-bs-toggle="modal" data-bs-target="#pay" >پارەدان</button>
-            <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
+            <button className="btn btn-danger " data-bs-toggle="modal" data-bs-target="#buy">خەرجی</button>
+            <div className="modal fade" id="buy" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">فۆرمی پارەدان</h5>
+                            <h5 className="modal-title">فۆرمی قاسە</h5>
                             <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form >
-                                <Select placeholder={options.label} defaultValue={options[1]} value={localID} onChange={(e) => setlocalID(e.value)} options={options} />
-                                <label for="income" className="form-label">بری پارە</label>
+                                <label for="ho" className="form-label">هۆکار</label>
+                                <input type="text" id="ho" className="form-control" aria-describedby="ho" value={ho} onChange={(e) => setHo(e.target.value)} />
+                                <label for="income" className="form-label">رۆشتوو</label>
                                 <input type="number" id="income" className="form-control" aria-describedby="income" value={income} onChange={(e) => setIncome(e.target.value)} />
-                                <label for="loan" className="form-label">گەڕاوە </label>
+                                <label for="loan" className="form-label">هاتوو </label>
                                 <input type="number" id="loan" className="form-control" aria-describedby="loan" value={loan} onChange={(e) => setLoan(e.target.value)} />
-                                <button className="btn btn-info" type="button" onClick={() => addpay(
+                                <button className="btn btn-info" type="button" onClick={() => addBuy(
                                     {
+                                        "name": ho,
                                         "group": group,
-                                        "local": localID,
                                         "bank": null
                                     },
                                     {
                                         "group": group,
-                                        "income": income,
-                                        "loan": loan
+                                        "income": loan,
+                                        "loan": income
                                     }
                                 )}
-                                >وەرگرتن</button>
+                                >خەزن</button>
                             </form>
                         </div>
                         <div className="modal-footer">
@@ -44,8 +43,9 @@ const NewPay = ({locals, addpay, group}) => {
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }
 
-export default NewPay
+export default NewBuy

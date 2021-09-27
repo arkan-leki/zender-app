@@ -388,7 +388,7 @@ const App = () => {
 
   const setVendorEvent = (id, group) => {
     setVendorID(id)
-    setGroupID(group)
+    // setGroupID(group)
     setItems([])
     setSales([])
     getState()
@@ -414,10 +414,10 @@ const App = () => {
   }
 
   const filterBydateOrder = async (date, id) => {
-  
+
     const server2 = await fetchOrders()
     setOrders(server2)
-   
+
     if (id != '') {
       setOrders(orders.filter((sale) => (
         sale.trader == id
@@ -427,7 +427,7 @@ const App = () => {
       setOrders(orders.filter((orders) => (
         moment(new Date(orders.date)).format("yyyy-MM-DD") == date
       )))
-     
+
     }
   }
 
@@ -769,11 +769,21 @@ const App = () => {
 
   return (
     <Router>
-      <Header addpay={addpay} searchTrader={searchTrader} group={groupId} traders={traders} search={search} addOrder={addOrder} vendor={vendorId} locals={locals} addForm={addForm} search={search} addTrade={addTrade} addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion} regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups} setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor} />
+
+      <Header
+        addBuy={addBuy} addpay={addpay} searchTrader={searchTrader} group={groupId}
+        traders={traders} search={search} addOrder={addOrder} vendor={vendorId}
+        locals={locals} addForm={addForm} search={search} addTrade={addTrade}
+        addLocal={addLocal} cats={cats} items={items} group={groupId} traders={traders}
+        filterItems={filterItems} itemPost={itemPost} addCat={addCat} addRegion={addRegion}
+        regions={regions} addGroup={addGroupEvent} vendors={vendors} groups={groups}
+        setGroupEvent={setGroupEvent} setVendorEvent={setVendorEvent} addVendor={addVendor}
+      />
+
       <div className='container-fluid'>
         <Route path='/' exact render={(props) => (
           <>
-            <Bank group={groupId} banks={banks} addBuy={addBuy} />
+            <Bank group={groupId} banks={banks} />
           </>
         )}
         />
@@ -816,7 +826,7 @@ const App = () => {
         />
         <Route path='/itemDetail/:id' exact render={(props) => (
           <>
-            <ItemDetail sales={sales} />
+            <ItemDetail sales={sales} itemEdit={itemEdit}/>
           </>
         )}
         />
@@ -834,14 +844,14 @@ const App = () => {
         />
         <Route path='/form/:id' exact render={(props) => (
           <>
-            <SaleForm searchItem={itemFilter} cats={cats} addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
+            <SaleForm groupId={groupId} groups={groups} searchItem={itemFilter} cats={cats} addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
           </>
         )}
         />
 
         <Route path='/order/:id' exact render={(props) => (
           <>
-            <OrderForm searchItem={itemFilter} cats={cats} items={items} addtoListEvent={addtoListEvent} search={itemFilter} group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent} />
+            <OrderForm groupId={groupId} groups={groups} searchItem={itemFilter} cats={cats} items={items} addtoListEvent={addtoListEvent} search={itemFilter} group={groupId} image={image} orders={orders} carts={carts} deleteEvent={deleteFromList} addGO={addBuyEvent} dashkan={dashkanBuyEvent} />
           </>
         )}
         />

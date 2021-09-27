@@ -24,7 +24,7 @@ const OrderList = ({orders}) => {
                         <tr key={index}>
 
                             <th scope="col"><Link to={`/order/${order.id}`}>{order.id}</Link></th>
-                            <th>{order.trader_name}</th>
+                            <th><Link to={`/order/${order.id}`}>{order.trader_name}</Link></th>
                             <th>{order.code}</th>
                             <th>{order.group_name}</th>
                             <th>{order.totall}$</th>

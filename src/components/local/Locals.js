@@ -43,9 +43,9 @@ export const Locals = ({ locals, group, addpay }) => {
                                 <td>{mob.totallSell}$</td>
                                 <td>{mob.mawe}$</td>
                                 <td>{mob.totallPay}$</td>
-                                {group ? <td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#pay" onClick={() => setId(mob.id)}>پارەدان</button></td> : <></>}
+                                {group ? <td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#payModal" onClick={() => setId(mob.id)}>پارەدان</button></td> : <></>}
                                 {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
-                                <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
+                                <div className="modal fade" id="payModal" tabIndex="-1" aria-hidden='true'>
                                     <div className="modal-dialog">
                                         <div className="modal-content">
                                             <div className="modal-header">

@@ -53,7 +53,7 @@ const NewLocal = ({addLocal ,regions}) => {
                                         "image": null,
                                     }
                                 )}
-                                >کڕین</button>
+                                >خەزن</button>
                             </form>
                         </div>
                         <div className="modal-footer">

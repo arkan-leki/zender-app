@@ -14,7 +14,7 @@ const NewTrade = ({group, addTrade}) => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">فۆرمی زیادکردن</h5>
+                            <h5 className="modal-title">فۆرمی کۆمپانیای</h5>
                             <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
@@ -39,7 +39,7 @@ const NewTrade = ({group, addTrade}) => {
                                         "group": group,
                                     }
                                 )}
-                                >کڕین</button>
+                                >خەزن</button>
                             </form>
                         </div>
                         <div className="modal-footer">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import NewBuy from './modals/NewBuy'
 import NewCat from './modals/NewCat'
 import NewGroup from './modals/NewGroup'
 import NewItem from './modals/NewItem'
@@ -11,7 +12,7 @@ import NewSell from './modals/NewSell'
 import NewTrade from './modals/NewTrade'
 import NewVendor from './modals/NewVendor'
 
-const Header = ({ addpay, addTrade, group , searchTrader, addOrder, groups, setGroupEvent, vendors, addLocal, setVendorEvent, addGroup, addRegion, addVendor, regions, addCat, cats, traders, itemPost , vendor, locals, addForm, search }) => {
+const Header = ({ addBuy, addpay, addTrade, group , searchTrader, addOrder, groups, setGroupEvent, vendors, addLocal, setVendorEvent, addGroup, addRegion, addVendor, regions, addCat, cats, traders, itemPost , vendor, locals, addForm, search }) => {
 
     return (
         <div className="d-print-none">
@@ -95,11 +96,12 @@ const Header = ({ addpay, addTrade, group , searchTrader, addOrder, groups, setG
                 <NewReg addRegion={addRegion} />
                 <NewCat addCat={addCat} />
                 {(group != "") ? <NewItem group={group} itemPost={itemPost} traders={traders} cats={cats} /> : <></>}
-                <NewLocal addLocal={addLocal} regions={regions} />
                 {group != '' ? <NewTrade group={group} addTrade={addTrade} /> : <></>}
+                <NewLocal addLocal={addLocal} regions={regions} />
                 {group != '' && vendor != '' ? <NewSell locals={locals} addForm={addForm} search={search} group={group} vendor={vendor} /> : <></>}
                 {group != '' ? <NewOrder searchTrader={searchTrader} group={group} traders={traders} search={search} addOrder={addOrder} /> : <></>}
-                {group ? <NewPay addpay={addpay , group} /> : <></>}
+                {group ? <NewPay locals={locals} addpay={addpay} group={group} /> : <></>}
+                {group ? <NewBuy addBuy={addBuy , group}/>: <></>}
             </div>
         </div>
     )

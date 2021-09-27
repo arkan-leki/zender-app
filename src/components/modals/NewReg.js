@@ -26,7 +26,7 @@ const NewReg = ({addRegion}) => {
                                         "code": code
                                     }
                                 )}
-                                >کڕین</button>
+                                >خەزن</button>
                             </form>
                         </div>
                         <div className="modal-footer">

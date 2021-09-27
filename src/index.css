@@ -1,7 +1,18 @@
+@font-face {
+  font-family: 'Hejar';
+  font-size: 1.5rem!important;
+  src: url('./fonts/rudawregular2.eot'); /* IE9 Compat Modes */
+  src: url('./fonts/rudawregular2.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/rudawregular2.woff') format('woff2'), /* Super Modern Browsers */
+       url('./fonts/rudawregular2.woff') format('woff'), /* Pretty Modern Browsers */
+       url('./fonts/rudawregular2.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/rudawregular2.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
 body {
   margin: 0;
-  font-family: 'Wazir', Georgia, "Times New Roman", serif!important;
-  /* font-size: 2.25rem!important; */
+  font-family: 'Hejar', Georgia, "Times New Roman", serif!important;
+  /* font-size: 1.5rem!important; */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

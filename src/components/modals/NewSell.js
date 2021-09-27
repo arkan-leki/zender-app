@@ -5,7 +5,7 @@ const NewSell = ({locals, search, addForm, group, vendor}) => {
     const [text, setText] = useState('')
     return (
         <div>
-            <button className=" btn btn-info" data-bs-toggle="modal" data-bs-target="#newSale">وەسڵی نوێ</button>
+            <button className=" btn btn-warning" data-bs-toggle="modal" data-bs-target="#newSale">وەسڵی نوێ</button>
 
             <div className="modal fade" id="newSale" tabIndex="-1" aria-hidden='true' width={100 + "%"}>
                 <div className="modal-dialog modal-fullscreen">

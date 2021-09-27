@@ -57,7 +57,7 @@ const Items = ({ items, traders, filterItems, group, cats, itemEdit , sort }) =>
                                     <th>{item.group}</th>
                                     <th >{item.trader}</th>
                                     <th >{item.category_name}</th>
-                                    <th><ItemForm item={item} cats={cats} group={group} traders={traders} itemEdit={itemEdit} /></th>
+                                    <th> <Link to={`/itemDetail/${item.id}`}>{item.name}</Link></th>
                                     <th className="d-print-none">{item.price}$</th>
                                     <th className="d-print-none">{item.addprice * 100}%</th>
                                     <th className="d-print-none">{item.finalprice}$</th>

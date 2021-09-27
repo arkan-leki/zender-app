@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ItemModal from '../item/ItemModal';
 import Discount from '../modals/Discount';
 
-const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
+const SaleForm = ({ groupId, groups, cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
     const [text, setText] = useState('')
 
     let { id } = useParams();
@@ -13,8 +13,8 @@ const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, d
     let wights = 0.0
     let summerprice = 0
     return (
-        <div className="mx-auto border border-5 p-5" style={{ width: 100 + '%' }}>
-            <div className="row border ">
+        <div className="mx-auto" style={{ width: 90 + '%' }} >
+            <div className="row border border-4 ">
                 <div className="col-4 ">
                     <h4>کۆمپانیایی زەندەر</h4>
                     <p>بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
@@ -26,30 +26,33 @@ const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, d
                     <h4>پسولەی فرۆش
                     </h4>
                     <p>
-                        Tel: 07709994444 - 09933338888
+                        07719930849 - محمد الزندی
+                        {/* {group.phone} */}
                     </p>
                 </div>
             </div>
             {waslz.map((wasl, index) => (
                 <>
                     {/* <h4>{wasl.id}</h4> */}
-                    <hr />
-                    <div className="row fs-6">
-                        <div className="col-8 border row">
-                            <div className="col-6"> <p>ناو : {wasl.local_name}</p>
+                    <br />
+                    <div className="row border border-4">
+                        <div className="row col-8 ">
+                            <div className="col"> <p>ناو : {wasl.local_name}</p>
                                 <p>ناوچە : {wasl.local_region}</p>
                                 <p>ژمارەی موبایل : {wasl.local_phone}</p></div>
-                            <div className="col-6"> <p>کۆد : {wasl.local_code}</p>
+                            <div className="col"> <p>کۆد : {wasl.local_code}</p>
                                 <p>فرۆشیار : {wasl.vendor_name}</p>
                                 <p>ژمارەی موبایل : {wasl.vendor_phone}</p></div>
                         </div>
-                        <div className="col-4 border text-center">
+                        <div className="col-4 bg-warning border border-4 border-danger text-center">
                             <p>بەرواری فرۆش</p>
                             <p>{moment(new Date(wasl.date)).format("DD/MM/YYYY")}</p>
                             <p>زنجیرە {wasl.id}</p>
                         </div>
 
                     </div>
+                    <br />
+
                     <div key={index} className="table-responsive">
 
                         <table className=" table table-striped table-hover align-middle caption-top border border-5">
@@ -116,7 +119,7 @@ const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, d
                             </tfoot> */}
                         </table>
                     </div>
-                    <div className="row">
+                    <div className="row border  border-4 ">
                         <div className="col-4">
                             <p>پارەدان بە قەرز</p>
                             <p>قەرزی پێشوو : {wasl.local_mawe - wasl.totallint}$</p>
@@ -124,7 +127,7 @@ const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, d
                         </div>
                         <div className="col-4 ">
                             <p>
-                                <ItemModal cats={cats} searchItem={searchItem} items={items} addtoListEvent={addtoListEvent}/>
+                                <ItemModal cats={cats} searchItem={searchItem} items={items} addtoListEvent={addtoListEvent} />
                             </p>
                             <p>وەزن :  {Math.trunc(wights)} کیلۆ</p>
                             <p>عدد {summer} کارتۆن</p>
@@ -134,8 +137,10 @@ const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, d
                             <p>داشکان : {wasl.discount}$ <Discount dashkan={dashkan} wasl={wasl} /></p>
                             <p>کۆو وەسڵ : {wasl.totallint}$</p>
                         </div>
-                    </div>
-                    </>
+                        <p>واژۆی وردبینی </p>
+                        <h5>واژۆی بەرێوەبەر </h5>
+                    </div>                   
+                </>
             ))}
         </div>
     )
