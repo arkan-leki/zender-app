@@ -3,8 +3,11 @@ import * as moment from 'moment'
 import { useState } from 'react';
 import ItemModal from '../item/ItemModal';
 import Discount from '../modals/Discount';
+import axios from 'axios'
+import React, { useEffect } from 'react'
+import Mawe from './Mawe';
 
-const SaleForm = ({ groupId, groups, cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
+const SaleForm = ({ cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
     const [text, setText] = useState('')
 
     let { id } = useParams();
@@ -12,6 +15,7 @@ const SaleForm = ({ groupId, groups, cats, searchItem, sales, items, carts, dele
     let summer = 0
     let wights = 0.0
     let summerprice = 0
+    
     return (
         <div className="mx-auto" style={{ width: 90 + '%' }} >
             <div className="row border border-4 ">
@@ -26,14 +30,13 @@ const SaleForm = ({ groupId, groups, cats, searchItem, sales, items, carts, dele
                     <h4>پسولەی فرۆش
                     </h4>
                     <p>
-                        07719930849 - محمد الزندی
+                        07719930849 - Tel
                         {/* {group.phone} */}
                     </p>
                 </div>
             </div>
             {waslz.map((wasl, index) => (
                 <>
-                    {/* <h4>{wasl.id}</h4> */}
                     <br />
                     <div className="row border border-4">
                         <div className="row col-8 ">
@@ -122,8 +125,8 @@ const SaleForm = ({ groupId, groups, cats, searchItem, sales, items, carts, dele
                     <div className="row border  border-4 ">
                         <div className="col-4">
                             <p>پارەدان بە قەرز</p>
-                            <p>قەرزی پێشوو : {wasl.local_mawe - wasl.totallint}$</p>
-                            <p>قەرزی ئێستا : {wasl.local_mawe}$</p>
+                            <p>قەرزی پێشوو :<Mawe wasl={wasl.datetime} plus={wasl.totallint} localId={wasl.local_id} locals={locals} groupId={wasl.group}/>$</p>
+                            <p>قەرزی ئێستا :<Mawe wasl={wasl.datetime} plus={0} localId={wasl.local_id} locals={locals} groupId={wasl.group}/>$</p>
                         </div>
                         <div className="col-4 ">
                             <p>
@@ -137,8 +140,7 @@ const SaleForm = ({ groupId, groups, cats, searchItem, sales, items, carts, dele
                             <p>داشکان : {wasl.discount}$ <Discount dashkan={dashkan} wasl={wasl} /></p>
                             <p>کۆو وەسڵ : {wasl.totallint}$</p>
                         </div>
-                        <p>واژۆی وردبینی </p>
-                        <h5>واژۆی بەرێوەبەر </h5>
+                        <p>ناونیشان کەلار-لیوکە</p>
                     </div>                   
                 </>
             ))}

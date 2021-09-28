@@ -29,8 +29,8 @@ const Pending = () => {
         })
     }
 
-
     return (
+
         <div className="table-responsive-xl aling.center ">
             <table className="table table-striped table-hover align-middle caption-top">
                 <thead>
