@@ -13,7 +13,7 @@ const NewLocal = ({addLocal ,regions}) => {
 
     return (
         <div>
-            <button className=" btn btn-success" data-bs-toggle="modal" data-bs-target="#newLocal">کڕیاری نوێ</button>
+            <button className=" btn btn-success fs-4" data-bs-toggle="modal" data-bs-target="#newLocal">کڕیاری نوێ <i className="fa fa-plus"></i></button>
             <div className="modal fade" id="newLocal" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">

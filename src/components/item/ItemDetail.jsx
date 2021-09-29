@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import ItemForm from './ItemForm';
 
-const ItemDetail = ({itemEdit}) => {
+const ItemDetail = ({ itemEdit }) => {
     let { id } = useParams();
     const [data, setData] = useState([]);
     const [cats, setCat] = useState([]);
@@ -28,7 +28,7 @@ const ItemDetail = ({itemEdit}) => {
         })
     }
     const fetchItems = () => {
-        axios.get("http://127.0.0.1:8000/api/items/"+id+"/").then(res => {
+        axios.get("http://127.0.0.1:8000/api/items/" + id + "/").then(res => {
             console.log(res);
             setItems(res.data)
         }).catch(err => {
@@ -43,32 +43,36 @@ const ItemDetail = ({itemEdit}) => {
     }, []);
 
     return (
-        <div className="table-responsive-xl aling.center ">
-            <ItemForm item={items} cats={cats} itemEdit={itemEdit} />
-            <table className="table table-striped table-hover align-middle caption-top">
-                <thead>
-                    <tr>
-                        <th># زنجیرە</th>
-                        <th> دانە </th>
-                        <th> نرخ</th>
-                        <th> بەروار</th>
-                        <th> وەسڵ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item) => (
+        <div className="row">
+            <div className="d-print-none col border border-3 m-5">
+                <ItemForm item={items} cats={cats} itemEdit={itemEdit} />
+            </div>
+            <div className="table-responsive-xl aling.center border border-3 col m-5 ">
+                <table className="table table-striped table-hover align-middle caption-top">
+                    <caption>دەرچوونەکان {items.name}</caption>
+                    <thead>
                         <tr>
-                            <th>{item.id}</th>
-                            <th>{item.quantity}</th>
-                            <th>{item.price}$</th>
-                            <th>{item.date}</th>
-                            <th>{item.sell}</th>
+                            <th># زنجیرە</th>
+                            <th> دانە </th>
+                            <th> نرخ</th>
+                            <th> بەروار</th>
+                            <th> وەسڵ</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {data.map((item) => (
+                            <tr>
+                                <th>{item.id}</th>
+                                <th>{item.quantity}</th>
+                                <th>{item.price}$</th>
+                                <th>{item.date}</th>
+                                <th>{item.sell}</th>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    
     )
 }
 

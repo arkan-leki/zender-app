@@ -1,3 +1,5 @@
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import React from 'react'
 import { Link } from 'react-router-dom';
@@ -31,7 +33,7 @@ const SaleList = ({ sales, addReSell }) => {
                             <td>{sale.group_name}</td>
                             <td>{sale.vendor_name}</td>
                             <td><Link to={`/form/${sale.id}`}>{sale.id}</Link></td>
-                            <td><Link to={`/form/${sale.id}`}>{sale.local_name}</Link></td>
+                            <td className="fs-5 ">{sale.local_name}<Link className="d-print-none" to={`/form/${sale.id}`}><FontAwesomeIcon  icon={faEdit} /></Link></td>
                             <td>{sale.totall}$</td>
                             <td>{sale.discount}$</td>
                             <td>{sale.totallint}$</td>

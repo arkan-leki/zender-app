@@ -1,3 +1,5 @@
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { useState } from 'react'
 
@@ -5,7 +7,7 @@ const NewSell = ({locals, search, addForm, group, vendor}) => {
     const [text, setText] = useState('')
     return (
         <div>
-            <button className=" btn btn-warning" data-bs-toggle="modal" data-bs-target="#newSale">وەسڵی نوێ</button>
+            <button className=" btn btn-warning fs-4" data-bs-toggle="modal" data-bs-target="#newSale">وەسڵی نوێ <FontAwesomeIcon icon={faCartPlus} /></button>
 
             <div className="modal fade" id="newSale" tabIndex="-1" aria-hidden='true' width={100 + "%"}>
                 <div className="modal-dialog modal-fullscreen">

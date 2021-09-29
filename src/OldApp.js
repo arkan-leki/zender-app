@@ -21,6 +21,7 @@ import LocalForm from './components/local/LocalForm';
 import ItemForm from './components/item/ItemForm';
 import ItemDetail from './components/item/ItemDetail';
 import Pending from './components/Pending';
+import axios from 'axios';
 
 // function App() {
 //   return (
@@ -314,7 +315,8 @@ const App = () => {
       setLocals(locals.filter((people) => {
         return people.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
           people.region.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
-          people.owner_name.toString().toLowerCase().includes(text.toString().toLowerCase())
+          people.code.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+          people.phone.toString().toLowerCase().includes(text.toString().toLowerCase())
       }))
     }
 
@@ -381,7 +383,7 @@ const App = () => {
 
   const setGroupEvent = (id) => {
     setGroupID(id)
-    setGroup(groups.filter((gro)=>gro.id==id))
+    setGroup(groups.filter((gro) => gro.id == id))
     setItems([])
     setSales([])
     setTraders([])
@@ -528,18 +530,16 @@ const App = () => {
   }
 
   const itemPost = async (post) => {
-    const res = await fetch(url + 'item/',
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(post)
-
-      })
-
-    getState()
-
+    axios({
+      method: 'post',
+      url: url + 'item/',
+      data: post
+    }).then(res => {
+      alert("تەواو سەرکەوتوو بوو");
+      setItems([res.data, ...items])
+    }).catch(err => {
+      alert("هەڵەیەک ڕوویدا");
+    })
   }
 
   const itemEdit = async (id, post) => {
@@ -552,6 +552,7 @@ const App = () => {
         body: JSON.stringify(post)
 
       })
+
 
     getState()
 
@@ -597,8 +598,8 @@ const App = () => {
     getState()
   }
 
-  const EditLocal = async (id,post) => {
-    const res = await fetch(url + 'local/'+id+'/',
+  const EditLocal = async (id, post) => {
+    const res = await fetch(url + 'local/' + id + '/',
       {
         method: 'PATCH',
         headers: {
@@ -802,9 +803,13 @@ const App = () => {
     setLocals(itemsort)
   }
 
+  const filterItemsX = () => {
+    let itemsort = items.filter((local) => local.mawe > 0.0)
+    setItems(itemsort)
+  }
+
   return (
     <Router>
-
       <Header
         addBuy={addBuy} addpay={addpay} searchTrader={searchTrader} group={groupId}
         traders={traders} search={search} addOrder={addOrder} vendor={vendorId}
@@ -830,7 +835,7 @@ const App = () => {
         />
         <Route path='/locals' exact render={(props) => (
           <>
-            <Locals  addOld={addOld} groupDetail={group} filterLocalsX={filterLocalsX} addpay={addpay} locals={locals} group={groupId} regions={regions} addRegion={addRegion} />
+            <Locals  image={image} search={search} addOld={addOld} groupDetail={group} filterLocalsX={filterLocalsX} addpay={addpay} locals={locals} group={groupId} regions={regions} addRegion={addRegion} />
           </>
         )}
         />
@@ -849,7 +854,7 @@ const App = () => {
         />
         <Route path='/items' exact render={(props) => (
           <>
-            <Items sort={sort} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
+            <Items image={image} filterItemsX={filterItemsX} sort={sort} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
           </>
         )}
         />
@@ -861,7 +866,7 @@ const App = () => {
         />
         <Route path='/itemDetail/:id' exact render={(props) => (
           <>
-            <ItemDetail sales={sales} itemEdit={itemEdit}/>
+            <ItemDetail sales={sales} itemEdit={itemEdit} />
           </>
         )}
         />
@@ -879,7 +884,7 @@ const App = () => {
         />
         <Route path='/form/:id' exact render={(props) => (
           <>
-            <SaleForm locals={locals} groupDetail={group}  groupId={groupId} groups={groups} searchItem={itemFilter} cats={cats} addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
+            <SaleForm locals={locals} groupDetail={group} groupId={groupId} groups={groups} searchItem={itemFilter} cats={cats} addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
           </>
         )}
         />

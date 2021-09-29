@@ -5,7 +5,7 @@ const NewCat = ({addCat}) => {
 
     return (
         <div>
-            <button className="btn btn-info " data-bs-toggle="modal" data-bs-target="#newCat">زیادکردنی جۆری کاڵا</button>
+            <button className="btn btn-info fs-4" data-bs-toggle="modal" data-bs-target="#newCat">زیادکردنی جۆری کاڵا <i className="fa fa-plus"></i></button>
             <div className="modal fade" id="newCat" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">

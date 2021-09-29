@@ -1,3 +1,5 @@
+import { faCartPlus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 const Item = ({item,addtoList}) => {
@@ -11,14 +13,14 @@ const Item = ({item,addtoList}) => {
                     </div>
                     <div className="col-8">
                         <div className="card-body">
-                            <div className="card-image"></div>
-                            <h5 className="card-title"> ناو {item.name} </h5>
+                            <h3 className="card-title">  {item.barcode} </h3>
+                            <h5 className="card-title">  {item.name} </h5>
                             <p className="card-text"><strong className="text-muted">{item.mawe}</strong> ماوە</p>
                             <h3 className="card-text">نرخ فرۆش {item.finalprice}$</h3> <h٤ className="card-text">نرخ {item.price}$</h٤>
                             {/* <Link to={`/mobile/${mobile.id}`} className="btn btn-primary">زیاتر بزانە</Link> */}
                         </div>
                     </div>
-                    <button onClick={() => addtoList(item)} className="btn btn-success"> <i className="bi bi-plus"></i> add to list</button>
+                    <button onClick={() => addtoList(item)} className="btn btn-success fs-4"> <FontAwesomeIcon icon={faCartPlus} /> هەڵبژاردن</button>
                 </div>
             </div>
         </div>

@@ -1,10 +1,12 @@
+import { faDisease, faSearchDollar } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 
 const Discount = ({wasl,dashkan}) => {
     const [DashText, setDashText] = useState('')
     return (
         <div>
-            <button className=" d-print-none btn btn-info" data-bs-toggle="modal" data-bs-target="#dicount">داشکاندن</button>
+            <button className=" d-print-none btn btn-info fs-4" data-bs-toggle="modal" data-bs-target="#dicount">داشکاندن <FontAwesomeIcon icon={faSearchDollar} /></button>
             <div className="modal fade" id="dicount" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">

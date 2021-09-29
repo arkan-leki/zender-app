@@ -5,15 +5,15 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
-const LocalForm = ({ image, locals, EditLocal , group, addOld }) => {
+const LocalForm = ({ image, locals, EditLocal, group, addOld }) => {
 
     let { id } = useParams();
-    const people = locals.filter((ppl)=>ppl.id=id);
+    const people = locals.filter((ppl) => ppl.id == id);
     const [loc, setLoc] = useState([])
 
 
     const fetchData = () => {
-        axios.get("http://127.0.0.1:8000/api/local/"+id+"/").then(res => {
+        axios.get("http://127.0.0.1:8000/api/local/" + id + "/").then(res => {
             setLoc(res.data)
         }).catch(err => {
             console.log(err);
@@ -26,12 +26,16 @@ const LocalForm = ({ image, locals, EditLocal , group, addOld }) => {
 
     const lists = (pp) => {
         let arr = []
+        pp.oldacc_compnay.map((val, index) => (
+            arr.push({ "id": <Link to={`/paymentForm/${val.id}`}> نقل حساب {val.id} </Link>, "name": val.local_name, "group": val.group_name, "pay": val.loan, "loan": 0, "date": val.date })
+        ))
         pp.attempts.map((val, index) => (
             arr.push({ "id": <Link to={`/form/${val.id}`}> کڕین {val.id} </Link>, "name": val.local_name, "group": val.group_name, "pay": val.totall, "loan": val.discount, "date": val.date })
         ))
         pp.payments.map((val, index) => (
             arr.push({ "id": <Link to={`/paymentForm/${val.id}`}> پارەدان {val.id} </Link>, "name": val.local_name, "group": val.group_name, "pay": 0, "loan": val.bank_income, "date": val.date })
         ))
+
         let suumer = parseFloat(pp.exchange)
         return (
             arr.sort((a, b) => a.date > b.date).map((attempt, index) => (
@@ -49,24 +53,28 @@ const LocalForm = ({ image, locals, EditLocal , group, addOld }) => {
     }
 
     return (
-        <section>
-            <div className="modal-body d-print-none">
-                    <LocalEdit local={loc} EditLocal={EditLocal} group={group} addOld={addOld} />
+        <section className="row">
+            <div className=" d-print-none col border border-3 m-5" >
+                <LocalEdit local={loc} EditLocal={EditLocal} group={group} addOld={addOld} />
             </div>
-            <div className="mx-auto border border-5 p-5" style={{ width: 100 + '%' }}>
-                <div className="row border ">
-                    <div className="col-4 ">
+            <div className=" border border-3 col m-5" >
+                <div className="row m-2">
+                    <div className="col text-center m-2">
                         <h4>کۆمپانیایی زەندەر</h4>
                         <p>بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
                     </div>
-                    <div className="text-center col-4">
-                        <img src={image} className="img-thumbnail" alt="..." width={100 + '%'} />
+                    <div className="text-center col m-2">
+                        <img src={image} className="img-thumbnail" alt="..." width={50 + '%'} />
                     </div>
-                    <div className="col-4">
-                        <h4>پسولەی پارەدان
+                    <div className="col text-center m-2">
+                        <h4>پسولەی فرۆش
                         </h4>
                         <p>
-                            Tel: 07709994444 - 09933338888
+                            {/* 07719930849 - Tel */}
+
+                            تەلەفۆن - ٠٧٧١٩٩٣٠٨٤٩
+                            <p>ناونیشان کەلار - لیوکە</p>
+
                         </p>
                     </div>
                 </div>
@@ -74,24 +82,24 @@ const LocalForm = ({ image, locals, EditLocal , group, addOld }) => {
                     <>
                         <h4> بەرێز {ppl.owner_name}</h4>
                         <hr />
-                        <div className="row fs-6">
-                            <div className="col-8 border row">
-                                <div className="col-6"> <p>ناو : {ppl.name}</p>
+                        <div className="row m-2">
+                            <div className="row col border border-3 text-right m-2">
+                                <div className="col "> <p>ناو : {ppl.name}</p>
                                     <p>ناوچە : {ppl.region}</p>
                                     <p>ژمارەی موبایل : {ppl.phone}</p></div>
-                                <div className="col-6"> <p>کۆد : {ppl.code}</p>
+                                <div className="col "> <p>کۆد : {ppl.code}</p>
                                     <p>قەرز : {ppl.mawe}</p>
                                     <p>قەرز یەکەم جار : {ppl.exchange}</p>
                                 </div>
                             </div>
-                            <div className="col-4 border text-center">
+                            <div className="col-4 border border-3 m-2 text-center">
                                 <p>بەرواری فرۆش</p>
                                 <p>{moment(new Date(ppl.date)).format("YYYY/MM/DD")}</p>
                                 <p>زنجیرە {ppl.id}</p>
                             </div>
 
                         </div>
-                        <div key={index} className="table-responsive">
+                        <div key={index} className="table-responsive ">
 
                             <table className=" table table-striped table-hover align-middle caption-top border border-5">
                                 <thead className="table-dark">
@@ -118,7 +126,8 @@ const LocalForm = ({ image, locals, EditLocal , group, addOld }) => {
                                     {lists({
                                         "exchange": ppl.exchange,
                                         "attempts": ppl.attempts,
-                                        "payments": ppl.payment_compnay
+                                        "payments": ppl.payment_compnay,
+                                        "oldacc_compnay": ppl.oldacc_compnay
                                     })}
                                     {/* {cats.map((attempt, index) => (
                                 <tr key={index}>

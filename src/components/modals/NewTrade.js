@@ -9,7 +9,7 @@ const NewTrade = ({group, addTrade}) => {
 
     return (
         <div>
-            <button className=" btn btn-success" data-bs-toggle="modal" data-bs-target="#newTrade">کۆمپانیایی نوێ</button>
+            <button className=" btn btn-success fs-4" data-bs-toggle="modal" data-bs-target="#newTrade">کۆمپانیایی نوێ <i className="fa fa-plus"></i></button>
              <div className="modal fade" id="newTrade" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">

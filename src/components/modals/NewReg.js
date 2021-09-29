@@ -6,7 +6,7 @@ const NewReg = ({addRegion}) => {
 
     return (
         <div>
-            <button className="btn btn-info " data-bs-toggle="modal" data-bs-target="#newRegion">زیادکردنی ناوچە</button>
+            <button className="btn btn-info fs-4" data-bs-toggle="modal" data-bs-target="#newRegion">زیادکردنی ناوچە <i className="fa fa-plus"></i></button>
             <div className="modal fade" id="newRegion" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">

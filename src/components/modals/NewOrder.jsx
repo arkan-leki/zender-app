@@ -7,7 +7,7 @@ const NewOrder = ({ group, traders, searchTrader, addOrder }) => {
 
     return (
         <div>
-            <button className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#newOrder">باری نوێ</button>
+            <button className="btn btn-warning fs-4" data-bs-toggle="modal" data-bs-target="#newOrder">باری نوێ <i className="fa fa-plus"></i></button>
             <div className="modal fade" id="newOrder" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog modal-fullscreen">
                     <div className="modal-content">

@@ -10,8 +10,8 @@ const NewVendor = ({ addVendor ,groups ,regions }) => {
 
     return (
         <div>
-            <button href="#add-group" className="btn btn-info " data-bs-toggle="modal" data-bs-target="#vendor">
-                زیادکردنی مەندوب
+            <button href="#add-group fs-4" className="btn btn-info fs-4" data-bs-toggle="modal" data-bs-target="#vendor">
+                زیادکردنی مەندوب <i className="fa fa-plus"></i>
             </button>
             <div className="modal fade" id="vendor" tabIndex="-1" aria-labelledby="vendor" aria-hidden="true">
                 <div className="modal-dialog">

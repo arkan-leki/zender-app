@@ -1,3 +1,5 @@
+import { faBoxOpen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react'
 import { useState } from 'react';
 
@@ -6,9 +8,9 @@ const Resell = ({ sale, addReSell }) => {
     const [items, setItems] = useState([])
     return (
         <div>
-            <button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#resell" onClick={() =>
+            <button className="btn btn-success fs-4" data-bs-toggle="modal" data-bs-target="#resell" onClick={() =>
                 setItems(sale.sell_detail)
-            }>گەڕانەوە لەفرۆش</button>
+            }>گەڕانەوە لەفرۆش <FontAwesomeIcon icon={faBoxOpen} /></button>
             <div className="modal fade" id="resell" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">

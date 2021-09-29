@@ -1,12 +1,12 @@
 @font-face {
   font-family: 'Hejar';
   font-size: 1.5rem!important;
-  src: url('./fonts/rudawregular2.eot'); /* IE9 Compat Modes */
-  src: url('./fonts/rudawregular2.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('./fonts/rudawregular2.woff') format('woff2'), /* Super Modern Browsers */
-       url('./fonts/rudawregular2.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./fonts/rudawregular2.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('./fonts/rudawregular2.svg#svgFontName') format('svg'); /* Legacy iOS */
+  src: url('./fonts/KHejar.eot'); /* IE9 Compat Modes */
+  src: url('./fonts/KHejar.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/KHejar.woff') format('woff2'), /* Super Modern Browsers */
+       url('./fonts/KHejar.woff') format('woff'), /* Pretty Modern Browsers */
+       url('./fonts/KHejar.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/KHejar.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
 
 body {
@@ -19,6 +19,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

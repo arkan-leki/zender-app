@@ -9,7 +9,7 @@ const NewPay = ({locals, addpay, group}) => {
 
     return (
         <div>
-            <button className="btn btn-danger " data-bs-toggle="modal" data-bs-target="#pay" >پارەدان</button>
+            <button className="btn btn-danger fs-4" data-bs-toggle="modal" data-bs-target="#pay" >پارەدان <i className="fa fa-plus"></i></button>
             <div className="modal fade" id="pay" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">

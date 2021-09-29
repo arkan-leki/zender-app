@@ -7,7 +7,7 @@ const NewBuy = ({ addBuy, group }) => {
 
     return (
         <div>
-            <button className="btn btn-danger " data-bs-toggle="modal" data-bs-target="#buy">خەرجی</button>
+            <button className="btn btn-danger fs-4" data-bs-toggle="modal" data-bs-target="#buy">خەرجی <i className="fa fa-plus"></i></button>
             <div className="modal fade" id="buy" tabIndex="-1" aria-hidden='true'>
                 <div className="modal-dialog">
                     <div className="modal-content">
