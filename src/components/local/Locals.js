@@ -4,6 +4,7 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
+import Currency from '../../Currency'
 
 export const Locals = ({ locals, group, addpay, filterLocalsX, groupDetail, search, image }) => {
     const [loan, setLoan] = useState('')
@@ -16,6 +17,11 @@ export const Locals = ({ locals, group, addpay, filterLocalsX, groupDetail, sear
     let oldValue = 0
     let mawe = 0
     let pay = 0
+    let counter = 0
+    let sumsell = 0
+    let sumpay = 0
+    let summawe = 0
+
     return (
         <><div className="mx-auto" style={{
             width: 100 + '%'
@@ -73,6 +79,7 @@ export const Locals = ({ locals, group, addpay, filterLocalsX, groupDetail, sear
                         {locals.map((mob, index) => (
                             <tr key={index}>
                                 <div hidden>
+                                    {counter = index + 1}
                                     {attemptsValue = (groupDetail.length > 0) ?
                                         Object.values(mob.attempts.filter((para) => {
                                             return (para.group) == group
@@ -92,6 +99,9 @@ export const Locals = ({ locals, group, addpay, filterLocalsX, groupDetail, sear
                                         : Object.values(mob.payment_compnay).reduce((r, { bank_income }) => r + parseFloat(bank_income), 0)
                                     }
                                     {mawe = attemptsValue + oldValue + parseFloat(mob.exchange)}
+                                    {sumsell += mawe}
+                                    {sumpay += pay}
+                                    {summawe += (mawe - pay)}
                                 </div>
 
                                 <th><Link className="text-decoration-none" to={`/form/${mob.id}`}>{mob.id}</Link></th>
@@ -99,12 +109,12 @@ export const Locals = ({ locals, group, addpay, filterLocalsX, groupDetail, sear
                                 <th>{mob.code}</th>
                                 <th >{mob.phone}</th>
                                 <th >{mob.region}</th>
-                                <td className="d-print-none">{mob.exchange}$</td>
-                                <td className="d-print-none">{oldValue}$</td>
-                                <td className="d-print-none">{attemptsValue}$</td>
-                                <th>{mawe}$</th>
-                                <th>{pay}$</th>
-                                <th>{mawe - pay}$</th>
+                                <td className="d-print-none">{Currency(parseFloat((mob.exchange)))}</td>
+                                <td className="d-print-none">{Currency(oldValue)} </td>
+                                <td className="d-print-none">{Currency(attemptsValue)} </td>
+                                <th>{Currency(mawe)}</th>
+                                <th>{Currency(pay)}</th>
+                                <th>{Currency(mawe - pay)} </th>
                                 {group ? <td><button className="btn btn-success " data-bs-toggle="modal" data-bs-target="#payModal" onClick={() => setId(mob.id)}>پارەدان</button></td> : <></>}
                                 <td><Link className="d-print-none btn btn-warning  " to={`/localForm/${mob.id}`}><FontAwesomeIcon icon={faEdit} /></Link></td>
                                 <div className="modal fade" id="payModal" tabIndex="-1" aria-hidden='true'>
@@ -144,7 +154,18 @@ export const Locals = ({ locals, group, addpay, filterLocalsX, groupDetail, sear
                         ))}
                     </tbody>
                     <tfoot>
-                        <th>10</th>
+                        <th> </th>
+                        <th>{counter}#</th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th className="d-print-none"> </th>
+                        <th className="d-print-none"> </th>
+                        <th className="d-print-none"> </th>
+                        <th>{Currency(sumsell)} </th>
+                        <th>{Currency(sumpay)}  </th>
+                        <th>{Currency(summawe)} </th>
+                        <th className="d-print-none"> </th>
                     </tfoot>
                 </table>
 

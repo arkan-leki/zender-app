@@ -552,9 +552,19 @@ const App = () => {
         body: JSON.stringify(post)
 
       })
+    
+      axios({
+        method: 'patch',
+        url:url + 'item/' + id + "/",
+        data: post
+      }).then(res => {
+        alert("تەواو سەرکەوتوو بوو");
+        getState()
+      }).catch(err => {
+        alert("هەڵەیەک ڕوویدا");
+      })
 
-
-    getState()
+    
 
   }
 

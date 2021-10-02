@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import Currency from '../../../Currency'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const OrderList = ({orders}) => {
     return (
@@ -17,6 +20,7 @@ const OrderList = ({orders}) => {
                         <th>کۆی داواکراو</th>
                         <th>کۆی پارە قەرز</th>
                         <th>بەروار داخلکردن</th>
+                        <th className="d-print-none"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,14 +28,15 @@ const OrderList = ({orders}) => {
                         <tr key={index}>
 
                             <th scope="col"><Link to={`/order/${order.id}`}>{order.id}</Link></th>
-                            <th><Link to={`/order/${order.id}`}>{order.trader_name}</Link></th>
+                            <th className="fs-5">{order.trader_name}</th>
                             <th>{order.code}</th>
                             <th>{order.group_name}</th>
-                            <th>{order.totall}$</th>
-                            <th>{order.discount}$</th>
-                            <th>{order.totallint}$</th>
-                            <th>{order.trader_mawe}$</th>
+                            <th>{Currency(parseFloat(order.totall))} </th>
+                            <th>{Currency(parseFloat(order.discount))} </th>
+                            <th>{Currency(order.totallint)} </th>
+                            <th>{Currency(parseFloat(order.trader_mawe))} </th>
                             <td>{moment(new Date(order.date)).format("DD/MM/YYYY")}</td>
+                            <td  className="d-print-none"><Link className="btn btn-warning" to={`/order/${order.id}`}><FontAwesomeIcon icon={faEdit} /></Link></td>
                         </tr>
                     ))}
 

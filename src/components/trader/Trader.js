@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React, { useState } from 'react'
+import Currency from '../../Currency'
 
 const Trader = ({ group, traders, addPayLoan }) => {
     const [loan, setLoan] = useState(0)
@@ -35,10 +36,10 @@ const Trader = ({ group, traders, addPayLoan }) => {
                                 <td>{mob.code}</td>
                                 <td>{mob.address}</td>
                                 <td>{mob.phone}</td>
-                                <td>{mob.exchange}$</td>
-                                <td>{mob.totallBuy}$</td>
-                                <td>{mob.totallLoan}$</td>
-                                <td>{mob.mawe}$</td>
+                                <td>{Currency(parseFloat(mob.exchange))} </td>
+                                <td>{Currency(parseFloat(mob.totallBuy))} </td>
+                                <td>{Currency(parseFloat(mob.totallLoan))} </td>
+                                <td>{Currency(mob.mawe)} </td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
                                 {group?<td><button className="btn btn-success d-print-none" data-bs-toggle="modal" data-bs-target="#lohan"  onClick={()=>setId(mob.id)}>پارەدان</button></td>:<></>}
                                 {/* <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td> */}
@@ -78,7 +79,9 @@ const Trader = ({ group, traders, addPayLoan }) => {
                 </table>
 
             </div>
-        </div></>
+       
+        </div>
+        </>
     )
 }
 

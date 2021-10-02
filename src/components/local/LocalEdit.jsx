@@ -89,7 +89,7 @@ const LocalEdit = ({ local, EditLocal,addOld , group}) => {
                         "group": group,
                         "income": '0',
                         "loan": loan,
-                        "local": 1,
+                        "local": local.id,
                     }
                 )}
                 >زیادکردن</button>

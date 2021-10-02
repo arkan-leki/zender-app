@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Currency from '../../Currency'
 
 const Mawe = ({ wasl, locals, groupId, localId, plus }) => {
 
@@ -46,7 +47,7 @@ const Mawe = ({ wasl, locals, groupId, localId, plus }) => {
                 return (para.group) == groupId && para.datetime <= wasl
             })).reduce((r, { bank_income }) => r + parseFloat(bank_income), 0)
 
-            return (attemptsValue + oldValue + parseFloat(mob.exchange)) - pay - plus
+            return Currency(parseFloat((attemptsValue + oldValue + parseFloat(mob.exchange)) - pay - plus))
         })}
     </>;
 }

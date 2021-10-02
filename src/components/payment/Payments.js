@@ -2,6 +2,7 @@ import * as moment from 'moment'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
+import Currency from '../../Currency'
 
 const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
     // const [text, setText] = useState('')
@@ -31,9 +32,11 @@ const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
                     <thead>
                         <tr>
                             <th scope="col"> وەسڵی پارەدان</th>
+                            <th >بنکەی فرۆش</th>
+                            <th scope="col"> کڕیار</th>
+                            <th scope="col"> کڕیار</th>
                             <th scope="col"> کڕیار</th>
                             <th >پارەی دراو</th>
-                            <th >بنکەی فرۆش</th>
                             <th>کۆی داشکان</th>
                             <th >بەروار</th>
                             <th className="d-print-none">رێکەوت</th>
@@ -43,9 +46,11 @@ const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
                         {payments.map((mob, index) => (
                             <tr key={index}>
                                 <td>{mob.id}</td>
-                                <td><Link to={`/paymentForm/${mob.id}`}>{mob.local_name}</Link></td>
-                                <td>{mob.bank_income}$</td>
                                 <td>{mob.group_name}</td>
+                                <td><Link to={`/paymentForm/${mob.id}`}>{mob.local_name}</Link></td>
+                                <td><Link to={`/paymentForm/${mob.id}`}>{mob.local_code}</Link></td>
+                                <td><Link to={`/paymentForm/${mob.id}`}>{mob.local_region}</Link></td>
+                                <td>{Currency(mob.bank_income)} </td>
                                 <td>{mob.date}</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
                                 <td className="d-print-none">{moment(new Date(mob.datetime)).format("DD/MM/YYYY HH:MM:SS")}</td>

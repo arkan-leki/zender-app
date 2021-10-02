@@ -1,40 +1,24 @@
-import * as React from 'react';
-import { HashRouter } from 'react-router-dom';
-import ResponsiveDrawer from './ResponsiveDrawer';
-import { Route } from 'react-router-dom';
-import Bank from './components/Bank';
-import axios from 'axios';
+import { faJournalWhills } from '@fortawesome/free-solid-svg-icons';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import APIContextProvider from './helper/APIContextProvider';
+import Header from './layout/Header';
+import Manage from './layout/Manage';
+import Trader from './layout/Trader';
 
 const App = () => {
-    const [data, setData] = React.useState([]);
 
-    const fetchData = () => {
-        axios.get("http://127.0.0.1:8000/api/bank/").then(res => {
-            console.log(res);
-            setData(res.data)
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-
-    React.useEffect(() => {
-        fetchData();
-    }, []);
-
-    return (
-        <ResponsiveDrawer >
-            <HashRouter>
-                <div>
-                    <Route path='/' exact render={(props) => (
-                        <>
-                            <Bank group={1} banks={data} />
-                        </>
-                    )}
-                    />
-                </div>
-            </HashRouter>
-        </ResponsiveDrawer>
-    )
+  return (
+    <Router>
+      <APIContextProvider>
+        <Header />
+        <Route path='/' exact render={(props) => (
+          <Manage />
+        )}
+        />
+        <Trader/>
+      </APIContextProvider>
+    </Router>
+  )
 }
 
 export default App

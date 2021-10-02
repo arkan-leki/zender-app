@@ -3,6 +3,7 @@ import * as moment from 'moment'
 import { useState } from 'react';
 import ItemModal from '../item/ItemModal';
 import Discount from '../modals/Discount';
+import Currency from '../../Currency';
 
 const OrderForm = ({ orders, carts, cats, searchItem, deleteEvent, addGO, dashkan, image, addtoListEvent, items }) => {
     const [text, setText] = useState('')
@@ -76,8 +77,8 @@ const OrderForm = ({ orders, carts, cats, searchItem, deleteEvent, addGO, dashka
                                         <th scope="row" >{kala.item}</th>
                                         <th >{kala.item_bag}</th>
                                         <th >{kala.quantity}</th>
-                                        <th>{kala.price}$</th>
-                                        <th >{kala.total}$</th>
+                                        <th>{Currency(parseFloat(kala.price))}</th>
+                                        <th >{Currency(parseFloat(kala.total))}</th>
                                         <th className="d-print-none">#</th>
                                         <th className="d-print-none">#</th>
                                     </tr>

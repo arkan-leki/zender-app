@@ -5,14 +5,19 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
+import Currency from '../../Currency'
 import ItemForm from './ItemForm'
 
-const Items = ({ items, traders, filterItems, filterItemsX, sort,image }) => {
+const Items = ({ items, traders, filterItems, filterItemsX, sort, image }) => {
     const [tradeID, setTradeID] = useState('')
     const [text, setText] = useState('')
     const tradersopt = [{ value: '', label: 'hich' }, ...traders.map((city) => ({ value: city.id, label: city.name }))]
 
-
+    let counter = 0
+    let sumsell = 0
+    let sumpay = 0
+    let summawe = 0
+    let summony = 0
 
     return (
         <section className="mx-auto" style={{ width: 100 + '%' }} id="items">
@@ -55,7 +60,7 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort,image }) => {
                                 <th>زنجیرە</th>
                                 <th>کۆد</th>
                                 <th>گروپ</th>
-                                <th >ناوی کۆمپانیا</th>
+                                <th className="d-print-none">ناوی کۆمپانیا</th>
                                 <th className="d-print-none">جۆر</th>
                                 <th>ناوی مەواد</th>
                                 <th className="d-print-none">نرخ</th>
@@ -65,6 +70,8 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort,image }) => {
                                 <th className="d-print-none">دانە</th>
                                 <th className="d-print-none">وەزن دانە</th>
                                 <th className="d-print-none">وەزن بار</th>
+                                <th>نقل مخزن</th>
+                                <th>هاتوو</th>
                                 <th>فرۆشراو</th>
                                 <th>ماوە</th>
                                 <th className="d-print-none"></th>
@@ -73,20 +80,29 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort,image }) => {
                         <tbody>
                             {items.map((item, index) => (
                                 <tr key={index}>
+                                    <td hidden>
+                                        {counter = index + 1}
+                                        {sumsell += item.ordered + item.stock}
+                                        {sumpay += item.popularity}
+                                        {summawe += item.mawe}
+                                        {summony += parseFloat(item.finalprice) * item.mawe}
+                                    </td>
                                     <th> <Link className="text-decoration-none text-dark" to={`/itemDetail/${item.id}`}>{item.id}</Link></th>
                                     <th><img src={item.image}
                                         className="img-fluid rounded-start m-2 d-print-none" alt="....." width={50 + 'px'} />{item.barcode}</th>
                                     <th>{item.group}</th>
-                                    <th >{item.trader}</th>
+                                    <th className="d-print-none">{item.trader}</th>
                                     <th className="d-print-none">{item.category_name}</th>
                                     <th> {item.name}</th>
-                                    <th className="d-print-none">{item.price}$</th>
+                                    <th className="d-print-none">{Currency(parseFloat(item.price))} </th>
                                     <th className="d-print-none">{item.addprice * 100}%</th>
-                                    <th >{item.finalprice}$</th>
+                                    <th >{Currency(parseFloat(item.finalprice))} </th>
                                     <th className="d-print-none">{item.bag}</th>
                                     <th className="d-print-none"> {item.quantity}</th>
                                     <th className="d-print-none">{item.wight} کگم</th>
                                     <th className="d-print-none">{item.wightAll} کگم</th>
+                                    <th>{item.stock}</th>
+                                    <th>{item.ordered}</th>
                                     <th>{item.popularity}</th>
                                     <th>{item.mawe}</th>
                                     <td> <Link className="d-print-none btn btn-warning " to={`/itemDetail/${item.id}`}><FontAwesomeIcon icon={faEdit} /></Link></td>
@@ -94,6 +110,25 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort,image }) => {
                             )
                             )}
                         </tbody>
+                        <tfoot>
+                            <th > </th>
+                            <th > </th>
+                            <th  ></th>
+                            <th className="d-print-none"> </th>
+                            <th className="d-print-none"> </th>
+                            <th>{counter} </th>
+                            <th className="d-print-none"> </th>
+                            <th className="d-print-none"> </th>
+                            <th className="d-print-none"> </th>
+                            <th className="d-print-none"> </th>
+                            <th className="d-print-none"> </th>
+                            <th className="d-print-none"> </th>
+                            <th  > {Currency(summony)} </th>
+                            <th  ></th>
+                            <th>{sumsell}</th>
+                            <th>{sumpay}</th>
+                            <th>{summawe} </th>
+                        </tfoot>
                     </table>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import React from 'react'
 import { Link } from 'react-router-dom';
+import Currency from '../../../Currency';
 import Resell from './Resell';
 
 const SaleList = ({ sales, addReSell }) => {
@@ -34,10 +35,10 @@ const SaleList = ({ sales, addReSell }) => {
                             <td>{sale.vendor_name}</td>
                             <td><Link to={`/form/${sale.id}`}>{sale.id}</Link></td>
                             <td className="fs-5 ">{sale.local_name}<Link className="d-print-none" to={`/form/${sale.id}`}><FontAwesomeIcon  icon={faEdit} /></Link></td>
-                            <td>{sale.totall}$</td>
-                            <td>{sale.discount}$</td>
-                            <td>{sale.totallint}$</td>
-                            <td>{sale.totalback}$</td>
+                            <td>{Currency(parseFloat(sale.totall))} </td>
+                            <td>{Currency(parseFloat(sale.discount))} </td>
+                            <td>{Currency(parseFloat(sale.totallint))} </td>
+                            <td>{Currency(parseFloat(sale.totalback))} </td>
                             <td>{moment(new Date(sale.date)).format("DD/MM/YYYY")}</td>
                             <td className="d-print-none"><Resell sale={sale} addReSell={addReSell} /></td>
                             <td className="d-print-none">{moment(new Date(sale.datetime)).format("DD/MM/YYYY HH:MM:SS")}

@@ -27,7 +27,7 @@ const LocalForm = ({ image, locals, EditLocal, group, addOld }) => {
     const lists = (pp) => {
         let arr = []
         pp.oldacc_compnay.map((val, index) => (
-            arr.push({ "id": <Link to={`/paymentForm/${val.id}`}> نقل حساب {val.id} </Link>, "name": val.local_name, "group": val.group_name, "pay": val.loan, "loan": 0, "date": val.date })
+            arr.push({ "id": <a >نقل حساب {val.id} </a>, "name": val.local_name, "group": val.group_name, "pay": val.loan, "loan": 0, "date": val.date })
         ))
         pp.attempts.map((val, index) => (
             arr.push({ "id": <Link to={`/form/${val.id}`}> کڕین {val.id} </Link>, "name": val.local_name, "group": val.group_name, "pay": val.totall, "loan": val.discount, "date": val.date })
@@ -115,7 +115,7 @@ const LocalForm = ({ image, locals, EditLocal, group, addOld }) => {
                                 </thead>
                                 <tbody>
                                     <tr key={index}>
-                                        <th scope="row"><Link to={`/form/${ppl.id}`}>{ppl.id}</Link> </th>
+                                        <th scope="row"><a >{ppl.id}</a> </th>
                                         <th scope="row" >{ppl.name}</th>
                                         <th scope="row"> یەکەم جار</th>
                                         <th scope="row">{ppl.exchange}$</th>

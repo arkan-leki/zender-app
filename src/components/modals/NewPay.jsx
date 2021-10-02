@@ -5,7 +5,7 @@ const NewPay = ({locals, addpay, group}) => {
     const [loan, setLoan] = useState('')
     const [income, setIncome] = useState('')
     const [localID, setlocalID] = useState('')
-    const options = locals.map((city) => ({ value: city.id, label: city.name }))
+    const options = locals.map((city) => ({ value: city.id, label: city.name + " / " + city.region }))
 
     return (
         <div>
@@ -19,7 +19,7 @@ const NewPay = ({locals, addpay, group}) => {
                         </div>
                         <div className="modal-body">
                             <form >
-                                <Select placeholder={options.label} defaultValue={options[1]} value={localID} onChange={(e) => setlocalID(e.value)} options={options} />
+                                <Select placeholder={options.label} defaultValue={options[1]} onChange={(e) => setlocalID(e.value)} options={options} />
                                 <label for="income" className="form-label">بری پارە</label>
                                 <input type="number" id="income" className="form-control" aria-describedby="income" value={income} onChange={(e) => setIncome(e.target.value)} />
                                 <label for="loan" className="form-label">گەڕاوە </label>

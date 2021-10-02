@@ -8,6 +8,7 @@ import React, { useEffect } from 'react'
 import Mawe from './Mawe';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Currency from '../../Currency';
 
 const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
     const [text, setText] = useState('')
@@ -20,18 +21,18 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
 
     return (
         <div className="mx-auto" style={{ width: 90 + '%' }} >
-            <div className="row m-2">
-                <div className="col text-center m-2">
-                    <h4>کۆمپانیایی زەندەر</h4>
-                    <p>بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
+            <div className="row mt-2 fs-4 border border-2">
+                <div className="col text-center  mt-2">
+                    <h2>کۆمپانیایی زەندەر</h2>
+                    <p className="fs-5">بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
                 </div>
-                <div className="text-center col m-2">
+                <div className="text-center   col mt-2">
                     <img src={image} className="img-thumbnail" alt="..." width={50 + '%'} />
                 </div>
-                <div className="col text-center m-2">
-                    <h4>پسولەی فرۆش
-                    </h4>
-                    <p>
+                <div className="col text-center mt-2">
+                    <h2>پسولەی فرۆش
+                    </h2>
+                    <p className="fs-5">
                         {/* 07719930849 - Tel */}
 
                         تەلەفۆن - ٠٧٧١٩٩٣٠٨٤٩
@@ -42,33 +43,34 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
             </div>
             {waslz.map((wasl, index) => (
                 <>
-                    <div className="row  m-2" >
-                        <div className="row col border border-3 text-right m-2">
-                            <div className="col">
+                    <div className="row border border-1 mt-2" >
+                        <div className="row col m-2  ">
+                            <div className="col-8 text-right  fs-4">
                                 <p>ناو : {wasl.local_name}</p>
                                 <p>ناونیشان : {wasl.local_region}</p>
                             </div>
-                            <div className="col">
-                                <p>ژمارەی موبایل : {wasl.local_phone}</p>
+                            <div className="col text-right fs-6">
+                                <p> تەلەفۆن : {wasl.local_phone}</p>
                                 <p>کۆد : {wasl.local_code}</p>
                             </div>
                         </div>
-                        <div className="col-2 border border-3  m-2">
-                            <p>فرۆشیار : {wasl.vendor_name}</p>
-                            <p>ژمارەی موبایل : {wasl.vendor_phone}</p>
+                        <div className="col-2 border border-1 text-center  ">
+                            <h4>فرۆشیار </h4>
+                            <p> {wasl.vendor_name}</p>
+                            <p>   {wasl.vendor_phone}</p>
                         </div>
-                        <div className="col-2 border border-3 text-center m-2">
-                            <h4>  {wasl.group_name} </h4>
+                        <div className="col-2 border border-1 text-center  ">
+                            <h4> {wasl.group_name} </h4>
                             <p> {wasl.id}</p>
                             <p>{moment(new Date(wasl.date)).format("DD/MM/YYYY")}</p>
                         </div>
 
                     </div>
 
-                    <div key={index} className="table-responsivetext-center ">
+                    <div key={index} className="table-responsivetext-center mt-2 ">
 
-                        <table className=" table table-striped table-hover align-middle caption-top  border border-2 ">
-                            <thead className="table-dark">
+                        <table className=" table table-striped table-hover align-middle caption-top border border-2  ">
+                            <thead className="table-dark fs-6">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col" >کۆد</th>
@@ -80,7 +82,7 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                     <th className="d-print-none">#</th> */}
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="fs-6">
                                 {wasl.sell_detail.map((kala, index) => (
                                     <tr key={index}>
                                         <th hidden={true}>{summer += kala.quantity}</th>
@@ -91,8 +93,8 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                         <th scope="row" >{kala.item_code}</th>
                                         <th scope="row" >{kala.item}</th>
                                         <th >{kala.quantity}</th>
-                                        <th>{kala.price}$</th>
-                                        <th >{kala.total}$</th>
+                                        <th>{Currency(parseFloat(kala.price))}</th>
+                                        <th >{Currency(parseFloat(kala.total))}</th>
                                         {/* <th className="d-print-none">#</th>
                                         <th className="d-print-none">#</th> */}
                                     </tr>
@@ -103,7 +105,7 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                         <th scope="row" >{kala.barcode}</th>
                                         <th scope="row" >{kala.name}</th>
                                         <th scope="row">{kala.bag}</th>
-                                        <th ><input className="form-control" id={kala.id} type="number" value={text} onChange={(e) => setText(e.target.value)} /></th>
+                                        <th ><input className="formt-control" id={kala.id} type="number" value={text} onChange={(e) => setText(e.target.value)} /></th>
                                         <th >{(text * kala.finalprice).toFixed(2)}$</th>
                                         <th>
                                             <div className="row p-3">
@@ -120,37 +122,37 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                 ))}
 
                             </tbody>
-                            <tfoot>
+                            <tfoot className=" border">
                                 <tr>
                                     <th></th>
                                     <th></th>
                                     <th> <p className="d-print-none">
                                         <ItemModal cats={cats} searchItem={searchItem} items={items} addtoListEvent={addtoListEvent} />
                                     </p></th>
-                                    <th> عدد {summer} کارتۆن</th>
-                                    <th> وەزن {Math.trunc(wights)} کیلۆ</th>
-                                    <th> {summerprice}$</th>
+                                    <th>  {summer} کارتۆن</th>
+                                    <th>  {Math.trunc(wights)} کیلۆ</th>
+                                    <th> {Currency(parseFloat(summerprice))}</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-                    <div className="row  m-2">
-                        <div className="col-4 m-2 border  border-3">
-                            <p>حسابی پێشوو :<Mawe wasl={wasl.datetime} plus={wasl.totallint} localId={wasl.local_id} locals={locals} groupId={wasl.group} />$</p>
-                            <p>حسابی ئێستا :<Mawe wasl={wasl.datetime} plus={0} localId={wasl.local_id} locals={locals} groupId={wasl.group} />$</p>
+                    <div className="row">
+                        <div className="col-4 fs-5  border  border-1">
+                            <p>حسابی پێشوو : <Mawe wasl={wasl.datetime} plus={wasl.totallint} localId={wasl.local_id} locals={locals} groupId={wasl.group} /> </p>
+                            <p>حسابی ئێستا :<Mawe wasl={wasl.datetime} plus={0} localId={wasl.local_id} locals={locals} groupId={wasl.group} /> </p>
                         </div>
                         <div className="col"></div>
-                        <div className="col text-center">
+                        <div className="col text-center border  border-1 ">
                             {/* <p>کۆی کڕین : {wasl.totall}$</p> */}
-                            {wasl.discount > 0 ? <p>داشکان {wasl.discount} $</p> : ''}
+                            {wasl.discount > 0 ? <p>داشکان {Currency(parseFloat(wasl.discount))} </p> : ''}
                             <Discount dashkan={dashkan} wasl={wasl} />
-                            <p>کۆی وەسڵ : {wasl.totallint}$</p>
+                            <p>کۆی وەسڵ : {Currency(parseFloat(wasl.totallint))}</p>
                         </div>
                     </div>
-                    <div className="row text-center">
-                        <h3 className="col"> </h3>
-                        <h3 className="col-4 border border-4"> واژۆی وردبین </h3>
-                        <h3 className="col">  </h3>
+                    <div className="mx-auto row text-center justify-center">
+                        <div className="col"></div>
+                        <h4 className="col-4 border-bottom border-2"> واژۆی وردبین </h4>
+                        <div className="col"></div>
                     </div>
                 </>
             ))}
