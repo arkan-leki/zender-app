@@ -1,3 +1,5 @@
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as moment from 'moment'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -9,7 +11,9 @@ const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
     const [date, setDate] = useState('')
     const [localID, setlocalID] = useState('')
     const localsopt = [{ value: '', label: 'hich' }, ...locals.map((city) => ({ value: city.id, label: city.name }))]
-    
+    let summer = Object.values(payments).reduce((r, { bank_income }) => r + parseFloat(bank_income), 0);
+    const sall = payments.length
+
     return (
         <><div className="mx-auto" style={{
             width: 100 + '%'
@@ -47,9 +51,9 @@ const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
                             <tr key={index}>
                                 <td>{mob.id}</td>
                                 <td>{mob.group_name}</td>
-                                <td><Link to={`/paymentForm/${mob.id}`}>{mob.local_name}</Link></td>
-                                <td><Link to={`/paymentForm/${mob.id}`}>{mob.local_code}</Link></td>
-                                <td><Link to={`/paymentForm/${mob.id}`}>{mob.local_region}</Link></td>
+                                <td>{mob.local_name} <Link className="d-print-none" to={`/paymentForm/${mob.id}`}><FontAwesomeIcon icon={faEdit} /></Link></td>
+                                <td><Link  className="text-decoration-none text-dark" to={`/paymentForm/${mob.id}`}>{mob.local_code}</Link></td>
+                                <td><Link  className="text-decoration-none text-dark" to={`/paymentForm/${mob.id}`}>{mob.local_region}</Link></td>
                                 <td>{Currency(mob.bank_income)} </td>
                                 <td>{mob.date}</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
@@ -58,6 +62,16 @@ const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
                         ))}
                     </tbody>
                     <tfoot>
+                        <tr>
+                            <th>{sall}</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>  {Currency(summer)}  </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </tfoot>
                 </table>
             </div>

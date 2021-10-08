@@ -7,8 +7,8 @@ import Currency from '../../../Currency';
 import Resell from './Resell';
 
 const SaleList = ({ sales, addReSell }) => {
-    let summer = Object.values(sales).reduce((r, { totallint }) => r + parseFloat(totallint), 0);
-
+    const summer = Object.values(sales).reduce((r, { totallint }) => r + parseFloat(totallint), 0);
+    const sall = sales.length
     return (
         <div className="table-responsive-xl aling.center">
             <table className="table table-striped table-hover col-12 caption-top">
@@ -19,6 +19,7 @@ const SaleList = ({ sales, addReSell }) => {
                         <th scope="col"> فرۆشیار</th>
                         <th scope="col">ژمارەی وەسڵ</th>
                         <th scope="col">کڕیار</th>
+                        <th scope="col">ناونیشان</th>
                         <th scope="col">کۆی وەسل</th>
                         <th scope="col">کۆی داشکان</th>
                         <th scope="col">کۆتا</th>
@@ -35,6 +36,7 @@ const SaleList = ({ sales, addReSell }) => {
                             <td>{sale.vendor_name}</td>
                             <td><Link to={`/form/${sale.id}`}>{sale.id}</Link></td>
                             <td className="fs-5 ">{sale.local_name}<Link className="d-print-none" to={`/form/${sale.id}`}><FontAwesomeIcon  icon={faEdit} /></Link></td>
+                            <td>{sale.local_region} </td>
                             <td>{Currency(parseFloat(sale.totall))} </td>
                             <td>{Currency(parseFloat(sale.discount))} </td>
                             <td>{Currency(parseFloat(sale.totallint))} </td>
@@ -47,7 +49,13 @@ const SaleList = ({ sales, addReSell }) => {
                     ))}
                 </tbody>
                 <tfoot>
-                    <th>{summer}</th>
+                    <th>{sall}</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>{Currency(summer)}</th>
                 </tfoot>
             </table> </div>
     )

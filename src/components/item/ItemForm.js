@@ -52,7 +52,7 @@ const ItemForm = ({ item, cats, itemEdit }) => {
                 <div className="row">
                     <div className="col-4  text-danger fs-5">
                         <label for="add" className="form-label ">ڕێژەی قازانج</label>
-                        <input placeholder={item.addprice * 100} type="number" id="add" className="form-control text-dangers" aria-describedby="add" value={add} onChange={(e) => setAdd(e.target.value)} />
+                        <input placeholder={(item.addprice * 100).toFixed(2)} type="number" id="add" className="form-control text-dangers" aria-describedby="add" value={add} onChange={(e) => setAdd(e.target.value)} />
                     </div>
                     <div className="col-4">
                         <label for="stock" className="form-label">مانەوەی یەکەمجار</label>

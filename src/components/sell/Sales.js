@@ -1,9 +1,10 @@
+import moment from 'moment'
 import { useState } from 'react'
 import Select from 'react-select'
 import SaleList from './model/SaleList'
 
 const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, addReSell }) => {
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState(moment(new Date()).format("YYYY-MM-DD"))
     const [localID, setlocalID] = useState('')
     const groupsopt = [{ value: '', label: 'hich' }, ...locals.map((city) => ({ value: city.id, label: city.name }))]
 

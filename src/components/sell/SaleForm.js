@@ -7,17 +7,52 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import Mawe from './Mawe';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../../Currency';
 
-const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent }) => {
-    const [text, setText] = useState('')
-
+const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent , deleteSale }) => {
+    const [text, setText] = useState(1)
+    const [itemz, setItemz] = useState([])
     let { id } = useParams();
     let waslz = sales.filter((mob) => mob.id == id)
     let summer = 0
     let wights = 0.0
     let summerprice = 0
+
+    useEffect(() => {
+        setItemz(items)
+    }, [])
+
+    const addto = (item) => {
+        setItemz(itemz.filter((i) => i.id != item.id))
+        addtoListEvent(item)
+    }
+    const _deleteEvent = (id) => {
+        const newItem = items.filter((i) => i.id == id)
+        newItem.map((it) => {
+            setItemz([...itemz, it])
+        })
+        deleteEvent(id)
+    }
+
+
+    const _itemFilter = (text, id) => {
+        setItemz(items)
+        if (text != '' || id != '') {
+            setItemz(itemz.filter((kala) => {
+                return kala.category == id
+            }))
+            if (text != '') {
+                setItemz(itemz.filter((kala) => {
+                    return kala.name.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+                        kala.barcode.toString().toLowerCase().includes(text.toString().toLowerCase()) ||
+                        kala.group.toString().toLowerCase().includes(text.toString().toLowerCase())
+                }))
+            }
+            return
+        }
+        return
+    }
 
     return (
         <div className="mx-auto" style={{ width: 90 + '%' }} >
@@ -78,8 +113,8 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                     <th >بڕ</th>
                                     <th>نرخی دانە</th>
                                     <th>کۆ</th>
-                                    {/* <th className="d-print-none">#</th>
-                                    <th className="d-print-none">#</th> */}
+                                    <th className="d-print-none">#</th>
+                                    <th className="d-print-none">#</th>
                                 </tr>
                             </thead>
                             <tbody className="fs-6">
@@ -88,15 +123,14 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                         <th hidden={true}>{summer += kala.quantity}</th>
                                         <th hidden={true}>{wights += kala.quantity * kala.item_wightAll}</th>
                                         <th hidden={true}>{summerprice += kala.total}</th>
-
                                         <th scope="row">{kala.id}</th>
                                         <th scope="row" >{kala.item_code}</th>
                                         <th scope="row" >{kala.item}</th>
                                         <th >{kala.quantity}</th>
                                         <th>{Currency(parseFloat(kala.price))}</th>
                                         <th >{Currency(parseFloat(kala.total))}</th>
-                                        {/* <th className="d-print-none">#</th>
-                                        <th className="d-print-none">#</th> */}
+                                        <th className="d-print-none"><button className="btn btn-warning"><FontAwesomeIcon icon={faEdit} /></button></th>
+                                        <th className="d-print-none"><button className="btn btn-danger" onClick={()=> deleteSale(kala.id)}><FontAwesomeIcon icon={faTrash} /></button></th>
                                     </tr>
                                 ))}
                                 {carts.map((kala, index) => (
@@ -104,12 +138,11 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                         <th scope="row">{kala.id}</th>
                                         <th scope="row" >{kala.barcode}</th>
                                         <th scope="row" >{kala.name}</th>
-                                        <th scope="row">{kala.bag}</th>
                                         <th ><input className="formt-control" id={kala.id} type="number" value={text} onChange={(e) => setText(e.target.value)} /></th>
                                         <th >{(text * kala.finalprice).toFixed(2)}$</th>
                                         <th>
                                             <div className="row p-3">
-                                                <button className="d-print-none btn btn-danger col fs-4" type="button" id="button-addon2" onClick={() => deleteEvent(kala.id)}>سڕینەوە <FontAwesomeIcon icon={faTrash} /></button>
+                                                <button className="d-print-none btn btn-danger col fs-4" type="button" id="button-addon2" onClick={() => _deleteEvent(kala.id)}>سڕینەوە <FontAwesomeIcon icon={faTrash} /></button>
                                                 <button className="d-print-none btn btn-info col fs-4" onClick={() => addGO({
                                                     "quantity": text,
                                                     "price": kala.finalprice,
@@ -127,7 +160,7 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                     <th></th>
                                     <th></th>
                                     <th> <p className="d-print-none">
-                                        <ItemModal cats={cats} searchItem={searchItem} items={items} addtoListEvent={addtoListEvent} />
+                                        <ItemModal cats={cats} searchItem={_itemFilter} items={itemz} addtoListEvent={addto} />
                                     </p></th>
                                     <th>  {summer} کارتۆن</th>
                                     <th>  {Math.trunc(wights)} کیلۆ</th>

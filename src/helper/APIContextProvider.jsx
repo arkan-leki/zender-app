@@ -33,11 +33,15 @@ const APIContextProvider = (props) => {
         return data
     }
     const fetchTraders = async () => {
-        const res =  await axios.get(url + 'traders/?format=json&group=' + groupId)
+        const res = await axios.get(url + 'traders/?format=json&group=' + groupId)
         const data = await res.data
         return data
-      }
-
+    }
+    const fetchItems = async () => {
+        const res = await fetch(url + 'items/?format=json&group=' + groupId)
+        const data = await res.json()
+        return data
+    }
 
     const chart = () => {
         let empSal = [];
@@ -73,11 +77,18 @@ const APIContextProvider = (props) => {
         console.log(empSal, empAge);
     };
 
+
     useEffect(() => {
         chart();
     }, []);
 
-
+    useEffect(() => {
+        const getItems = async () => {
+            const server = await fetchItems()
+            setItems(server)
+        }
+        getItems()
+    }, [])
     useEffect(() => {
         const getGroups = async () => {
             const server = await fetchGroups()
@@ -108,8 +119,11 @@ const APIContextProvider = (props) => {
         setVendorID(id)
     }
 
+    const Currency = (num) => {
+        return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
 
-    const value = { groups, setGroupEvent, vendors, setVendorEvent, chartData  , traders }
+    const value = { groups, setGroupEvent, vendors, setVendorEvent, chartData, traders, items, Currency }
 
     return (
         <APIContext.Provider value={value}>

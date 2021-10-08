@@ -1,14 +1,13 @@
+import { useContext, useState } from 'react'
+import { APIContext } from '../helper/APIContext'
 import { faEdit, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
-import Currency from '../../Currency'
-import ItemForm from './ItemForm'
 
-const Items = ({ items, traders, filterItems, filterItemsX, sort, image, setDeleted }) => {
+const Items = () => {
+    const { items, traders, filterItems, filterItemsX, image, setDeleted, Currency } = useContext(APIContext)
     const [tradeID, setTradeID] = useState('')
     const [text, setText] = useState('')
     const tradersopt = [{ value: '', label: 'hich' }, ...traders.map((city) => ({ value: city.id, label: city.name }))]
@@ -19,7 +18,6 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort, image, setDele
     let sumpay = Object.values(items).reduce((r, { popularity }) => r + parseFloat(popularity), 0);
     let summony = Object.values(items).reduce((r, { mawe, finalprice }) => r + (parseFloat(finalprice) * mawe), 0);
     let summawe = Object.values(items).reduce((r, { mawe }) => r + parseFloat(mawe), 0);
-
 
     return (
         <section className="mx-auto" style={{ width: 100 + '%' }} id="items">

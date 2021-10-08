@@ -48,6 +48,7 @@ import axios from 'axios';
 
 const App = () => {
   const [sales, setSales] = useState([])
+  const [solds, setSolds] = useState([])
   const [items, setItems] = useState([])
   const [cats, setCats] = useState([])
   const [carts, setCarts] = useState([])
@@ -154,11 +155,29 @@ const App = () => {
     getItems()
   }, [])
 
+  useEffect(() => {
+    const getSolds = async () => {
+      const server = await fetchSold()
+      if(groupId!='')
+        setSolds(server.filter((mob) =>  mob.group == groupId))
+      else
+      setSolds(server)
+    }
+    getSolds()
+  }, [])
+
   const fetchSales = async () => {
     const res = await fetch(url + 'sells/?format=json&group=' + groupId + '&vendor=' + vendorId)
     const data = await res.json()
     return data
   }
+
+  const fetchSold = async () => {
+    const res = await fetch(url + 'sales/?format=json')
+    const data = await res.json()
+    return data
+  }
+
 
   const fetchTraders = async () => {
     const res = await fetch(url + 'traders/?format=json&group=' + groupId)
@@ -363,6 +382,8 @@ const App = () => {
     setOrders(server)
     server = await fetchSales()
     setSales(server)
+    server = await fetchSold()
+    setSolds(server)
     server = await fetchItems()
     setItems(server)
     server = await fetchTraders()
@@ -552,19 +573,19 @@ const App = () => {
         body: JSON.stringify(post)
 
       })
-    
-      axios({
-        method: 'patch',
-        url:url + 'item/' + id + "/",
-        data: post
-      }).then(res => {
-        alert("تەواو سەرکەوتوو بوو");
-        getState()
-      }).catch(err => {
-        alert("هەڵەیەک ڕوویدا");
-      })
 
-    
+    axios({
+      method: 'patch',
+      url: url + 'item/' + id + "/",
+      data: post
+    }).then(res => {
+      alert("تەواو سەرکەوتوو بوو");
+      getState()
+    }).catch(err => {
+      alert("هەڵەیەک ڕوویدا");
+    })
+
+
 
   }
 
@@ -803,8 +824,8 @@ const App = () => {
     getState()
   }
 
-  const sort = (sortKey) => {
-    let itemsort = items.sort((a, b) => a[sortKey].localeCompare(b[sortKey]))
+  const sort = () => {
+    let itemsort = items.filter((item) => item.deleted == true)
     setItems(itemsort)
   }
 
@@ -816,6 +837,15 @@ const App = () => {
   const filterItemsX = () => {
     let itemsort = items.filter((local) => local.mawe > 0.0)
     setItems(itemsort)
+  }
+
+
+  const setDeleted =  (item) => {
+    axios.patch("http://127.0.0.1:8000/api/item/" + item.id + "/", { "deleted": (!item.deleted) }).then(res => {
+      getState()
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   return (
@@ -845,7 +875,7 @@ const App = () => {
         />
         <Route path='/locals' exact render={(props) => (
           <>
-            <Locals  image={image} search={search} addOld={addOld} groupDetail={group} filterLocalsX={filterLocalsX} addpay={addpay} locals={locals} group={groupId} regions={regions} addRegion={addRegion} />
+            <Locals image={image} search={search} addOld={addOld} groupDetail={group} filterLocalsX={filterLocalsX} addpay={addpay} locals={locals} group={groupId} regions={regions} addRegion={addRegion} />
           </>
         )}
         />
@@ -864,7 +894,7 @@ const App = () => {
         />
         <Route path='/items' exact render={(props) => (
           <>
-            <Items image={image} filterItemsX={filterItemsX} sort={sort} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
+            <Items setDeleted={setDeleted} image={image} filterItemsX={filterItemsX} sort={sort} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
           </>
         )}
         />
@@ -882,7 +912,7 @@ const App = () => {
         />
         <Route path='/pending' exact render={(props) => (
           <>
-            <Pending sales={sales} />
+            <Pending solds={solds} image={image} items={items} groupId={groupId} />
           </>
         )}
         />

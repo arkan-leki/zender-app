@@ -1,40 +1,31 @@
 import axios from 'axios';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
+import Currency from '../Currency';
 
-const Pending = () => {
+const Pending = ({ image, items, groupId, solds }) => {
     const [data, setData] = useState([]);
-    const [sales, setSales] = useState([]);
     const [tday, setTday] = useState([]);
+    const [date, setDate] = useState(moment(new Date()).format("YYYY-MM-DD"))
 
     const fetchData = () => {
-        axios.get("http://127.0.0.1:8000/api/sales/").then(res => {
+        axios.get("http://127.0.0.1:8000/api/sales/?format=json").then(res => {
             console.log(res);
 
-            setData(res.data.filter((mob) => mob.status == false))
-            setSales(res.data.filter((mob) => mob.status == true))
-
+            setData(res.data.filter((mob) => mob.date == date && mob.item_group == groupId))
         }).catch(err => {
             console.log(err);
         })
 
-        axios.get("http://127.0.0.1:8000/api/items/").then(res => {
-            let fas = []
-            let list = 0
-            let date = ""
-            let cont = 0
-            res.data.map((mob) => {
-                mob.item_sell.filter((mob) => mob.status == false).map((foo) => {
-                    list += foo.quantity
-                    date = foo.date
-                    cont += 1
-                })
-                fas.push({ "item": mob.name, "quantity": list, "price": mob.price * list , "date": date , "id": cont })
-                list = 0
-            })
-            setTday(fas.filter((faq) => faq.quantity != 0))
-        }).catch(err => {
-            console.log(err);
+        const _item_sell = []
+        items.map((_item) => {
+            let item_sell = _item.item_sell.filter((mob) => mob.date == date)
+            let quantity = Object.values(item_sell).reduce((r, { quantity }) => r + quantity, 0)
+            let price = Object.values(item_sell).reduce((r, { price, quantity }) => r + parseFloat(quantity * price), 0);
+            _item_sell.push({ "item": _item.name, "qazanc": Currency(price - (_item.price * quantity)), "barcode": _item.barcode, "quantity": quantity, "price": price, "date": date, "group": _item.group, 'itemp': Currency(price / quantity) })
         })
+        setTday(_item_sell.filter((_items) => _items.quantity != 0))
+
     }
 
     useEffect(() => {
@@ -45,79 +36,120 @@ const Pending = () => {
     const setStat = (item) => {
         axios.patch("http://127.0.0.1:8000/api/sale/" + item.id + "/", { "status": (!item.status) }).then(res => {
             console.log(res);
-            fetchData();
+            // fetchData();
         }).catch(err => {
             console.log(err);
         })
     }
 
+    const filter = (date) => {
+        fetchData()
+    }
+
     return (
 
-       <div className="row">
+        <div className="row">
             <div className="col table-responsive-xl aling.center ">
-            <table className="table table-striped table-hover align-middle caption-top">
-                <thead>
-                    <tr>
-                        <th># زنجیرە</th>
-                        <th> ناو </th>
-                        <th> دانە </th>
-                        <th> نرخ</th>
-                        <th> بەروار</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tday.map((item, i) => (
-                        <tr key={i}>
-                            <th>{item.id}</th>
-                            <th>{item.item}</th>
-                            <th>{item.quantity} دانە</th>
-                            <th>{item.price}$</th>
-                            <th>{item.date}</th>
+                <table className="table table-striped table-hover align-middle caption-top">
+                    <caption>
+                        <div className="row m-2">
+                            <div className="col text-center m-2">
+                                <h4>کۆمپانیایی زەندەر</h4>
+                                <p>بۆ بازگانی گشتی و بریکارینامەی بازرگانی / سنوردار</p>
+                            </div>
+                            <div className="text-center col m-2">
+                                <img src={image} className="img-thumbnail" alt="..." width={40 + '%'} />
+                            </div>
+                            <div className="col text-center m-2">
+                                <h4>دەرچوو مەخزەن
+                                </h4>
+                                <p>
+                                    {/* 07719930849 - Tel */}
+                                    {moment(new Date()).format("DD/MM/YYYY")}
+                                </p>
+                            </div>
+                        </div></caption>
+                    <thead>
+                        <tr>
+                            <th>گروپ</th>
+                            <th> کۆد </th>
+                            <th> ناو </th>
+                            <th> دانە </th>
+                            <th> نرخ</th>
+                            <th>  کۆ</th>
+                            <th> قازانج</th>
+                            <th> بەروار</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {tday.map((item, i) => (
+                            <tr key={i}>
+                                <th>{item.group}</th>
+                                <th>{item.barcode}</th>
+                                <th>{item.item}</th>
+                                <th>{item.quantity}</th>
+                                <th>{item.itemp}</th>
+                                <th>{Currency(item.price)}</th>
+                                <th>{item.qazanc}</th>
+                                <th>{item.date}</th>
+                            </tr>
+                        ))}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>{data.length} جۆر</th>
+                            <th>{Object.values(data).reduce((r, { quantity }) => r + parseFloat(quantity), 0)}</th>
+                            <th>{Currency(Object.values(data).reduce((r, { price }) => r + parseFloat(price), 0))}</th>
+                            <th>{Currency(Object.values(data).reduce((r, { price, quantity }) => r + (parseFloat(price) * parseFloat(quantity)), 0))}</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div className="col table-responsive-xl aling.center d-print-none">
+                <div className="container d-print-none p-5">
+                    <div className="d-md-flex justify-content-between align-items-center">
+                        <h5 className="mb-3 mb-md-0">گەران بۆ بارەکان</h5>
+                        <div className="input-group news-input">
+                            <input id='date' type type="date" className="form-control" placeholder=""
+                                aria-label="Eneter Your price" aria-describedby="button-addon2" value={date} onChange={(e) => setDate(e.target.value)} />
+                            <button className="btn btn-dark" type="button" id="button-addon2" onClick={() => filter(date)}>گەڕان</button>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <table className="table table-striped table-hover align-middle caption-top">
+                    <thead>
+                        <tr>
+                            <th># زنجیرە</th>
+                            <th> ناو </th>
+                            <th> دانە </th>
+                            <th> نرخ</th>
+                            <th> بەروار</th>
+                            <th> وەسڵ</th>
+                            {/* <th> حاڵەت</th> */}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((item, i) => (
+                            <tr key={i}>
+                                <th>{item.id}</th>
+                                <th>{item.item}</th>
+                                <th>{item.quantity} دانە</th>
+                                <th>{item.price}$</th>
+                                <th>{item.date}</th>
+                                <th>{item.sell}</th>
+                                {/* <th><input type="checkbox" name="status" id={i} checked={item.status} onClick={(e) => setStat(item)} /></th> */}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div className="col table-responsive-xl aling.center d-print-none">
-            <table className="table table-striped table-hover align-middle caption-top">
-                <thead>
-                    <tr>
-                        <th># زنجیرە</th>
-                        <th> ناو </th>
-                        <th> دانە </th>
-                        <th> نرخ</th>
-                        <th> بەروار</th>
-                        <th> وەسڵ</th>
-                        <th> حاڵەت</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item, i) => (
-                        <tr key={i}>
-                            <th>{item.id}</th>
-                            <th>{item.item}</th>
-                            <th>{item.quantity} دانە</th>
-                            <th>{item.price}$</th>
-                            <th>{item.date}</th>
-                            <th>{item.sell}</th>
-                            <th><input type="checkbox" name="status" id={i} checked={item.status} onClick={(e) => setStat(item)} /></th>
-                        </tr>
-                    ))}
-                    {sales.map((item, i) => (
-                        <tr key={i}>
-                            <th>{item.id}</th>
-                            <th>{item.item}</th>
-                            <th>{item.quantity} دانە</th>
-                            <th>{item.price}$</th>
-                            <th>{item.date}</th>
-                            <th>{item.sell}</th>
-                            <th><input type="checkbox" name="status" id={i} checked={item.status} /></th>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-       </div>
     )
 }
 
