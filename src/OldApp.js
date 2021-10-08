@@ -63,7 +63,7 @@ const App = () => {
   const [groupId, setGroupID] = useState('')
   const [group, setGroup] = useState([])
   const [vendorId, setVendorID] = useState('')
-  const url = 'http://127.0.0.1:8000/api/'
+  const BASE_URL = 'http://127.0.0.1:8000/api/'
 
   useEffect(() => {
     const getOrders = async () => {
@@ -158,83 +158,83 @@ const App = () => {
   useEffect(() => {
     const getSolds = async () => {
       const server = await fetchSold()
-      if(groupId!='')
-        setSolds(server.filter((mob) =>  mob.group == groupId))
+      if (groupId != '')
+        setSolds(server.filter((mob) => mob.group == groupId))
       else
-      setSolds(server)
+        setSolds(server)
     }
     getSolds()
   }, [])
 
   const fetchSales = async () => {
-    const res = await fetch(url + 'sells/?format=json&group=' + groupId + '&vendor=' + vendorId)
+    const res = await fetch(BASE_URL + 'sells/?format=json&group=' + groupId + '&vendor=' + vendorId)
     const data = await res.json()
     return data
   }
 
   const fetchSold = async () => {
-    const res = await fetch(url + 'sales/?format=json')
+    const res = await fetch(BASE_URL + 'sales/?format=json')
     const data = await res.json()
     return data
   }
 
 
   const fetchTraders = async () => {
-    const res = await fetch(url + 'traders/?format=json&group=' + groupId)
+    const res = await fetch(BASE_URL + 'traders/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
   const fetchVendors = async () => {
-    const res = await fetch(url + 'vendors/?format=json')
+    const res = await fetch(BASE_URL + 'vendors/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchOrders = async () => {
-    const res = await fetch(url + 'orders/?format=json&group=' + groupId)
+    const res = await fetch(BASE_URL + 'orders/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
 
   const fetchLocals = async () => {
-    const res = await fetch(url + 'locals/?format=json')
+    const res = await fetch(BASE_URL + 'locals/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchItems = async () => {
-    const res = await fetch(url + 'items/?format=json&group=' + groupId)
+    const res = await fetch(BASE_URL + 'items/?format=json&group=' + groupId)
     const data = await res.json()
     return data
   }
 
   const fetchGroups = async () => {
-    const res = await fetch(url + 'groups/?format=json')
+    const res = await fetch(BASE_URL + 'groups/?format=json')
     const data = await res.json()
     return data
   }
   const fetchPayments = async () => {
-    const res = await fetch(url + 'payment/?format=json')
+    const res = await fetch(BASE_URL + 'payment/?format=json')
     const data = await res.json()
     return data
   }
   const fetchRegions = async () => {
-    const res = await fetch(url + 'region/?format=json')
+    const res = await fetch(BASE_URL + 'region/?format=json')
     const data = await res.json()
     return data
   }
 
   const fetchBanks = async () => {
-    const res = await fetch(url + 'bank/?format=json&group=' + groupId)
+    const res = await fetch(BASE_URL + 'bank/?format=json&group=' + groupId)
     const data = await res.json()
 
     return data
   }
 
   const fetchCats = async () => {
-    const res = await fetch(url + 'cat/?format=json&group=' + groupId)
+    const res = await fetch(BASE_URL + 'cat/?format=json&group=' + groupId)
     const data = await res.json()
 
     return data
@@ -251,7 +251,7 @@ const App = () => {
   }
 
   const dashkanEvent = async (id, discount) => {
-    const res = await fetch(url + 'sell/' + id + '/',
+    const res = await fetch(BASE_URL + 'sell/' + id + '/',
       {
         method: 'PATCH',
         headers: {
@@ -267,7 +267,7 @@ const App = () => {
   }
 
   const addGoEvent = async (kala) => {
-    const res = await fetch(url + 'sale/',
+    const res = await fetch(BASE_URL + 'sale/',
       {
         method: 'POST',
         headers: {
@@ -280,10 +280,24 @@ const App = () => {
     getState()
     setCarts(carts.filter((mob) => mob.id != kala.item))
   }
-
+  
+  const deleteSale = (kalaID) => {
+    async function deletePost() {
+      await axios.delete(BASE_URL + 'sale/' + kalaID+'/')
+        .then(() => getState());
+    }
+    deletePost();
+  }
+  const editKalaEvent = (id,data) => {
+    async function deletePost() {
+      await axios.patch(`${BASE_URL}sale/${id}/`, data)
+        .then(() => {getState()});
+    }
+    deletePost();
+  }
 
   const addOrder = async (args) => {
-    const res = await fetch(url + 'order/',
+    const res = await fetch(BASE_URL + 'order/',
       {
         method: 'POST',
         headers: {
@@ -299,7 +313,7 @@ const App = () => {
   }
 
   const addForm = async (args) => {
-    const res = await fetch(url + 'sell/',
+    const res = await fetch(BASE_URL + 'sell/',
       {
         method: 'POST',
         headers: {
@@ -378,6 +392,7 @@ const App = () => {
   }
 
   const getState = async () => {
+    // alert('done')
     let server = await fetchOrders()
     setOrders(server)
     server = await fetchSales()
@@ -477,7 +492,7 @@ const App = () => {
 
 
   const addBuyEvent = async (kala, price) => {
-    const res = await fetch(url + 'ordered/',
+    const res = await fetch(BASE_URL + 'ordered/',
       {
         method: 'POST',
         headers: {
@@ -486,7 +501,7 @@ const App = () => {
         body: JSON.stringify(kala)
 
       })
-    const res2 = await fetch(url + 'item/' + kala.item + "/",
+    const res2 = await fetch(BASE_URL + 'item/' + kala.item + "/",
       {
         method: 'PATCH',
         headers: {
@@ -501,7 +516,7 @@ const App = () => {
   }
 
   const dashkanBuyEvent = async (id, discount) => {
-    const res = await fetch(url + 'order/' + id + '/',
+    const res = await fetch(BASE_URL + 'order/' + id + '/',
       {
         method: 'PATCH',
         headers: {
@@ -553,7 +568,7 @@ const App = () => {
   const itemPost = async (post) => {
     axios({
       method: 'post',
-      url: url + 'item/',
+      BASE_URL: BASE_URL + 'item/',
       data: post
     }).then(res => {
       alert("تەواو سەرکەوتوو بوو");
@@ -564,7 +579,7 @@ const App = () => {
   }
 
   const itemEdit = async (id, post) => {
-    const res = await fetch(url + 'item/' + id + "/",
+    const res = await fetch(BASE_URL + 'item/' + id + "/",
       {
         method: 'PATCH',
         headers: {
@@ -576,7 +591,7 @@ const App = () => {
 
     axios({
       method: 'patch',
-      url: url + 'item/' + id + "/",
+      BASE_URL: BASE_URL + 'item/' + id + "/",
       data: post
     }).then(res => {
       alert("تەواو سەرکەوتوو بوو");
@@ -599,7 +614,7 @@ const App = () => {
   // }
 
   const addGroupEvent = async (post) => {
-    const res = await fetch(url + 'group/',
+    const res = await fetch(BASE_URL + 'group/',
       {
         method: 'POST',
         headers: {
@@ -616,7 +631,7 @@ const App = () => {
   }
 
   const addLocal = async (post) => {
-    const res = await fetch(url + 'local/',
+    const res = await fetch(BASE_URL + 'local/',
       {
         method: 'POST',
         headers: {
@@ -630,7 +645,7 @@ const App = () => {
   }
 
   const EditLocal = async (id, post) => {
-    const res = await fetch(url + 'local/' + id + '/',
+    const res = await fetch(BASE_URL + 'local/' + id + '/',
       {
         method: 'PATCH',
         headers: {
@@ -644,7 +659,7 @@ const App = () => {
   }
 
   const addRegion = async (post) => {
-    const res = await fetch(url + 'region/',
+    const res = await fetch(BASE_URL + 'region/',
       {
         method: 'POST',
         headers: {
@@ -659,7 +674,7 @@ const App = () => {
 
 
   const addCat = async (post) => {
-    const res = await fetch(url + 'cat/',
+    const res = await fetch(BASE_URL + 'cat/',
       {
         method: 'POST',
         headers: {
@@ -673,7 +688,7 @@ const App = () => {
   }
 
   const addTrade = async (post) => {
-    const res = await fetch(url + 'trader/',
+    const res = await fetch(BASE_URL + 'trader/',
       {
         method: 'POST',
         headers: {
@@ -687,7 +702,7 @@ const App = () => {
   }
 
   const addVendor = async (post) => {
-    const res = await fetch(url + 'vendors/',
+    const res = await fetch(BASE_URL + 'vendors/',
       {
         method: 'POST',
         headers: {
@@ -701,7 +716,7 @@ const App = () => {
   }
 
   const addOld = async (old) => {
-    const res = await fetch(url + 'oldacc/',
+    const res = await fetch(BASE_URL + 'oldacc/',
       {
         method: 'POST',
         headers: {
@@ -715,7 +730,7 @@ const App = () => {
   }
 
   const addpay = async (pay, bank) => {
-    const res = await fetch(url + 'bank/',
+    const res = await fetch(BASE_URL + 'bank/',
       {
         method: 'POST',
         headers: {
@@ -728,7 +743,7 @@ const App = () => {
     const data = res.json()
     data.then(async (d) => {
       console.log(d.id)
-      await fetch(url + 'payment/',
+      await fetch(BASE_URL + 'payment/',
         {
           method: 'POST',
           headers: {
@@ -746,7 +761,7 @@ const App = () => {
   }
 
   const addPayLoan = async (trader, bank) => {
-    const res = await fetch(url + 'bank/',
+    const res = await fetch(BASE_URL + 'bank/',
       {
         method: 'POST',
         headers: {
@@ -759,7 +774,7 @@ const App = () => {
     const data = res.json()
     data.then(async (d) => {
       console.log(d.id)
-      await fetch(url + 'payloan/',
+      await fetch(BASE_URL + 'payloan/',
         {
           method: 'POST',
           headers: {
@@ -776,7 +791,7 @@ const App = () => {
   }
 
   const addReSell = async (resell) => {
-    const res = await fetch(url + 'resell/',
+    const res = await fetch(BASE_URL + 'resell/',
       {
         method: 'POST',
         headers: {
@@ -792,7 +807,7 @@ const App = () => {
 
 
   const addBuy = async (buy, bank) => {
-    const res = await fetch(url + 'bank/',
+    const res = await fetch(BASE_URL + 'bank/',
       {
         method: 'POST',
         headers: {
@@ -808,7 +823,7 @@ const App = () => {
 
     data.then(async (d) => {
       console.log(d.id)
-      await fetch(url + 'buy/',
+      await fetch(BASE_URL + 'buy/',
         {
           method: 'POST',
           headers: {
@@ -840,7 +855,7 @@ const App = () => {
   }
 
 
-  const setDeleted =  (item) => {
+  const setDeleted = (item) => {
     axios.patch("http://127.0.0.1:8000/api/item/" + item.id + "/", { "deleted": (!item.deleted) }).then(res => {
       getState()
     }).catch(err => {
@@ -924,7 +939,7 @@ const App = () => {
         />
         <Route path='/form/:id' exact render={(props) => (
           <>
-            <SaleForm locals={locals} groupDetail={group} groupId={groupId} groups={groups} searchItem={itemFilter} cats={cats} addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
+            <SaleForm editKalaEvent={editKalaEvent} deleteSale={deleteSale} locals={locals} groupDetail={group} groupId={groupId} groups={groups} searchItem={itemFilter} cats={cats} addtoListEvent={addtoListEvent} image={image} group={groupId} carts={carts} sales={sales} items={items} deleteEvent={deleteFromList} addGO={addGoEvent} dashkan={dashkanEvent} />
           </>
         )}
         />

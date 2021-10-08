@@ -10,8 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../../Currency';
 
-const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent , deleteSale }) => {
+const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent, deleteSale, editKalaEvent }) => {
     const [text, setText] = useState(1)
+    const [dana, setDana] = useState('')
+    const [kalaId, setKalaId] = useState('')
     const [itemz, setItemz] = useState([])
     let { id } = useParams();
     let waslz = sales.filter((mob) => mob.id == id)
@@ -52,6 +54,35 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
             return
         }
         return
+    }
+
+    const _edit = (kalaID) => {
+        return (
+            <><div className="modal fade" id="editModal" tabIndex="-1" aria-hidden='true'>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">فۆرمی پارەدان</h5>
+                            <button className="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form>
+                                <label for="dana" className="form-label">دانە</label>
+                                <input type="number" id="dana" className="form-control" aria-describedby="dana" value={dana} onChange={(e) => setDana(e.target.value)} />
+                                <button className="btn btn-info" type="button" onClick={() => editKalaEvent(kalaId,
+                                    {
+                                        'quantity': dana
+                                    }
+                                )}
+                                >وەرگرتن</button>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div></>
+        )
     }
 
     return (
@@ -129,8 +160,10 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                         <th >{kala.quantity}</th>
                                         <th>{Currency(parseFloat(kala.price))}</th>
                                         <th >{Currency(parseFloat(kala.total))}</th>
-                                        <th className="d-print-none"><button className="btn btn-warning"><FontAwesomeIcon icon={faEdit} /></button></th>
-                                        <th className="d-print-none"><button className="btn btn-danger" onClick={()=> deleteSale(kala.id)}><FontAwesomeIcon icon={faTrash} /></button></th>
+                                        <th className="d-print-none">
+                                            <button className="btn btn-warning " data-bs-toggle="modal" data-bs-target="#editModal" onClick={() => { setKalaId(kala.id); setDana(kala.quantity) }}><FontAwesomeIcon icon={faEdit} /></button>                                            </th>
+                                        <th className="d-print-none"><button className="btn btn-danger" onClick={() => deleteSale(kala.id)}><FontAwesomeIcon icon={faTrash} /></button></th>
+                                        {_edit()}
                                     </tr>
                                 ))}
                                 {carts.map((kala, index) => (
@@ -139,22 +172,24 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                         <th scope="row" >{kala.barcode}</th>
                                         <th scope="row" >{kala.name}</th>
                                         <th ><input className="formt-control" id={kala.id} type="number" value={text} onChange={(e) => setText(e.target.value)} /></th>
-                                        <th >{(text * kala.finalprice).toFixed(2)}$</th>
-                                        <th>
-                                            <div className="row p-3">
-                                                <button className="d-print-none btn btn-danger col fs-4" type="button" id="button-addon2" onClick={() => _deleteEvent(kala.id)}>سڕینەوە <FontAwesomeIcon icon={faTrash} /></button>
-                                                <button className="d-print-none btn btn-info col fs-4" onClick={() => addGO({
-                                                    "quantity": text,
-                                                    "price": kala.finalprice,
-                                                    "sell": wasl.id,
-                                                    "item": kala.id
-                                                })}> خەزن    <FontAwesomeIcon icon={faSave} /></button>
-                                            </div>
+                                        <th scope="row" >{Currency(parseFloat(kala.price))}</th>
+                                        <th >{Currency(text * kala.finalprice)}</th>
+                                        <th className="d-print-none ">
+                                            <button className="btn btn-danger  fs-4" type="button" id="button-addon2" onClick={() => _deleteEvent(kala.id)}>سڕینەوە <FontAwesomeIcon icon={faTrash} /></button>
+                                        </th>
+                                        <th className="d-print-none ">
+                                            <button className="btn btn-info fs-4" onClick={() => addGO({
+                                                "quantity": text,
+                                                "price": kala.finalprice,
+                                                "sell": wasl.id,
+                                                "item": kala.id
+                                            })}> خەزن <FontAwesomeIcon icon={faSave} /></button>
                                         </th>
                                     </tr>
                                 ))}
 
                             </tbody>
+
                             <tfoot className=" border">
                                 <tr>
                                     <th></th>
