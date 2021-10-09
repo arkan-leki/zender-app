@@ -54,6 +54,9 @@ const Header = ({ addBuy, addpay, addTrade, group, searchTrader, addOrder, group
                             <li className="nav-item">
                                 <Link className="nav-link " to="/pending" >دەرچوون لە کۆگا</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link " to="/report" >راپۆرت</Link>
+                            </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     لقەکان

@@ -9,9 +9,9 @@ import Mawe from './Mawe';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../../Currency';
+import Cart from './Cart';
 
 const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEvent, addGO, dashkan, locals, image, addtoListEvent, deleteSale, editKalaEvent }) => {
-    const [text, setText] = useState(1)
     const [dana, setDana] = useState('')
     const [kalaId, setKalaId] = useState('')
     const [itemz, setItemz] = useState([])
@@ -138,8 +138,8 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                         <table className=" table table-striped table-hover align-middle caption-top border border-2  ">
                             <thead className="table-dark fs-6">
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col" >کۆد</th>
+                                    <th  scope="col">#</th>
+                                    <th className="border-right border border-2 border-dark" scope="col" >کۆد</th>
                                     <th scope="col" >کاڵا</th>
                                     <th >بڕ</th>
                                     <th>نرخی دانە</th>
@@ -154,8 +154,8 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                         <th hidden={true}>{summer += kala.quantity}</th>
                                         <th hidden={true}>{wights += kala.quantity * kala.item_wightAll}</th>
                                         <th hidden={true}>{summerprice += kala.total}</th>
-                                        <th scope="row">{kala.id}</th>
-                                        <th scope="row" >{kala.item_code}</th>
+                                        <th  scope="row">{kala.id}</th>
+                                        <th className="border-right border border-2 border-dark" scope="row" >{kala.item_code}</th>
                                         <th scope="row" >{kala.item}</th>
                                         <th >{kala.quantity}</th>
                                         <th>{Currency(parseFloat(kala.price))}</th>
@@ -167,25 +167,7 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                     </tr>
                                 ))}
                                 {carts.map((kala, index) => (
-                                    <tr key={index}>
-                                        <th scope="row">{kala.id}</th>
-                                        <th scope="row" >{kala.barcode}</th>
-                                        <th scope="row" >{kala.name}</th>
-                                        <th ><input className="formt-control" id={kala.id} type="number" value={text} onChange={(e) => setText(e.target.value)} /></th>
-                                        <th scope="row" >{Currency(parseFloat(kala.price))}</th>
-                                        <th >{Currency(text * kala.finalprice)}</th>
-                                        <th className="d-print-none ">
-                                            <button className="btn btn-danger  fs-4" type="button" id="button-addon2" onClick={() => _deleteEvent(kala.id)}>سڕینەوە <FontAwesomeIcon icon={faTrash} /></button>
-                                        </th>
-                                        <th className="d-print-none ">
-                                            <button className="btn btn-info fs-4" onClick={() => addGO({
-                                                "quantity": text,
-                                                "price": kala.finalprice,
-                                                "sell": wasl.id,
-                                                "item": kala.id
-                                            })}> خەزن <FontAwesomeIcon icon={faSave} /></button>
-                                        </th>
-                                    </tr>
+                                   <Cart waslid={wasl.id} _deleteEvent={_deleteEvent} addGO={addGO} kala={kala} key={index}/>
                                 ))}
 
                             </tbody>

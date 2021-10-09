@@ -22,6 +22,7 @@ import ItemForm from './components/item/ItemForm';
 import ItemDetail from './components/item/ItemDetail';
 import Pending from './components/Pending';
 import axios from 'axios';
+import Report from './components/Report';
 
 // function App() {
 //   return (
@@ -910,6 +911,12 @@ const App = () => {
         <Route path='/items' exact render={(props) => (
           <>
             <Items setDeleted={setDeleted} image={image} filterItemsX={filterItemsX} sort={sort} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
+          </>
+        )}
+        />
+        <Route path='/report' exact render={(props) => (
+          <>
+            <Report setDeleted={setDeleted} image={image} filterItemsX={filterItemsX} sort={sort} cats={cats} items={items} group={groupId} traders={traders} filterItems={filterItems} itemPost={itemPost} itemEdit={itemEdit} />
           </>
         )}
         />

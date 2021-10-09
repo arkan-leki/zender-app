@@ -11,8 +11,13 @@ const Pending = ({ image, items, groupId, solds }) => {
     const fetchData = () => {
         axios.get("http://127.0.0.1:8000/api/sales/?format=json").then(res => {
             console.log(res);
+            // alert(groupId)
 
-            setData(res.data.filter((mob) => mob.date == date && mob.item_group == groupId))
+            if (groupId) {
+                setData(res.data.filter((mob) => mob.date == date && mob.item_group == groupId))
+            } else {
+                setData(res.data.filter((mob) => mob.date == date))
+            }
         }).catch(err => {
             console.log(err);
         })
@@ -22,10 +27,9 @@ const Pending = ({ image, items, groupId, solds }) => {
             let item_sell = _item.item_sell.filter((mob) => mob.date == date)
             let quantity = Object.values(item_sell).reduce((r, { quantity }) => r + quantity, 0)
             let price = Object.values(item_sell).reduce((r, { price, quantity }) => r + parseFloat(quantity * price), 0);
-            _item_sell.push({ "item": _item.name, "qazanc": Currency(price - (_item.price * quantity)), "barcode": _item.barcode, "quantity": quantity, "price": price, "date": date, "group": _item.group, 'itemp': Currency(price / quantity) })
+            _item_sell.push({ "item": _item.name, "item_price": _item.price, "qazanc": Currency(price - (_item.price * quantity)), "barcode": _item.barcode, "quantity": quantity, "mawe": _item.mawe, "maweprice": (_item.mawe * _item.price), "price": price, "date": date, "group": _item.group, 'itemp': Currency(price / quantity) })
         })
         setTday(_item_sell.filter((_items) => _items.quantity != 0))
-
     }
 
     useEffect(() => {
@@ -45,6 +49,8 @@ const Pending = ({ image, items, groupId, solds }) => {
     const filter = (date) => {
         fetchData()
     }
+
+    let totalqazanj = 0
 
     return (
 
@@ -74,9 +80,12 @@ const Pending = ({ image, items, groupId, solds }) => {
                             <th>گروپ</th>
                             <th> کۆد </th>
                             <th> ناو </th>
-                            <th> دانە </th>
+                            <th> کڕین</th>
                             <th> نرخ</th>
-                            <th>  کۆ</th>
+                            <th> فرۆشراو </th>
+                            <th> ماوە </th>
+                            <th>  داهات</th>
+                            <th>  سەرمایە</th>
                             <th> قازانج</th>
                             <th> بەروار</th>
                         </tr>
@@ -87,9 +96,12 @@ const Pending = ({ image, items, groupId, solds }) => {
                                 <th>{item.group}</th>
                                 <th>{item.barcode}</th>
                                 <th>{item.item}</th>
-                                <th>{item.quantity}</th>
+                                <th>{item.item_price}</th>
                                 <th>{item.itemp}</th>
+                                <th>{item.quantity}</th>
+                                <th>{item.mawe}</th>
                                 <th>{Currency(item.price)}</th>
+                                <th>{Currency(item.maweprice)}</th>
                                 <th>{item.qazanc}</th>
                                 <th>{item.date}</th>
                             </tr>
@@ -99,12 +111,14 @@ const Pending = ({ image, items, groupId, solds }) => {
                         <tr>
                             <th></th>
                             <th></th>
-                            <th>{data.length} جۆر</th>
+                            <th>{data.length}</th>
+                            <th></th>
+                            <th>{Currency(Object.values(data).reduce((r, { item_price, quantity }) => r + parseFloat(quantity * item_price), 0))}</th>
                             <th>{Object.values(data).reduce((r, { quantity }) => r + parseFloat(quantity), 0)}</th>
-                            <th>{Currency(Object.values(data).reduce((r, { price }) => r + parseFloat(price), 0))}</th>
-                            <th>{Currency(Object.values(data).reduce((r, { price, quantity }) => r + (parseFloat(price) * parseFloat(quantity)), 0))}</th>
-                            <th></th>
-                            <th></th>
+                            <th>{Object.values(data).reduce((r, { mawe }) => r + parseFloat(mawe), 0)}</th>
+                            <th>{Currency(Object.values(data).reduce((r, { price, quantity }) => r + parseFloat(quantity * price), 0))}</th>
+                            <th>{Currency(Object.values(data).reduce((r, { finalprice, mawe }) => r + parseFloat(mawe * finalprice), 0))}</th>
+                            <th>{Currency(Object.values(data).reduce((r, { quantity, item_price, price }) => r + (quantity * (parseFloat(price) - parseFloat(item_price))), 0))}</th>
                         </tr>
                     </tfoot>
                 </table>

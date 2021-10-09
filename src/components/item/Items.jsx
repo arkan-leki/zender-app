@@ -14,11 +14,11 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort, image, setDele
     const tradersopt = [{ value: '', label: 'hich' }, ...traders.map((city) => ({ value: city.id, label: city.name }))]
     const [status, setStatus] = useState(true)
 
-    let counter = Object.values(items).reduce((r, { id }) => r + r, 0);
-    let sumsell = Object.values(items).reduce((r, { ordered, stock }) => r + parseFloat(ordered + stock), 0);
-    let sumpay = Object.values(items).reduce((r, { popularity }) => r + parseFloat(popularity), 0);
-    let summony = Object.values(items).reduce((r, { mawe, finalprice }) => r + (parseFloat(finalprice) * mawe), 0);
-    let summawe = Object.values(items).reduce((r, { mawe }) => r + parseFloat(mawe), 0);
+    let counter = items.filter((i) => i.deleted != status).length
+    let sumsell = Object.values(items.filter((i) => i.deleted != status)).reduce((r, { ordered, stock }) => r + parseFloat(ordered + stock), 0);
+    let sumpay = Object.values(items.filter((i) => i.deleted != status)).reduce((r, { popularity }) => r + parseFloat(popularity), 0);
+    let summony = Object.values(items.filter((i) => i.deleted != status)).reduce((r, { mawe, finalprice }) => r + (parseFloat(finalprice) * mawe), 0);
+    let summawe = Object.values(items.filter((i) => i.deleted != status)).reduce((r, { mawe }) => r + parseFloat(mawe), 0);
 
 
     return (
@@ -66,7 +66,7 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort, image, setDele
                                 <th className="d-print-none">جۆر</th>
                                 <th>ناوی مەواد</th>
                                 <th className="d-print-none">نرخ</th>
-                                <th className="d-print-none" ></th>
+                                <th className="d-print-none" >قازانج</th>
                                 <th > نرخ فرۆش</th>
                                 <th className="d-print-none">جۆر بار</th>
                                 <th className="d-print-none">دانە</th>
@@ -84,7 +84,7 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort, image, setDele
                             {items.filter((i) => i.deleted != status).map((item, index) => (
                                 <tr key={index}>
                                     <td hidden>
-                                        {counter = index + 1}
+                                        {/* {counter = index + 1} */}
                                         {/* {sumsell += item.ordered + item.stock}
                                         {sumpay += item.popularity} */}
                                         {/* {summawe += item.mawe} */}
