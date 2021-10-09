@@ -281,18 +281,18 @@ const App = () => {
     getState()
     setCarts(carts.filter((mob) => mob.id != kala.item))
   }
-  
+
   const deleteSale = (kalaID) => {
     async function deletePost() {
-      await axios.delete(BASE_URL + 'sale/' + kalaID+'/')
+      await axios.delete(BASE_URL + 'sale/' + kalaID + '/')
         .then(() => getState());
     }
     deletePost();
   }
-  const editKalaEvent = (id,data) => {
+  const editKalaEvent = (id, data) => {
     async function deletePost() {
       await axios.patch(`${BASE_URL}sale/${id}/`, data)
-        .then(() => {getState()});
+        .then(() => { getState() });
     }
     deletePost();
   }
@@ -580,39 +580,14 @@ const App = () => {
   }
 
   const itemEdit = async (id, post) => {
-    const res = await fetch(BASE_URL + 'item/' + id + "/",
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(post)
-
+    await axios.patch(`${BASE_URL}item/${id}/`, post)
+      .then(res => {
+        alert("تەواو سەرکەوتوو بوو");
+        getState()
+      }).catch(err => {
+        alert("هەڵەیەک ڕوویدا");
       })
-
-    axios({
-      method: 'patch',
-      BASE_URL: BASE_URL + 'item/' + id + "/",
-      data: post
-    }).then(res => {
-      alert("تەواو سەرکەوتوو بوو");
-      getState()
-    }).catch(err => {
-      alert("هەڵەیەک ڕوویدا");
-    })
-
-
-
   }
-
-
-  // const itemzPost = async (post) => {
-
-  //   post.map((moo) => {
-  //     itemzPost(moo)
-  //   })
-
-  // }
 
   const addGroupEvent = async (post) => {
     const res = await fetch(BASE_URL + 'group/',
@@ -624,11 +599,6 @@ const App = () => {
         body: JSON.stringify(post)
 
       })
-
-    // const data = res.json()
-    // let server = await fetchGroups()
-    // setGroups(server)
-    // getState()
   }
 
   const addLocal = async (post) => {

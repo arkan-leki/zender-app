@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import { useParams } from 'react-router';
 import Select from 'react-select';
 
@@ -16,6 +16,13 @@ const ItemForm = ({ item, cats, itemEdit }) => {
     const [stock, setStock] = useState(item.stock)
     const [catID, setCatID] = useState(item.category)
     const optioncats = cats.map((city) => ({ value: city.id, label: city.name }))
+
+    useEffect(() => {
+        setAdd(item.addprice * 100)
+        return () => {
+            
+        }
+    }, [itemEdit])
 
     return (
         <div>

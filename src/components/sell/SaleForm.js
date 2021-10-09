@@ -56,6 +56,14 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
         return
     }
 
+    const _deleteSale = (kalaID) => {
+        if(window.confirm("areu sure")){
+            deleteSale(kalaID)
+        }else{
+            console.log('Thing was saved to the database.');
+        }
+    }
+
     const _edit = (kalaID) => {
         return (
             <><div className="modal fade" id="editModal" tabIndex="-1" aria-hidden='true'>
@@ -137,9 +145,9 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
 
                         <table className=" table table-striped table-hover align-middle caption-top border border-2  ">
                             <thead className="table-dark fs-6">
-                                <tr>
-                                    <th  scope="col">#</th>
-                                    <th className="border-right border border-2 border-dark" scope="col" >کۆد</th>
+                                <tr className="text-center  ">
+                                    <th scope="col">#</th>
+                                    <th scope="col" >کۆد</th>
                                     <th scope="col" >کاڵا</th>
                                     <th >بڕ</th>
                                     <th>نرخی دانە</th>
@@ -154,15 +162,15 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                         <th hidden={true}>{summer += kala.quantity}</th>
                                         <th hidden={true}>{wights += kala.quantity * kala.item_wightAll}</th>
                                         <th hidden={true}>{summerprice += kala.total}</th>
-                                        <th  scope="row">{kala.id}</th>
-                                        <th className="border-right border border-2 border-dark" scope="row" >{kala.item_code}</th>
+                                        <th scope="row">{kala.id}</th>
+                                        <th scope="row" >{kala.item_code}</th>
                                         <th scope="row" >{kala.item}</th>
                                         <th >{kala.quantity}</th>
                                         <th>{Currency(parseFloat(kala.price))}</th>
                                         <th >{Currency(parseFloat(kala.total))}</th>
                                         <th className="d-print-none">
                                             <button className="btn btn-warning " data-bs-toggle="modal" data-bs-target="#editModal" onClick={() => { setKalaId(kala.id); setDana(kala.quantity) }}><FontAwesomeIcon icon={faEdit} /></button>                                            </th>
-                                        <th className="d-print-none"><button className="btn btn-danger" onClick={() => deleteSale(kala.id)}><FontAwesomeIcon icon={faTrash} /></button></th>
+                                        <th className="d-print-none"><button className="btn btn-danger" onClick={() => _deleteSale(kala.id)}><FontAwesomeIcon icon={faTrash} /></button></th>
                                         {_edit()}
                                     </tr>
                                 ))}
