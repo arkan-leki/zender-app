@@ -4,7 +4,7 @@ import React from 'react'
 
 const Item = ({item,addtoList}) => {
     return (
-        <div className="co-sm-6 col-md-4 col-xl-3">
+        <div className="col-sm-6 col-md-4 col-xl-3">
             <div className="card bg-light mb-3">
                 <div className="row g-0">
                     <div className="col-4">

@@ -36,7 +36,6 @@ const Pending = ({ image, items, groupId, solds }) => {
         fetchData();
     }, []);
 
-
     const setStat = (item) => {
         axios.patch("http://127.0.0.1:8000/api/sale/" + item.id + "/", { "status": (!item.status) }).then(res => {
             console.log(res);

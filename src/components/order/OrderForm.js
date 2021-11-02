@@ -8,7 +8,7 @@ import Currency from '../../Currency';
 const OrderForm = ({ orders, carts, cats, searchItem, deleteEvent, addGO, dashkan, image, addtoListEvent, items }) => {
     const [text, setText] = useState('')
     const [text2, setText2] = useState('')
-    const [checked, setChecked] = useState(true);
+    const [checked, setChecked] = useState(false);
     let { id } = useParams();
     let orderz = orders.filter((o) => o.id == id)
     let summer = 0

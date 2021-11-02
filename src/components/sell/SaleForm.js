@@ -107,11 +107,8 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                     <h2>پسولەی فرۆش
                     </h2>
                     <p className="fs-5">
-                        {/* 07719930849 - Tel */}
-
-                        تەلەفۆن - ٠٧٧١٩٩٣٠٨٤٩
+                        تەلەفۆن - {groupDetail.phone}
                         <p>ناونیشان کەلار - لیوکە</p>
-
                     </p>
                 </div>
             </div>
@@ -138,11 +135,8 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                             <p> {wasl.id}</p>
                             <p>{moment(new Date(wasl.date)).format("DD/MM/YYYY")}</p>
                         </div>
-
                     </div>
-
-                    <div key={index} className="table-responsivetext-center mt-2 ">
-
+                    <div key={index} className="table-responsive text-center mt-2 ">
                         <table className=" table table-striped table-hover align-middle caption-top border border-2  ">
                             <thead className="table-dark fs-6">
                                 <tr className="text-center  ">
@@ -177,9 +171,7 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
                                 {carts.map((kala, index) => (
                                    <Cart waslid={wasl.id} _deleteEvent={_deleteEvent} addGO={addGO} kala={kala} key={index}/>
                                 ))}
-
                             </tbody>
-
                             <tfoot className=" border">
                                 <tr>
                                     <th></th>
@@ -219,3 +211,5 @@ const SaleForm = ({ groupDetail, cats, searchItem, sales, items, carts, deleteEv
 }
 
 export default SaleForm
+
+

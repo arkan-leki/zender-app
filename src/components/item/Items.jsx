@@ -65,9 +65,9 @@ const Items = ({ items, traders, filterItems, filterItemsX, sort, image, setDele
                                 <th className="d-print-none">ناوی کۆمپانیا</th>
                                 <th className="d-print-none">جۆر</th>
                                 <th>ناوی مەواد</th>
+                                <th className="d-print-none">نرخی کڕین</th>
+                                <th className="d-print-none" >نسبە</th>
                                 <th className="d-print-none">نرخ</th>
-                                <th className="d-print-none" >قازانج</th>
-                                <th > نرخ فرۆش</th>
                                 <th className="d-print-none">جۆر بار</th>
                                 <th className="d-print-none">دانە</th>
                                 <th className="d-print-none">وەزن دانە</th>

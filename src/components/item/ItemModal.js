@@ -32,7 +32,7 @@ const ItemModal = ({ items, addtoListEvent, searchItem, cats }) => {
                         <div className="modal-body">
                             <h1 className="align-left">کاڵاکان</h1>
                             <div className="row row-cols-1 row-cols-md-4 text-center g-4">
-                                {items.filter((i)=> i.deleted != true).map((item, index) => (
+                                {items.map((item, index) => (
                                     <Item key={index} item={item} addtoList={addtoListEvent} />
                                 )
                                 )}

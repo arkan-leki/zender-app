@@ -13,7 +13,7 @@ const Cart = ({waslid, addGO, kala,_deleteEvent }) => {
             <th scope="row" >{kala.barcode}</th>
             <th scope="row" >{kala.name}</th>
             <th ><input placeholder={kala.mawe} className="formt-control" id={kala.id} type="number" onChange={(e) => setText(e.target.value)} /></th>
-            <th scope="row" >{Currency(parseFloat(kala.price))}</th>
+            <th scope="row" >{Currency(parseFloat(kala.finalprice))}</th>
             <th >{Currency(text * kala.finalprice)}</th>
             <th className="d-print-none ">
                 <button className="btn btn-danger  fs-4" type="button" id="button-addon2" onClick={() => _deleteEvent(kala.id)}>سڕینەوە <FontAwesomeIcon icon={faTrash} /></button>

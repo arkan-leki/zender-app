@@ -54,7 +54,7 @@ const Payments = ({ payments, locals, group, filterBydate, addpay }) => {
                                 <td>{mob.local_name} <Link className="d-print-none" to={`/paymentForm/${mob.id}`}><FontAwesomeIcon icon={faEdit} /></Link></td>
                                 <td><Link  className="text-decoration-none text-dark" to={`/paymentForm/${mob.id}`}>{mob.local_code}</Link></td>
                                 <td><Link  className="text-decoration-none text-dark" to={`/paymentForm/${mob.id}`}>{mob.local_region}</Link></td>
-                                <td>{Currency(mob.bank_income)} </td>
+                                <td>{Currency(mob.bank_income-mob.bank_loan)} </td>
                                 <td>{mob.date}</td>
                                 <td>{moment(new Date(mob.date)).format("DD/MM/YYYY")}</td>
                                 <td className="d-print-none">{moment(new Date(mob.datetime)).format("DD/MM/YYYY HH:MM:SS")}</td>

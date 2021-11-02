@@ -3,7 +3,7 @@ import * as moment from 'moment'
 import LocalEdit from './LocalEdit';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import Currency from '../../Currency'
 
 const LocalForm = ({ image, locals, EditLocal, group, addOld }) => {
 
@@ -27,13 +27,13 @@ const LocalForm = ({ image, locals, EditLocal, group, addOld }) => {
     const lists = (pp) => {
         let arr = []
         pp.oldacc_compnay.map((val, index) => (
-            arr.push({ "id": <a >نقل حساب {val.id} </a>, "name": val.local_name, "group": val.group_name, "pay": val.loan, "loan": 0, "date": val.date })
+            arr.push({ "id": <a >نقل حساب {val.id} </a>, "name": val.local_name, "group": val.group_name, "pay": val.loan, "loan": val.income, "date": val.date })
         ))
         pp.attempts.map((val, index) => (
             arr.push({ "id": <Link to={`/form/${val.id}`}> کڕین {val.id} </Link>, "name": val.local_name, "group": val.group_name, "pay": val.totall, "loan": val.discount, "date": val.date })
         ))
         pp.payments.map((val, index) => (
-            arr.push({ "id": <Link to={`/paymentForm/${val.id}`}> پارەدان {val.id} </Link>, "name": val.local_name, "group": val.group_name, "pay": 0, "loan": val.bank_income, "date": val.date })
+            arr.push({ "id": <Link to={`/paymentForm/${val.id}`}> پارەدان {val.id} </Link>, "name": val.local_name, "group": val.group_name, "pay": val.bank_loan, "loan": val.bank_income, "date": val.date })
         ))
 
         let suumer = parseFloat(pp.exchange)
@@ -43,10 +43,10 @@ const LocalForm = ({ image, locals, EditLocal, group, addOld }) => {
                     <th scope="row"> {attempt.id}</th>
                     <th scope="row" >{attempt.name}</th>
                     <th scope="row">{attempt.group}</th>
-                    <th scope="row">{attempt.pay}$</th>
-                    <th scope="row">{attempt.loan}$</th>
+                    <th scope="row">{Currency(parseFloat(attempt.pay))}</th>
+                    <th scope="row">{Currency(parseFloat(attempt.loan))}</th>
                     <th scope="row">{attempt.date}</th>
-                    <th>{(suumer += parseFloat(attempt.pay).toFixed(2) - parseFloat(attempt.loan).toFixed(2)).toFixed(2)}</th>
+                    <th>{Currency(suumer += parseFloat(attempt.pay) - parseFloat(attempt.loan))}</th>
                 </tr>
             ))
         )
@@ -97,7 +97,6 @@ const LocalForm = ({ image, locals, EditLocal, group, addOld }) => {
                                 <p>{moment(new Date(ppl.date)).format("YYYY/MM/DD")}</p>
                                 <p>زنجیرە {ppl.id}</p>
                             </div>
-
                         </div>
                         <div key={index} className="table-responsive ">
 
@@ -118,63 +117,19 @@ const LocalForm = ({ image, locals, EditLocal, group, addOld }) => {
                                         <th scope="row"><a >{ppl.id}</a> </th>
                                         <th scope="row" >{ppl.name}</th>
                                         <th scope="row"> یەکەم جار</th>
-                                        <th scope="row">{ppl.exchange}$</th>
+                                        <th scope="row">{Currency(parseFloat(ppl.exchange))}$</th>
                                         <th scope="row">0$</th>
                                         <th scope="row">{ppl.date}</th>
                                     </tr>
 
                                     {lists({
                                         "exchange": ppl.exchange,
-                                        "attempts": ppl.attempts,
-                                        "payments": ppl.payment_compnay,
+                                        "attempts": group != '' ?  ppl.attempts.filter((att)=> att.group == group) : ppl.attempts,
+                                        "payments": group != '' ? ppl.payment_compnay.filter((att)=> att.group == group) : ppl.payment_compnay ,
                                         "oldacc_compnay": ppl.oldacc_compnay
                                     })}
-                                    {/* {cats.map((attempt, index) => (
-                                <tr key={index}>
-                                    <th scope="row"> <Link to={`/paymentForm/${attempt.id}`}>کڕێن {attempt.id} </Link></th>
-                                    <th scope="row" >{attempt.local_name}</th>
-                                    <th scope="row">{attempt.group_name}</th>
-                                    <th scope="row">{attempt.totall}$</th>
-                                    <th scope="row">{attempt.discount}$</th>
-                                    <th scope="row">{attempt.date}</th>
-                                </tr>
-                            ))} */}
-                                    {/* {ppl.attempts.map((attempt, index) => (
-                                <>
-                                    <tr key={index}>
-                                        <th scope="row"> <Link to={`/paymentForm/${attempt.id}`}>کڕێن {attempt.id} </Link></th>
-                                        <th scope="row" >{attempt.local_name}</th>
-                                        <th scope="row">{attempt.group_name}</th>
-                                        <th scope="row">{attempt.totall}$</th>
-                                        <th scope="row">{attempt.discount}$</th>
-                                        <th scope="row">{attempt.date}</th>
-                                    </tr>
-
-                                </>
-                            ))}
-
-                            {ppl.payment_compnay.map((pay, index) => (
-                                <tr key={index}>
-                                    <th scope="row"><Link to={`/paymentForm/${ppl.id}`}>پارەدان {pay.id} </Link></th>
-                                    <th scope="row" >{pay.local_name}</th>
-                                    <th >{pay.group_name}</th>
-                                    <th >{pay.bank_income}$</th>
-                                    <th>{pay.bank_loan}$</th>
-                                    <th >{pay.date}</th>
-                                </tr>
-                            ))} */}
 
                                 </tbody>
-                                {/* <tfoot>
-                            <th>
-                                <Link className="btn d-print-none btn-info" to={`/itemlist/${wasl.id}`}>زیادکردن</Link>
-                            </th>
-                            <th></th>
-                            <th> وەزن {Math.trunc( wights )} کیلۆ</th>
-                            <th> عدد {summer} کارتۆن</th>
-                            <th> {summerprice}$</th>
-                            <th> <Link className="btn d-print-none btn-info" to={`/`}>گەرانەوە</Link></th>
-                        </tfoot> */}
                             </table>
                         </div>
                     </>

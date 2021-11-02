@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import * as moment from 'moment'
 import Currency from '../../Currency'
 
-const PaymentForm = ({ image, payments }) => {
+const PaymentForm = ({ image, payments , DOLLAR }) => {
     let { id } = useParams();
     let waslz = payments.filter((mob) => mob.id == id)
 
@@ -36,10 +36,10 @@ const PaymentForm = ({ image, payments }) => {
                         <div className="col-8 border row">
                             <div className="col-6"> <p>بازار : {wasl.local_name}</p>
                                 <p>ژمارەی دەفتەر : {wasl.local_code}</p>
-                                <p>پارەی دراو : {Currency(wasl.bank_income)} </p></div>
+                                <p>پارەی دراو : {Currency(wasl.bank_income-wasl.bank_loan)} </p></div>
                             <div className="col-6"> <p> ناونیشان : {wasl.local_region}</p>
                                 <p>ژمارەی پسولە : {wasl.id}</p>
-                                <p>بری ماوە : {Currency(wasl.bank_income * 1470)} دینار</p>
+                                <p>بەدینار : {((wasl.bank_income-wasl.bank_loan) * DOLLAR).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} دینار</p>
                             </div>
                         </div>
                         <div className="col-4 border text-center">

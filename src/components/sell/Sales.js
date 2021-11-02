@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Select from 'react-select'
 import SaleList from './model/SaleList'
 
-const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, addReSell }) => {
+const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, addReSell, setStatus }) => {
     const [date, setDate] = useState(moment(new Date()).format("YYYY-MM-DD"))
     const [localID, setlocalID] = useState('')
     const groupsopt = [{ value: '', label: 'hich' }, ...locals.map((city) => ({ value: city.id, label: city.name }))]
@@ -25,8 +25,7 @@ const Sales = ({ sales, locals, search, addForm, group, vendor, filterBydate, ad
                     </div>
                 </div>
                 <hr />
-                <SaleList sales={sales} addReSell={addReSell} />
-
+                <SaleList setStatus={setStatus} sales={sales} addReSell={addReSell} />
             </div>
         </section>
     )

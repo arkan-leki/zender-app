@@ -65,6 +65,7 @@ const App = () => {
   const [group, setGroup] = useState([])
   const [vendorId, setVendorID] = useState('')
   const BASE_URL = 'http://127.0.0.1:8000/api/'
+  const [DOLLAR, setDOLLAR] = useState(1480)
 
   useEffect(() => {
     const getOrders = async () => {
@@ -834,6 +835,15 @@ const App = () => {
     })
   }
 
+
+  const setStatus = (sale) => {
+    axios.patch(`http://127.0.0.1:8000/api/sell/${sale.id}/`, { "status": (!sale.status) }).then(res => {
+      getState()
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
   return (
     <Router>
       <Header
@@ -910,7 +920,7 @@ const App = () => {
         />
         <Route path='/forms' exact render={(props) => (
           <>
-            <Sales addReSell={addReSell} items={items} filterBydate={filterBydateSales} vendor={vendorId} group={groupId} search={search} locals={locals} sales={sales} addForm={addForm} />
+            <Sales setStatus={setStatus} addReSell={addReSell} items={items} filterBydate={filterBydateSales} vendor={vendorId} group={groupId} search={search} locals={locals} sales={sales} addForm={addForm} />
           </>
         )}
         />
@@ -937,7 +947,7 @@ const App = () => {
 
         <Route path='/paymentForm/:id' exact render={(props) => (
           <>
-            <PaymentForm payments={payments} image={image} />
+            <PaymentForm payments={payments} image={image} DOLLAR={DOLLAR}/>
           </>
         )}
         />
